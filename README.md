@@ -1,7 +1,6 @@
 # Ananta · अनन्त
 
-Interactive chambers that turn results from Indian mathematics into light and sound,
-plus my IllustrisTNG research write-up. Live site: `https://ishamainii.github.io/ananta/`
+Interactive chambers that turn results from Indian mathematics into light and sound, Live site: `https://ishamainii.github.io/ananta/`
 
 | # | Chamber | Math | Status |
 |---|---------|------|--------|
@@ -13,22 +12,25 @@ plus my IllustrisTNG research write-up. Live site: `https://ishamainii.github.io
 | 06 | Tātkālika | Bhāskara II's instantaneous motion; gradient ascent to the extremum | live |
 | 07 | Pūrṇa | Droste self-similarity, Jaina orders of number, khahara | live |
 
-Every chamber has a guide (✦ ask): type "show me 6 dimensions", "solve N = 991",
-"dive toward 1/5", "scramble it"… With a proxy configured (worker/README.md) it's an
-LLM that drives the scene through tool calls; without one it parses requests offline.
+Every chamber teaches itself: a step-by-step "how to play" tour (each step changes the
+scene), a colour key, and a "why this sound" panel that shows which number picked each note.
+
+The guide (✦ ask, or g) is a small command interpreter in js/guide.js, no server and no
+model. It splits a request into clauses ("show 6 dimensions and turn syllables 2 and 5,
+then what is a guru"), sends each clause to the chamber's tools, and answers questions
+from a keyword-matched question bank in each chamber's page.json. Voice in and out where
+the browser supports it.
 
 ## Layout
 ```
-index.html                 home: chambers, research, lab log
+index.html                 home: chambers, how to play, lab log
 chambers/<name>/           one folder per chamber (index.html + main.js)
-research/illustristng/     research write-up
 js/psyche.js               the kaleidoscope / log-polar zoom shader behind every chamber
 js/sound.js                Web Audio score: Karplus–Strong tanpura & santoor, bansuri, bowl
 js/chamber-ui.js           veil, dock, trip slider, notebook drawer, bibliography
 data/sources.json          every citation, checked against a publisher or journal record
 python/                    the math, tested first (pytest), then ported to JS
 tools/make_pages.py        builds each chamber's index.html from tools/chamber.html + page.json + notes.html
-worker/                    Cloudflare Worker proxy for the LLM guide
 js/guide.js                the guide: tool-calling loop (online) or request parsing (offline)
 ```
 

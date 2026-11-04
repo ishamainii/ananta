@@ -95,8 +95,9 @@ function frame(now) {
   const t = (now - t0) / 1000;
   if (playing && now - lastAt > 900) {
     n = n >= 200 ? 1 : n + 1; lastAt = now; readout();
+    sound.why = `n = ${n}: n mod 5 = ${n % 5} picks the note${n % 10 >= 5 ? ", second half of each ten an octave up" : ""}`;
     sound.pluck(degree((n % 5) + 2 + (n % 10 >= 5 ? 5 : 0), SA * 2), 0.05);
-    if (n % 5 === 4) sound.bowl(SA * 4);
+    if (n % 5 === 4) { sound.why = `n = ${n} = 5k + 4, so 5 divides p(${n})`; sound.bowl(SA * 4); }
   }
   if (!reduce && now - tourAt > 11000) { tourAt = now; TOUR[tour++ % TOUR.length](); readout(); }
   for (const k of ["cx", "cy", "zoom"]) view[k] += ((k === "cx" || k === "cy" ? target[k] : target.zoom) - view[k]) * 0.012;

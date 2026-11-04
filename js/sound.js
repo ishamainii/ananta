@@ -12,7 +12,17 @@ export const SA = 138.59;                         // Sa near C#3
 const BHU = [1, 9 / 8, 5 / 4, 3 / 2, 5 / 3];
 export const degree = (d, base = SA * 2) => base * BHU[((d % 5) + 5) % 5] * 2 ** Math.floor(d / 5);
 
+// name a frequency as a swara of the scale: which degree, its ratio to Sa, and the octave
+const SWARA = ["Sa", "Re", "Ga", "Pa", "Dha"], RATIO = ["1", "9/8", "5/4", "3/2", "5/3"];
+export function swara(f) {
+  const oct = Math.floor(Math.log2(f / SA) + 1e-6), r = f / (SA * 2 ** oct);
+  let best = 0; BHU.forEach((b, i) => { if (Math.abs(Math.log2(r / b)) < Math.abs(Math.log2(r / BHU[best]))) best = i; });
+  const off = Math.abs(1200 * Math.log2(r / BHU[best]));
+  return { name: SWARA[best], ratio: RATIO[best], octave: oct, inScale: off < 15, label: off < 15 ? `${SWARA[best]} (${RATIO[best]} × Sa)` : `${Math.round(f)} Hz` };
+}
+
 export function createSound() {
+  let vol = (() => { try { const v = parseFloat(localStorage.getItem("ananta-vol")); return isNaN(v) ? 0.7 : v; } catch { return 0.7; } })();
   let ac = null, master, wet, analyser, data, on = false, timer = null;
   let droneNext = 0, droneIdx = 0, fluteFree = 0, flute = null;
   const cache = new Map();
@@ -122,7 +132,7 @@ export function createSound() {
       await ac.resume(); on = true;
       droneNext = Math.max(droneNext, ac.currentTime + 0.05); fluteFree = Math.max(fluteFree, ac.currentTime + 3);
       master.gain.cancelScheduledValues(ac.currentTime); master.gain.setValueAtTime(Math.max(0.0001, master.gain.value), ac.currentTime);
-      master.gain.exponentialRampToValueAtTime(0.9, ac.currentTime + 3);
+      master.gain.exponentialRampToValueAtTime(Math.max(0.0001, vol * 1.2), ac.currentTime + 3);
       tick(); clearInterval(timer); timer = setInterval(tick, 200); api.bowl();
     },
     stop() {
@@ -131,8 +141,15 @@ export function createSound() {
       master.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.8);
       setTimeout(() => { if (!on) ac.suspend(); }, 900);
     },
+    get volume() { return vol; },
+    setVolume(v) {                                // 0..1, remembered between visits
+      vol = Math.max(0, Math.min(1, v)); try { localStorage.setItem("ananta-vol", String(vol)); } catch {}
+      if (ac && on) { master.gain.cancelScheduledValues(ac.currentTime); master.gain.setTargetAtTime(Math.max(0.0001, vol * 1.2), ac.currentTime, 0.08); }
+    },
+    onNote: null,                                 // the chamber UI listens here to explain each note
+    why: "",                                      // the chamber sets this before each note: which number chose it
     bowl(f = SA * 2) {
-      if (!on) return; const t = ac.currentTime + 0.03;
+      if (!on) return; api.onNote?.({ kind: "bowl", f, why: api.why }); const t = ac.currentTime + 0.03;
       [[1, 1, 11], [2.71, .42, 7.5], [5.15, .2, 4.5], [8.4, .08, 2.6]].forEach(([m, a, dcy]) => [0, 0.9].forEach(det => {
         const o = ac.createOscillator(), g = ac.createGain(); o.type = "sine"; o.frequency.value = f * m + det;
         g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.045 * a, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + dcy);
@@ -140,7 +157,8 @@ export function createSound() {
       }));
     },
     pluck(f, gain = 0.07) {                       // a soft santoor string, two courses slightly apart in tune
-      if (!on) return; const t = ac.currentTime + 0.02, b = ks(f, 2.4, 0.7);
+      if (!on) return; api.onNote?.({ kind: "santoor", f, why: api.why });
+      const t = ac.currentTime + 0.02, b = ks(f, 2.4, 0.7);
       play(b, t, gain, 1.002, 0.7); play(b, t + 0.01, gain * 0.7, 0.998, 0.7);
     },
     energy() {                                    // 0..1 loudness, for the visuals to breathe with

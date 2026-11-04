@@ -34,11 +34,16 @@
   <div class="big" id="cap2"></div>
 </div>
 
+<div class="key" id="key" aria-label="Key: what each colour means"></div>
+
 <div class="dock">
   <label class="chip">epicycle r/R <input id="kSel" type="range" min="5" max="80" value="32" style="width:90px;accent-color:#ff8a3d"></label>
   <span class="sep"></span>
-  <label class="chip trip" title="How loud the psychedelic layer is">trip <input id="trip" type="range" min="0" max="100" value="50"></label>
+  <button class="chip" id="tourBtn" aria-pressed="false" title="How to play (?)">? how to play</button>
+  <label class="chip trip" title="How strong the psychedelic background is. 0 shows only the math.">trip <input id="trip" type="range" min="0" max="100" value="40"></label>
   <button class="chip" id="soundBtn" aria-pressed="false">♪ sound</button>
+  <label class="chip vol" title="Volume">vol <input id="vol" type="range" min="0" max="100" value="70" aria-label="Volume"></label>
+  <button class="chip" id="whyBtn" aria-pressed="false" title="Why these notes?">why this sound</button>
   <button class="chip" id="guideBtn" aria-pressed="false" title="Ask the guide (g)">✦ ask</button>
   <button class="chip" id="notesBtn" aria-pressed="false" title="Notebook (n)">notebook</button>
 </div>
@@ -70,6 +75,22 @@
   <h3>Sources</h3>
   <ol class="sources" id="sources"></ol>
 </aside>
+
+<section class="tour" id="tour" hidden aria-live="polite" aria-label="How to play">
+  <div class="tour-top"><span class="tour-n" id="tourN"></span><button class="chip close" id="tourClose" aria-label="Close tutorial">✕</button></div>
+  <h2 id="tourT"></h2>
+  <p id="tourB"></p>
+  <p class="tour-see" id="tourSee"></p>
+  <div class="tour-go"><button class="chip" id="tourBack">← back</button><button class="chip primary" id="tourNext">next →</button></div>
+</section>
+
+<section class="whysound" id="whySound" hidden aria-label="Why this sound">
+  <div class="tour-top"><span class="tour-n">why this sound</span><button class="chip close" id="whyClose" aria-label="Close">✕</button></div>
+  <div id="whyText"></div>
+  <ol class="notes-log" id="notesLog" aria-live="off"><li class="dim">turn sound on to see each note as it plays</li></ol>
+</section>
+
+<script type="application/json" id="chamberData">{"tutorial": [{"t": "Planets don't move evenly", "b": "In the Indian model, an imaginary <b>mean planet<\/b> goes round the earth at a steady speed (gold, on the big circle). The <b>true planet<\/b> rides a small circle, an epicycle, around it (white). So sometimes the real planet runs ahead and sometimes it lags.", "see": "the labels: earth, mean planet, true planet."}, {"t": "The correction", "do": "epicycle 0.32", "b": "True place = mean place + a correction E, the <b>equation of centre<\/b>. E depends on M, how far round the epicycle the planet is. The purple curve on the right is E over one full lap.", "see": "the dot on the purple curve moving as the planet goes round."}, {"t": "Speed at one instant", "b": "Bhāskara II (1150) separated average daily motion from the speed <b>at an instant<\/b>: tātkālika gati. It's the slope of E right now, the tangent line on the curve. True speed = mean speed × (1 + dE/dM).", "see": "the tangent line, and 'true speed / mean speed' in the readout."}, {"t": "Where the correction peaks", "do": "go to 90 degrees", "b": "At M = 90° the correction is at its largest and the tangent is flat: the rate of change is zero. Bhāskara notes the mean speed is exact there. Today we write it as f′(x) = 0 at a maximum.", "see": "the tangent turning green and flat, and dE/dM = 0."}, {"t": "Climbing with only the slope", "b": "The green bead knows nothing but the slope where it stands. It steps uphill, a little at a time, and always stops where the slope is zero. That's <b>gradient ascent<\/b>, the same idea used to train every neural network.", "see": "the green bead settling at the top of the curve."}, {"t": "A bigger epicycle", "do": "epicycle 0.6", "b": "A bigger epicycle means a bigger correction, a steeper curve and a wilder rosette. The rosette is just the orbit drawn from a slowly turning viewpoint; the physics doesn't change.", "see": "the taller purple curve. Try 'epicycle 0.15' for a nearly circular orbit."}], "legend": [["#5fd4ff", "earth, at the centre"], ["#ffd27a", "mean planet: moves at constant speed"], ["#ff8a3d", "epicycle arm"], ["#fff0d6", "true planet, and its trail"], ["#b08cff", "E(M): the correction over one lap"], ["#5fe3b2", "tangent turns green where the rate is zero"]], "faq": [{"k": ["tatkalika", "instant", "gati", "instantaneous"], "q": "what is tatkalika gati?", "a": "Bhāskara II's term for a planet's speed at a single instant, as opposed to its average daily motion. In modern terms it's a derivative."}, {"k": ["epicycle", "deferent", "small circle"], "q": "what is an epicycle?", "a": "A small circle (radius r) whose centre moves round a big circle (radius R). The planet rides the small one. Here r/R sets how lopsided the motion is."}, {"k": ["equation of centre", "correction", "e(m)"], "q": "what is the equation of centre?", "a": "The correction added to the mean position to get the true one: E(M) = −arcsin((r/R)·sin M)."}, {"k": ["derivative", "calculus", "newton", "leibniz"], "q": "is this calculus?", "a": "It's an early form of the derivative and of the rule that it vanishes at an extremum, about 500 years before Newton and Leibniz, but without their general theory."}, {"k": ["bead", "gradient", "neural", "optimi"], "q": "what is the green bead?", "a": "A gradient-ascent climber: it only knows the instantaneous slope dE/dM and keeps stepping uphill with a bit of momentum. It always stops where the slope is zero."}, {"k": ["rosette", "flower", "trail"], "q": "why is the orbit a flower?", "a": "It's drawn from a frame that turns a little slower than the mean planet, so each lap lands slightly rotated. Only the viewpoint turns; the motion is the same."}, {"k": ["bhupali", "raag", "raga", "scale"], "q": "why raag bhupali?", "a": "Bhupali uses five notes, Sa Re Ga Pa Dha, tuned as the ratios 1, 9/8, 5/4, 3/2 and 5/3. It has no half-steps, so any note the math picks sounds consonant against the drone."}, {"k": ["frequency", "frequencies", "hz", "hertz", "ratio", "tuning"], "q": "how are the frequencies chosen?", "a": "Sa is 138.6 Hz. Every other note is Sa times a whole-number ratio (9/8, 5/4, 3/2, 5/3) or that times a power of 2 for higher octaves. Which note plays is chosen by a number in the scene. Open 'why this sound' to watch it live."}, {"k": ["trip", "background", "psychedelic", "haze", "kaleidoscope"], "q": "what is the background?", "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'trip 0' to switch it off and see only the math."}, {"k": ["who made", "who built", "isha", "author"], "q": "who made this?", "a": "Isha Maini, a data science student at Emory. Each chamber's math is written and tested in Python and JavaScript before it's drawn."}], "slug": "tatkalika", "num": "06", "sound": "<p><b>The pitch is the planet's speed.<\/b> Every 0.7 seconds a note plays whose height is <b>4 × (true speed ÷ mean speed)<\/b>. When the planet runs fast the note is high; when it lags, low. Over one lap you hear the speed rise and fall like the purple curve's slope.<\/p><p>The bowl rings at the instant <b>dE/dM = 0<\/b>, the extreme, where true speed equals mean speed.<\/p><p>Every chamber plays in <b>Raag Bhupali<\/b>: five notes, Sa Re Ga Pa Dha, tuned as whole-number ratios of the home note Sa (138.6 Hz here): <b>1, 9/8, 5/4, 3/2, 5/3<\/b>. Simple ratios mean the sound waves line up every few cycles, so they never clash. That lets the math pick any note it likes and it still sounds like music. Underneath, a tanpura drone holds Sa and Pa, and a bansuri improvises in the same raag. The santoor and the singing bowl are the ones the math plays.<\/p>"}</script>
 
 <div class="veil" id="veil">
   <div class="eyebrow">chamber 06 · tātkālika</div>

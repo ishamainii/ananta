@@ -49,6 +49,10 @@ function draw(t) {
   glowLine(ctx, [[mx, my], [px, py]], "#ff8a3d", 1.2, 0.8);
   glowLine(ctx, [[cx, cy], [px, py]], "#fff0d6", 1, 0.7);
   glowDot(ctx, cx, cy, 4, "#5fd4ff"); glowDot(ctx, mx, my, 3, "#ffd27a", 0.6); glowDot(ctx, px, py, 5, "#fff0d6");
+  ctx.font = "11px 'IBM Plex Mono', monospace";                     // name the three bodies
+  ctx.fillStyle = "#5fd4ff"; ctx.fillText("earth", cx + 8, cy + 16);
+  ctx.fillStyle = "#ffd27a"; ctx.fillText("mean planet", mx + 8, my - 8);
+  ctx.fillStyle = "#fff0d6"; ctx.fillText("true planet", px + 9, py + 4);
 
   // ---- right: E(M) over one revolution, its tangent now, and the bead climbing to the extremum
   const gx = wide ? W * 0.58 : 24, gw = wide ? W * 0.36 : W - 48, gy = wide ? H / 2 - 10 : H * 0.72, gh = Math.min(H * 0.16, 120);
@@ -81,9 +85,9 @@ function frame(now) {
   stage.psyche.setFold(8 + 2 * Math.round(4 * k));
   stage.render(reduce ? 0 : t, sound.energy());
   stage.clear(); const flat = draw(t);
-  if (flat && !wasExtreme) { sound.bowl(); }
+  if (flat && !wasExtreme) { sound.why = "dE/dM = 0: the correction is at its extreme, true speed = mean speed"; sound.bowl(); }
   wasExtreme = flat;
-  if (now - lastNote > 700) { lastNote = now; sound.pluck(degree(Math.round(4 + 4 * (1 + dE(M)) - 4), SA * 2), 0.05); readout(); }
+  if (now - lastNote > 700) { lastNote = now; sound.why = `true speed = ${(1 + dE(M)).toFixed(2)} × mean speed → pitch = 4 × that`; sound.pluck(degree(Math.round(4 + 4 * (1 + dE(M)) - 4), SA * 2), 0.05); readout(); }
   $("cap1").textContent = flat ? "the instantaneous correction vanishes · E is at its extreme · true speed equals mean speed"
     : "the planet's true place = mean place + equation of centre";
   $("cap2").innerHTML = `<span class="${flat ? "hot" : ""}" style="font-family:'IBM Plex Mono',monospace;font-size:clamp(16px,2.4vw,26px);letter-spacing:.02em">dE/dM = ${dE(M).toFixed(3)}</span>`;

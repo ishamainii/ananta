@@ -111,7 +111,7 @@ function stepTurns(now) {
     if (pending || now >= nextTurnAt) {
       const hp = hiddenPlanes(), pl = pending ?? hp[cycleIdx++ % hp.length]; pending = null;
       turn = { a: pl[0], b: pl[1], t0: now, done: 0, dir: Math.random() < .5 ? 1 : -1 };
-      shownPlane = pl; renderPlaneCap(); sound.bowl();
+      shownPlane = pl; renderPlaneCap(); sound.why = `a quarter turn begins in the plane of syllables ${pl[0] + 1} and ${pl[1] + 1}`; sound.bowl();
     }
     return;
   }
@@ -152,6 +152,10 @@ setupChamber({ key: "pingala", sound, psyche, tools: [
     run: ({ a, b }) => { a = Math.max(1, Math.min(n, a)) - 1; b = Math.max(1, Math.min(n, b)) - 1; if (a === b) return { error: "need two different syllables" };
       if (a > b) [a, b] = [b, a]; pending = [a, b];
       return { say: `${turn ? "Next" : "Now"}: a quarter turn in the plane of syllables ${a + 1} and ${b + 1}.` }; } },
+  { name: "labels", hint: "hide labels", parse: t => /label|names?|meters? on/.test(t) ? { on: !/hide|off|no /.test(t) } : null,
+    run: ({ on }) => { labels = on; return { say: on ? "Every corner is labelled with its meter: । light, ऽ heavy." : "Labels off." }; } },
+  { name: "neighbours", hint: "why are corners joined", parse: t => /edge|joined|connect|neighbou?r/.test(t) ? {} : null,
+    run: () => ({ say: `Two corners share an edge when their meters differ in exactly one syllable. The edge's colour tells you which syllable: colour 1 is the first syllable, and so on. Every corner here has ${n} edges, one per syllable you could flip.` }) },
 ] });
 
 // ---------- frame ----------
@@ -159,7 +163,7 @@ const tA = new THREE.Vector3(), tB = new THREE.Vector3(), UP = new THREE.Vector3
 const t0 = performance.now();
 function frame(now) {
   stepTurns(now);
-  if (now - stepT0 > STEP_MS) { step++; stepT0 = now; renderCaption(); sound.pluck(degree(pop(curV()) + 2, SA * 4)); }
+  if (now - stepT0 > STEP_MS) { step++; stepT0 = now; renderCaption(); const g = pop(curV()); sound.why = `${meterOf(curV()).map(b => b ? "ऽ" : "।").join("")} has ${g} guru${g === 1 ? "" : "s"} → ${g} step${g === 1 ? "" : "s"} up the scale`; sound.pluck(degree(g + 2, SA * 4)); }
 
   const P = V.map(v => proj3(mul(Bd, v)));
   let dmin = Infinity, dmax = -Infinity; for (const p of P) { dmin = Math.min(dmin, p[3]); dmax = Math.max(dmax, p[3]); }
@@ -205,7 +209,34 @@ function frame(now) {
   psyche.update(reduce ? 0 : (now - t0) / 1000, sound.energy());
   controls.update();
   renderer.clear(); composer.render();
+  drawLabels(P, pl);
   requestAnimationFrame(frame);
+}
+
+// ---------- labels: every corner is a meter, so write the meter on it ----------
+// ink canvas on top of the WebGL stage. Up to 5 syllables every corner gets its meter;
+// past that there are too many, so only the walker's corner and its neighbours do.
+const ink = $("ink"), ictx = ink.getContext("2d"), v3 = new THREE.Vector3();
+let labels = true;
+function drawLabels(P, pl) {
+  const dpr = Math.min(2, devicePixelRatio || 1), W = innerWidth, H = innerHeight;
+  if (ink.width !== Math.round(W * dpr)) { ink.width = Math.round(W * dpr); ink.height = Math.round(H * dpr); }
+  ictx.setTransform(dpr, 0, 0, dpr, 0, 0); ictx.clearRect(0, 0, W, H);
+  if (!labels) return;
+  cube.updateMatrixWorld();
+  const cur = curV(), near = new Set(Array.from({ length: n }, (_, b) => cur ^ (1 << b)));
+  ictx.font = `${n > 5 ? 11 : 13}px 'Tiro Devanagari Sanskrit', serif`; ictx.textAlign = "center";
+  P.forEach((p, i) => {
+    if (n > 5 && i !== cur && !near.has(i)) return;
+    v3.set(p[0], p[1], p[2]).applyMatrix4(cube.matrixWorld).project(camera);
+    const x = (v3.x + 1) / 2 * W, y = (1 - v3.y) / 2 * H - 12, here = i === cur;
+    const depth = Math.max(0.25, Math.min(1, (p[3] - 0.15) * 2.4));
+    ictx.globalAlpha = here ? 1 : (near.has(i) ? 0.75 : 0.45) * depth;
+    ictx.fillStyle = here ? "#ffd27a" : "#efe6d6";
+    if (here) { ictx.shadowColor = "rgba(255,190,90,.9)"; ictx.shadowBlur = 10; } else ictx.shadowBlur = 0;
+    ictx.fillText(meterOf(i).map(b => b ? "ऽ" : "।").join(""), x, y);
+  });
+  ictx.globalAlpha = 1; ictx.shadowBlur = 0;
 }
 
 build(4);

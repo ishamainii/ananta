@@ -1,83 +1,108 @@
-// guide.js — "ask the chamber". The visitor types in plain language and the scene answers.
+// guide.js: "ask the chamber". Plain language in, the scene changes, answers come back.
 //
-// Each chamber registers tools: { name, description, input_schema, run(args), parse?(text) }.
-//  * online  (a proxy URL is set in js/config.js): the message, the chamber's notes and the
-//    tool schemas go to the LLM; tool calls it makes are executed here, on the live scene,
-//    and their results are sent back until it answers. The answer can be read aloud.
-//  * offline (no proxy): each tool's parse() tries to read the request directly, so
-//    "show me 6 dimensions" still works on a static host.
-import { GUIDE_URL, GUIDE_MODEL } from "./config.js";
+// No server, no model: it's a small command interpreter.
+//  1. split the request into clauses ("show 6 dimensions and turn syllables 2 and 5, then explain guru")
+//     on commas / "and" / "then" / "also", but glue a bare number back on ("2 and 5" stays together)
+//  2. each clause goes to the chamber's tools in order; the first tool whose parse() reads it runs
+//  3. a clause that no tool reads (or that is a question) is matched against the chamber's
+//     question bank: every entry has keywords, and the entry with the most hits answers
+//  4. anything left over gets a short "didn't catch that" with clickable suggestions
+// Answers can be read aloud, and on browsers with speech recognition you can talk to it.
 
-export function createGuide({ chamber, tools, context }) {
+export function createGuide({ chamber, tools, faq = [] }) {
   const box = document.createElement("div");
   box.className = "guide"; box.hidden = true;
+  const hints = tools.map(t => t.hint).filter(Boolean);
   box.innerHTML = `
     <div class="guide-log" id="guideLog" aria-live="polite"></div>
+    <div class="guide-try" id="guideTry"></div>
     <form class="guide-form" id="guideForm">
-      <input id="guideIn" autocomplete="off" placeholder="${tools[0]?.hint ?? "ask anything about this chamber"}" aria-label="Ask the guide">
+      <input id="guideIn" autocomplete="off" placeholder="try: ${hints.slice(0, 2).join(" and ")}" aria-label="Ask the guide">
       <button class="chip" type="submit">ask</button>
+      <button class="chip" type="button" id="guideMic" aria-pressed="false" title="Speak a request" hidden>🎙</button>
       <button class="chip" type="button" id="guideVoice" aria-pressed="false" title="Read answers aloud">voice</button>
     </form>`;
   document.body.appendChild(box);
   const log = box.querySelector("#guideLog"), input = box.querySelector("#guideIn"), voiceBtn = box.querySelector("#guideVoice");
-  let voice = false, history = [];
-  voiceBtn.addEventListener("click", () => { voice = !voice; voiceBtn.setAttribute("aria-pressed", String(voice)); if (!voice) speechSynthesis?.cancel(); });
+  const tryBox = box.querySelector("#guideTry");
+  const examples = [...hints.slice(0, 5), ...faq.slice(0, 3).map(f => f.q)];
+  tryBox.innerHTML = examples.map(e => `<button type="button" class="try">${e}</button>`).join("");
+  tryBox.addEventListener("click", e => { if (e.target.matches(".try")) ask(e.target.textContent); });
 
+  let voice = false;
+  voiceBtn.addEventListener("click", () => { voice = !voice; voiceBtn.setAttribute("aria-pressed", String(voice)); if (!voice) speechSynthesis?.cancel(); });
   const say = (who, text) => {
     const p = document.createElement("p"); p.className = who; p.textContent = text; log.appendChild(p); log.scrollTop = log.scrollHeight;
-    if (who === "bot" && voice && "speechSynthesis" in window) { const u = new SpeechSynthesisUtterance(text); u.rate = 0.95; u.pitch = 0.9; speechSynthesis.speak(u); }
+    if (who === "bot" && voice && "speechSynthesis" in window) { const u = new SpeechSynthesisUtterance(text.replace(/·/g, ",")); u.rate = 0.97; speechSynthesis.speak(u); }
     return p;
   };
-  const byName = Object.fromEntries(tools.map(t => [t.name, t]));
 
-  async function offline(text) {
-    for (const t of tools) {
-      const args = t.parse?.(text.toLowerCase());
-      if (args) { const r = await t.run(args); say("bot", r?.say ?? "Done."); return; }
+  // ---- understanding
+  const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’']/g, "'").trim();
+  function clauses(text) {
+    const parts = norm(text).split(/\s*(?:[,;!?]|\.(?=\s|$)|\band then\b|\bthen\b|\balso\b|\band\b|\b&\b)\s*/).filter(Boolean);
+    const out = [];
+    for (const p of parts) {                       // "turn syllables 2 and 5": the 5 belongs to the clause before it
+      if (out.length && /^(\d+|one|two|three|four|five|six|seven|eight|nine|ten)$/.test(p)) out[out.length - 1] += " and " + p;
+      else out.push(p);
     }
-    say("bot", "Offline guide: I can do " + tools.map(t => t.hint).filter(Boolean).join(" · ") + ".");
+    return out;
   }
-
-  async function online(text) {
-    history.push({ role: "user", content: text });
-    const system = `You are the guide inside "${chamber}", one chamber of Ananta, an interactive site on Indian mathematics by Isha Maini. ` +
-      `Change the live visualization with the tools whenever the visitor asks to see something. Answer in at most 3 short sentences, ` +
-      `precise and a little poetic. Only state history that appears in the context below; cite sources by their id in square brackets.\n\nCONTEXT:\n${context()}`;
-    const schemas = tools.map(({ name, description, input_schema }) => ({ name, description, input_schema }));
-    for (let turn = 0; turn < 5; turn++) {
-      const res = await fetch(GUIDE_URL, { method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ model: GUIDE_MODEL, max_tokens: 400, system, tools: schemas, messages: history }) });
-      if (!res.ok) throw new Error(`guide ${res.status}`);
-      const msg = await res.json();
-      history.push({ role: "assistant", content: msg.content });
-      const text = msg.content.filter(b => b.type === "text").map(b => b.text).join(" ").trim();
-      if (text) say("bot", text);
-      const calls = msg.content.filter(b => b.type === "tool_use");
-      if (!calls.length) return;
-      const results = [];
-      for (const c of calls) {
-        let out; try { out = await byName[c.name].run(c.input); } catch (e) { out = { error: String(e) }; }
-        results.push({ type: "tool_result", tool_use_id: c.id, content: JSON.stringify(out ?? { ok: true }) });
+  const isQuestion = c => /^(what|why|how|who|when|where|which|is|are|does|do|can|explain|tell me|define|meaning)\b/.test(c);
+  function answer(c) {
+    let best = null, bestScore = 0;
+    for (const f of faq) {
+      const score = f.k.reduce((n, k) => n + (c.includes(norm(k)) ? (k.length > 5 ? 2 : 1) : 0), 0);
+      if (score > bestScore) { best = f; bestScore = score; }
+    }
+    return bestScore ? best.a : null;
+  }
+  async function runClause(c) {
+    if (/^(help|commands|what can (you|i) do|options|menu)\b/.test(c)) return "I can change the scene or answer questions, several at once. Try: " + hints.slice(0, 6).join(" · ") + ".";
+    if (/^(hi|hello|hey|namaste)\b/.test(c)) return `Namaste. This is ${chamber}. Ask me to change something, or ask what you're looking at.`;
+    if (!isQuestion(c) || /^(show|turn|go|set|play|open)/.test(c)) {
+      for (const t of tools) {
+        const args = t.parse?.(c);
+        if (args) { const r = await t.run(args); return r?.say ?? "Done."; }
       }
-      history.push({ role: "user", content: results });
     }
+    const a = answer(c);
+    if (a) return a;
+    if (isQuestion(c)) for (const t of tools) { const args = t.parse?.(c); if (args) { const r = await t.run(args); return r?.say ?? "Done."; } }
+    return null;
   }
+  async function exec(text, { quiet = false } = {}) {
+    const said = [], missed = [];
+    for (const c of clauses(text)) { const r = await runClause(c); r ? said.push(r) : missed.push(c); }
+    if (!quiet) {
+      if (said.length) say("bot", said.join(" "));
+      if (missed.length) say("bot dim", `I didn't catch "${missed.join(`", "`)}". Tap a suggestion below, or say "help".`);
+    }
+    return said;
+  }
+  async function ask(text) { say("you", text); await exec(text); }
 
-  box.querySelector("#guideForm").addEventListener("submit", async e => {
-    e.preventDefault(); const text = input.value.trim(); if (!text) return; input.value = ""; say("you", text);
-    const thinking = say("bot dim", "…");
-    try { if (GUIDE_URL) await online(text); else await offline(text); }
-    catch { await offline(text); }
-    finally { thinking.remove(); }
+  box.querySelector("#guideForm").addEventListener("submit", e => {
+    e.preventDefault(); const text = input.value.trim(); if (!text) return; input.value = ""; ask(text);
   });
 
-  const toggle = open => { box.hidden = !open; document.getElementById("guideBtn")?.setAttribute("aria-pressed", String(open)); if (open) input.focus(); };
+  // ---- talking to it, where the browser supports speech recognition
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition, mic = box.querySelector("#guideMic");
+  if (SR) {
+    mic.hidden = false;
+    const rec = new SR(); rec.lang = "en-US"; rec.interimResults = true;
+    rec.onresult = e => { const r = [...e.results].map(x => x[0].transcript).join(""); input.value = r; if (e.results[e.results.length - 1].isFinal) { input.value = ""; ask(r); } };
+    rec.onend = () => mic.setAttribute("aria-pressed", "false");
+    mic.addEventListener("click", () => { if (mic.getAttribute("aria-pressed") === "true") rec.stop(); else { voice = true; voiceBtn.setAttribute("aria-pressed", "true"); mic.setAttribute("aria-pressed", "true"); rec.start(); } });
+  }
+
+  const toggle = open => { box.hidden = !open; document.getElementById("guideBtn")?.setAttribute("aria-pressed", String(open)); if (open) { input.focus(); if (!log.children.length) say("bot dim", `Ask me to change the scene or explain it. You can chain requests: "${hints[0] ?? "help"} and ${hints[1] ?? "why this sound"}".`); } };
   document.getElementById("guideBtn")?.addEventListener("click", () => toggle(box.hidden));
-  addEventListener("keydown", e => { if (e.key === "g" && document.activeElement?.tagName !== "INPUT") { e.preventDefault(); toggle(box.hidden); } });
-  return { toggle };
+  addEventListener("keydown", e => { if (e.key === "g" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) { e.preventDefault(); toggle(box.hidden); } });
+  return { toggle, exec, ask };
 }
 
-// helpers for offline parsing
+// helpers for parsing
 export const num = (text, re) => { const m = text.match(re); return m ? Number(m[1]) : null; };
 export const WORDNUM = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
 export const toNum = s => WORDNUM[s] ?? Number(s);

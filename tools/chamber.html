@@ -34,11 +34,16 @@
   <div class="big" id="cap2"></div>
 </div>
 
+<div class="key" id="key" aria-label="Key: what each colour means"></div>
+
 <div class="dock">
   $dock
   <span class="sep"></span>
-  <label class="chip trip" title="How loud the psychedelic layer is">trip <input id="trip" type="range" min="0" max="100" value="$trip"></label>
+  <button class="chip" id="tourBtn" aria-pressed="false" title="How to play (?)">? how to play</button>
+  <label class="chip trip" title="How strong the psychedelic background is. 0 shows only the math.">trip <input id="trip" type="range" min="0" max="100" value="$trip"></label>
   <button class="chip" id="soundBtn" aria-pressed="false">♪ sound</button>
+  <label class="chip vol" title="Volume">vol <input id="vol" type="range" min="0" max="100" value="70" aria-label="Volume"></label>
+  <button class="chip" id="whyBtn" aria-pressed="false" title="Why these notes?">why this sound</button>
   <button class="chip" id="guideBtn" aria-pressed="false" title="Ask the guide (g)">✦ ask</button>
   <button class="chip" id="notesBtn" aria-pressed="false" title="Notebook (n)">notebook</button>
 </div>
@@ -49,6 +54,22 @@ $notes
   <h3>Sources</h3>
   <ol class="sources" id="sources"></ol>
 </aside>
+
+<section class="tour" id="tour" hidden aria-live="polite" aria-label="How to play">
+  <div class="tour-top"><span class="tour-n" id="tourN"></span><button class="chip close" id="tourClose" aria-label="Close tutorial">✕</button></div>
+  <h2 id="tourT"></h2>
+  <p id="tourB"></p>
+  <p class="tour-see" id="tourSee"></p>
+  <div class="tour-go"><button class="chip" id="tourBack">← back</button><button class="chip primary" id="tourNext">next →</button></div>
+</section>
+
+<section class="whysound" id="whySound" hidden aria-label="Why this sound">
+  <div class="tour-top"><span class="tour-n">why this sound</span><button class="chip close" id="whyClose" aria-label="Close">✕</button></div>
+  <div id="whyText"></div>
+  <ol class="notes-log" id="notesLog" aria-live="off"><li class="dim">turn sound on to see each note as it plays</li></ol>
+</section>
+
+<script type="application/json" id="chamberData">$data</script>
 
 <div class="veil" id="veil">
   <div class="eyebrow">chamber $num · $short</div>

@@ -63,7 +63,11 @@ function draw(t) {
     for (let q = 0; q < 8; q++) { const a = q * Math.PI / 4 + t * 0.3; ctx.beginPath(); ctx.ellipse(p[0] + Math.cos(a) * petal, p[1] + Math.sin(a) * petal, petal, petal * 0.38, a, 0, 6.2832); ctx.stroke(); }
     ctx.restore();
     glowDot(ctx, p[0], p[1], k === 1 ? 6 : 3, c);
+    ctx.fillStyle = c; ctx.globalAlpha = i === shown - 1 ? 1 : 0.6; ctx.font = "11px 'IBM Plex Mono', monospace";   // each stop says its k
+    ctx.fillText(i === 0 ? `start k=${k}` : `k=${k}`, p[0] + 9, p[1] - 9); ctx.globalAlpha = 1;
   }
+  ctx.fillStyle = "rgba(239,230,214,.45)"; ctx.font = "11px 'IBM Plex Mono', monospace"; ctx.textAlign = "center";   // the rings measure digits of a
+  ctx.fillText("further out = more digits in a", cx, cy + R + 22); ctx.textAlign = "start";
   if (doneAt) {                                         // the closing bloom
     const e = Math.min(1, (performance.now() - doneAt) / 2500);
     ctx.save(); ctx.globalCompositeOperation = "lighter";
@@ -80,8 +84,9 @@ function frame(now) {
     if (shown < steps.length) {
       shown++; lastStepAt = now; readout();
       const k = Number(steps[shown - 1].k);
+      sound.why = `turn ${shown}: k = ${k}, so the pitch sits ${Math.round(Math.log2(Math.abs(k) + 1))} steps up (≈ log₂|k|)`;
       sound.pluck(degree(Math.min(9, Math.round(Math.log2(Math.abs(k) + 1)) + 2), SA * 2), 0.07);
-      if (k === 1) { doneAt = now; sound.bowl(); sound.bowl(SA * 3); }
+      if (k === 1) { doneAt = now; sound.why = `k = 1: x² − ${N}y² = 1 is solved`; sound.bowl(); sound.bowl(SA * 3); }
     } else if (doneAt && now - doneAt > 9000) {        // move on to the next famous N
       setN(FAMOUS[(FAMOUS.indexOf(N) + 1) % FAMOUS.length]);
     }

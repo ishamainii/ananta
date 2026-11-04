@@ -53,7 +53,7 @@ function setMove(i) {
   move = ((i % 3) + 3) % 3; moveAt = performance.now(); uniforms.uMode.value = move;
   document.querySelectorAll("#moves button").forEach((b, j) => b.setAttribute("aria-pressed", String(j === move)));
   $("cap2").innerHTML = `<span style="font-size:clamp(15px,2.2vw,24px);letter-spacing:.06em">${MOVES[move].line}</span>`;
-  $("cap1").textContent = MOVES[move].cap; sound.bowl(SA * (move + 2));
+  $("cap1").textContent = MOVES[move].cap; sound.why = `movement ${move + 1}: harmonic ${move + 2} of Sa`; sound.bowl(SA * (move + 2));
 }
 document.querySelectorAll("#moves button").forEach((b, j) => b.addEventListener("click", () => setMove(j)));
 
@@ -94,6 +94,7 @@ function drawKhahara(t, e) {
 }
 
 const t0 = performance.now();
+let count = 0;
 function frame(now) {
   const t = (now - t0) / 1000, e = Math.min(1, Math.max(0, (now - moveAt) / 14000));
   if (!reduce && now - moveAt > 18000) setMove(move + 1);
@@ -102,7 +103,12 @@ function frame(now) {
   stage.render(reduce ? 0 : t, sound.energy());
   stage.clear();
   if (move === 1) drawJaina(t, e); else if (move === 2) drawKhahara(t, e);
-  if (now - lastNote > 1600) { lastNote = now; sound.pluck(degree([0, 2, 3, 5, 7][Math.floor(Math.random() * 5)], SA * 2), 0.05); }
+  if (now - lastNote > 1600) {                 // I: Sa in a random octave (the same whole at every scale)
+    lastNote = now; count++;                     // II: count up the scale, ten notes per ring    III: one note that never changes
+    if (move === 0) { const o = Math.floor(Math.random() * 3); sound.why = `always Sa, octave ${o + 1}: the same whole at a different scale`; sound.pluck(SA * 2 ** (o + 1), 0.05); }
+    else if (move === 1) { sound.why = `counting: ${count % 10} of 10, then the next ring is ×10`; sound.pluck(degree(count % 10, SA * 2), 0.05); }
+    else { sound.why = "khahara: add or take away, it stays the same note"; sound.pluck(SA * 3, 0.05); }
+  }
   requestAnimationFrame(frame);
 }
 

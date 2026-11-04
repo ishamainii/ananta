@@ -86,8 +86,9 @@ function frame(now) {
   if (phase === "hold" && !reduce && now - phaseAt > HOLD_MS) { cycle++ % 2 ? nudge() : scramble(); }
   if (phase === "solve" && now - lastStep > STEP_MS) {
     lastStep = now; x = newtonStep(x); iter++; const R = norm(residuals(x)); hist.push(R); readout();
+    sound.why = `Newton step ${iter}: error ${R.toExponential(1)}, ${Math.max(0, Math.round(-Math.log10(R)))} digits exact → higher note`;
     sound.pluck(degree(Math.min(9, Math.max(0, Math.round(-Math.log10(R) / 1.6))), SA * 2), 0.07);
-    if (R < 1e-12 || iter > 25) { phase = "hold"; phaseAt = now; sound.bowl(); readout(); }
+    if (R < 1e-12 || iter > 25) { phase = "hold"; phaseAt = now; sound.why = "all eleven triple points exact"; sound.bowl(); readout(); }
   }
   for (let i = 0; i < x.length; i++) shown[i] += (x[i] - shown[i]) * 0.12;   // glide between Newton iterates
   stage.psyche.setFold(phase === "hold" ? 16 : 9);

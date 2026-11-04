@@ -17,5 +17,9 @@ for page in sorted((ROOT / "chambers").glob("*/page.json")):
     spec = json.loads(page.read_text(encoding="utf-8"))
     spec["notes"] = (d / "notes.html").read_text(encoding="utf-8")
     spec.setdefault("dock", "")
+    # tutorial, colour key, sound mapping and guide answers travel to the page as JSON
+    data = {k: spec.get(k, []) for k in ("tutorial", "legend", "faq")}
+    data.update(slug=d.name, num=spec["num"], sound=spec.get("sound", ""))
+    spec["data"] = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
     (d / "index.html").write_text(TEMPLATE.substitute(spec), encoding="utf-8")
     print("built", d.relative_to(ROOT) / "index.html")

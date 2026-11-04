@@ -92,8 +92,10 @@ function frame(now) {
   if (playing && now - lastTermAt > TERM_MS) {
     lastTermAt = now; terms = terms >= maxTerms ? 1 : terms + 1;
     const d = goodDigits(estimate(terms, order));
-    sound.pluck(degree(Math.min(9, 2 + Math.floor(terms / 8)), SA * 2) * (terms % 2 ? 1 : 1.5), 0.05);
-    if (terms > 1 && d > goodDigits(estimate(terms - 1, order))) sound.bowl(SA * 4);
+    // plus terms play the base note, minus terms three steps higher in the raag (Sa→Pa is × 3/2), so every note stays in Bhupali
+    sound.why = `term ${terms}: ${terms % 2 ? "+" : "−"}1/${2 * terms - 1}${terms % 2 ? "" : ", a minus term, so three notes higher in the raag"}`;
+    sound.pluck(degree(Math.min(9, 2 + Math.floor(terms / 8)) + (terms % 2 ? 0 : 3), SA * 2), 0.05);
+    if (terms > 1 && d > goodDigits(estimate(terms - 1, order))) { sound.why = `π gained a correct digit: ${Math.max(0, d - 2)} now`; sound.bowl(SA * 4); }
     readout();
   }
   if (autoTwist && view === "chain") {          // breathe away from 180° and come back, so the spiral blooms and folds
