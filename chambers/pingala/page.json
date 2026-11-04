@@ -1,0 +1,12 @@
+{
+ "num": "01",
+ "short": "chandas",
+ "name": "Chandas",
+ "deva": "छन्दः",
+ "sub": "meters as a hypercube",
+ "description": "Pingala's poetic meters as the corners of a cube in 3 to 7 dimensions, turning through hidden dimensions.",
+ "aria": "A cube of light in higher dimensions whose corners are Pingala's meters",
+ "intro": "Every poetic meter Pingala counted is a corner of a cube in higher dimensions. Here is that cube, turning through the fourth dimension.",
+ "dock": "<div id=\"dims\" style=\"display:flex;gap:6px\"></div>",
+ "trip": "55"
+}

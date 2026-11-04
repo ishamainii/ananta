@@ -1,0 +1,145 @@
+{
+ "_note": "Every entry was checked against a publisher, journal, or library record. 'url' points to that record. Fields left out were not confirmed.",
+ "general": [
+  {
+   "id": "plofker2009",
+   "cite": "Plofker, K. (2009). Mathematics in India: 500 BCE–1800 CE. Princeton University Press.",
+   "url": "https://en.wikipedia.org/wiki/Mathematics_in_India_(book)",
+   "why": "The standard scholarly survey of the field."
+  },
+  {
+   "id": "joseph2011",
+   "cite": "Joseph, G. G. (2011). The Crest of the Peacock: Non-European Roots of Mathematics (3rd ed.). Princeton University Press. ISBN 9780691135267.",
+   "url": "https://press.princeton.edu/books/paperback/9780691135267/the-crest-of-the-peacock",
+   "why": "Widely cited history of non-European mathematics, with chapters on India and the Jaina school."
+  },
+  {
+   "id": "colebrooke1817",
+   "cite": "Colebrooke, H. T. (trans.) (1817). Algebra, with Arithmetic and Mensuration, from the Sanscrit of Brahmegupta and Bháscara. London: John Murray.",
+   "url": "https://zenodo.org/records/7882650",
+   "why": "The first English translation of Brahmagupta's and Bhāskara II's arithmetic and algebra."
+  }
+ ],
+ "pingala": [
+  {
+   "id": "vannooten1993",
+   "cite": "van Nooten, B. (1993). Binary numbers in Indian antiquity. Journal of Indian Philosophy, 21, 31–50.",
+   "url": "https://arxiv.org/abs/math/0703658",
+   "why": "The classic study of Pingala's binary enumeration of meters. (Link: Kulkarni's paper, which cites it.)"
+  },
+  {
+   "id": "kulkarni2008",
+   "cite": "Kulkarni, A. (2008). Recursion and Combinatorial Mathematics in Chandashastra. arXiv:math/0703658.",
+   "url": "https://arxiv.org/abs/math/0703658",
+   "why": "Reads Pingala's sutras 8.20–8.35 (prastara, nashta, uddishta, meru) as recursive algorithms."
+  },
+  {
+   "id": "singh1985",
+   "cite": "Singh, P. (1985). The so-called Fibonacci numbers in ancient and medieval India. Historia Mathematica, 12, 229–244.",
+   "url": "https://courses.cs.cornell.edu/cs2110/2017fa/L25-Fibonacci/Singh-so-called-Fibs.pdf",
+   "why": "Traces the mātrā-meter counts 1, 2, 3, 5, 8, … through Virahāṅka, Gopāla, Hemacandra and Nārāyaṇa."
+  },
+  {
+   "id": "halayudha",
+   "cite": "Halāyudha (10th c.). Mṛtasañjīvanī, commentary on Pingala's Chandaḥśāstra. Dating per Winternitz, History of Indian Literature, vol. III.",
+   "url": "https://en.wikipedia.org/wiki/Halayudha",
+   "why": "The commentary that makes the meru-prastāra (Pascal's triangle) explicit."
+  }
+ ],
+ "madhava": [
+  {
+   "id": "rajagopal1978",
+   "cite": "Rajagopal, C. T., & Rangachari, M. S. (1978). On an untapped source of medieval Keralese mathematics. Archive for History of Exact Sciences, 18(2), 89–102. doi:10.1007/BF00348142",
+   "url": "https://doi.org/10.1007/BF00348142",
+   "why": "Landmark paper bringing the Kerala series for π and arctan to modern attention."
+  },
+  {
+   "id": "roy1990",
+   "cite": "Roy, R. (1990). The discovery of the series formula for π by Leibniz, Gregory and Nilakantha. Mathematics Magazine, 63, 291–306.",
+   "url": "https://maa.org/node/113628",
+   "why": "Prize-winning comparison of the European and Kerala derivations."
+  },
+  {
+   "id": "gyb2008",
+   "cite": "Sarma, K. V., Ramasubramanian, K., Srinivas, M. D., & Sriram, M. S. (2008). Gaṇita-Yukti-Bhāṣā (Rationales in Mathematical Astronomy) of Jyeṣṭhadeva, Vols. I–II. Springer. ISBN 978-1-84882-072-2.",
+   "url": "https://link.springer.com/book/9781848820722",
+   "why": "Critical edition and translation of the Malayalam text that gives the proofs."
+  },
+  {
+   "id": "ramasubramanian2023",
+   "cite": "Ramasubramanian, K. (2023). The history and historiography of the discovery of calculus in India. Proceedings of the ICM 2022, EMS Press, 5784–5812. doi:10.4171/ICM2022/77",
+   "url": "https://doi.org/10.4171/icm2022/77",
+   "why": "Invited survey at the International Congress of Mathematicians."
+  }
+ ],
+ "chakravala": [
+  {
+   "id": "selenius1975",
+   "cite": "Selenius, C.-O. (1975). Rationale of the chakravāla process of Jayadeva and Bhāskara II. Historia Mathematica, 2, 167–184.",
+   "url": "https://www.ms.uky.edu/~sohum/ma330/files/Rationale-of-the-chakrav-la-process-of-Jayadeva-and-Bh-skara-II_1975_Historia-Mathematica.pdf",
+   "why": "Shows the method is a minimal-length, best-approximation continued-fraction algorithm; for N = 61 it needs a handful of steps where the European route needs about 22 convergents."
+  }
+ ],
+ "ramanujan": [
+  {
+   "id": "hardyramanujan1918",
+   "cite": "Hardy, G. H., & Ramanujan, S. (1918). Asymptotic formulae in combinatory analysis. Proceedings of the London Mathematical Society (2), 17, 75–115.",
+   "url": "https://ramanujan.sirinudi.org/Volumes/published/ram36.html",
+   "why": "The paper that founded the circle method and gave the asymptotic formula for p(n)."
+  },
+  {
+   "id": "andrewsberndt2005",
+   "cite": "Andrews, G. E., & Berndt, B. C. (2005). Ramanujan's Lost Notebook, Part I. Springer.",
+   "url": "https://link.springer.com/book/9780387255293",
+   "why": "The definitive edition of the lost notebook, with proofs."
+  }
+ ],
+ "sriyantra": [
+  {
+   "id": "kulaichev1984",
+   "cite": "Kulaichev, A. P. (1984). Sriyantra and its mathematical properties. Indian Journal of History of Science, 19(3).",
+   "url": "https://insa.ndl.gov.in/items/d4c61eeb-00b9-435f-acaf-62db328a5870/full",
+   "why": "Treats the construction as a system of geometric conditions and studies when exact concurrency is possible."
+  },
+  {
+   "id": "tahta1992",
+   "cite": "Tahta, D. (1992). On the geometry of the sriyantra. The Mathematical Gazette, 76(475), 49–60. doi:10.2307/3620377",
+   "url": "https://doi.org/10.2307/3620377",
+   "why": "Examines the yantra's geometric structure and the claims made about it."
+  }
+ ],
+ "infinity": [
+  {
+   "id": "sathaye2015",
+   "cite": "Sathaye, A. (2015). Bhāskarācārya's treatment of the concept of infinity. Gaṇita Bhāratī, 37(1–2), 55–67.",
+   "url": "https://www.ms.uky.edu/~sohum/ma330/files/bhaskara_infinity.pdf",
+   "why": "On khahara (a quantity divided by zero) in the Bījagaṇita, including verse 2.20: adding or subtracting does not change it."
+  },
+  {
+   "id": "gupta1992",
+   "cite": "Gupta, R. C. (1992). The first unenumerable number in Jaina mathematics. Gaṇita Bhāratī, 14(1–4), 11–24.",
+   "url": "https://mathshistory.st-andrews.ac.uk/HistTopics/Jaina_mathematics/",
+   "why": "On the Anuyogadvāra Sūtra's construction of the first 'innumerable' number. (Link: MacTutor overview citing it.)"
+  },
+  {
+   "id": "mactutorjaina",
+   "cite": "O'Connor, J. J., & Robertson, E. F. (2000). Jaina mathematics. MacTutor History of Mathematics, University of St Andrews.",
+   "url": "https://mathshistory.st-andrews.ac.uk/HistTopics/Jaina_mathematics/",
+   "why": "Overview of the enumerable / innumerable / infinite classes and the five kinds of infinity."
+  },
+  {
+   "id": "brihad511",
+   "cite": "Bṛhadāraṇyaka Upaniṣad 5.1.1 (pūrṇam adaḥ pūrṇam idam …). Commentary: Swami Krishnananda, The Brihadaranyaka Upanishad.",
+   "url": "https://www.swami-krishnananda.org/upanishad/upan_12.html",
+   "why": "The verse of fullness: from the full, the full is taken, and the full remains."
+  }
+ ],
+ "optimisation": [
+  {
+   "id": "ramasubramanian2010",
+   "cite": "Ramasubramanian, K., & Srinivas, M. D. (2010). Development of calculus in India. In Studies in the History of Indian Mathematics. Hindustan Book Agency. doi:10.1007/978-93-86279-49-1_8",
+   "url": "https://doi.org/10.1007/978-93-86279-49-1_8",
+   "why": "Discusses Bhāskara II's instantaneous motion and the vanishing of the velocity correction where the equation of centre is extremal (Siddhānta-śiromaṇi)."
+  }
+ ]
+}

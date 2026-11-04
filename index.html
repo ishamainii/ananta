@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="site-root" content="./">
+<title>Isha Maini · Ananta</title>
+<meta name="description" content="Isha Maini: astrophysics research with IllustrisTNG, and Ananta, interactive visualizations of Indian mathematics in higher dimensions.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/home.css">
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+</head>
+<body class="home">
+<canvas id="sky" class="sky" aria-hidden="true"></canvas>
+
+<header class="topbar">
+  <a class="mark" href="./"><b lang="sa">अनन्त</b><span>ANANTA</span></a>
+  <nav class="crumbs"><a href="#chambers">chambers</a><a href="#research">research</a><a href="#next">next</a><a href="#log">lab log</a><a href="#about">about</a></nav>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="kicker mono">isha maini · emory university · physics &amp; data science</p>
+    <h1>I simulate galaxies, and I turn old Indian mathematics into things you can walk around inside.</h1>
+    <p class="lede">Ananta (<span lang="sa">अनन्त</span>, "without end") is a series of interactive chambers. Each one takes a result from Indian mathematics, writes the math as tested code, and renders it as light and sound. Every claim links to the paper it comes from.</p>
+    <div class="hero-cta"><a class="chip primary" href="chambers/pingala/">enter chamber 01 →</a><a class="chip" href="#research">my astrophysics research</a></div>
+  </section>
+
+
+
+  <section id="chambers" class="block">
+    <header class="block-head"><h2>Chambers</h2><p class="mono dim">7 live · each with tested math, sound and sources · press ✦ ask inside any chamber</p></header>
+    <ol class="chambers" id="chamberList"></ol>
+  </section>
+
+
+
+  <section id="research" class="block">
+    <header class="block-head"><h2>Research</h2><p class="mono dim">emory university · jul 2025 – now</p></header>
+    <a class="research-card" href="research/illustristng/">
+      <div class="rc-text">
+        <p class="mono dim">astrophysics · simulation-based inference</p>
+        <h3>Forward-modeling IllustrisTNG galaxies into mock MaNGA observations</h3>
+        <p>I turn simulated galaxies into synthetic integral-field spectroscopy that looks like what the MaNGA survey measures, then run it through GIST, the same analysis pipeline used on real data. Along the way I profiled the pipeline, found why it couldn't scale, and built an LLM assistant that reads our real outputs.</p>
+        <p class="mono stat-row"><span>13.1 min → main step on 6 CPUs</span><span>381 tasks, each loading its own data copy</span><span>75% fewer full runs per sweep</span></p>
+      </div>
+      <span class="rc-go mono">read →</span>
+    </a>
+  </section>
+
+  <section id="next" class="block">
+    <header class="block-head"><h2>Next</h2><p class="mono dim">planned, in roughly this order</p></header>
+    <ol class="chambers next-list">
+      <li class="chamber"><div class="inner"><span class="num"><span>08</span><span class="status">○ planned</span></span><span class="deva" lang="sa">कुट्टक</span><h3>Kuṭṭaka · the pulverizer</h3><p>Āryabhaṭa's algorithm for ax + by = c as a lattice walk that grinds coefficients down, with Euclid running alongside for comparison.</p><span class="who">Āryabhaṭa, 499 CE</span></div></li>
+      <li class="chamber"><div class="inner"><span class="num"><span>09</span><span class="status">○ planned</span></span><span class="deva" lang="sa">भद्रगणित</span><h3>Bhadragaṇita · magic squares</h3><p>Nārāyaṇa Paṇḍita's methods for building magic squares, shown as a search space a solver can explore.</p><span class="who">Nārāyaṇa Paṇḍita, 1356</span></div></li>
+      <li class="chamber"><div class="inner"><span class="num"><span>10</span><span class="status">○ planned</span></span><span class="deva" lang="sa">ज्या</span><h3>Jyā · the sine table</h3><p>Āryabhaṭa's 24 sine differences and the Kerala sine series, compared as interpolation and approximation problems.</p><span class="who">Āryabhaṭa · Mādhava</span></div></li>
+      <li class="chamber"><div class="inner"><span class="num"><span>R2</span><span class="status">○ research</span></span><span class="deva">✦</span><h3>Learning galaxy kinematics from mock IFU cubes</h3><p>Use the TNG → MaNGA pipeline to generate a labelled set of mock cubes, then train a model to recover σ* and viewing angle, and test it on real MaNGA.</p><span class="who">extends my Emory research</span></div></li>
+      <li class="chamber"><div class="inner"><span class="num"><span>R3</span><span class="status">○ research</span></span><span class="deva">✦</span><h3>Galaxies in n dimensions</h3><p>Embed TNG galaxies by their properties (mass, age, metallicity, kinematics) and fly through the high-dimensional space with the Ananta engine.</p><span class="who">where the two halves of this site meet</span></div></li>
+    </ol>
+  </section>
+
+  <section id="log" class="block">
+    <header class="block-head"><h2>Lab log</h2><p class="mono dim">what changed, newest first</p></header>
+    <ol class="log mono">
+      <li><time>2026-11-02</time> chambers 02–07 live: Mādhava, Chakravāla, Ramanujan, Śrī Yantra, Tātkālika, Pūrṇa. Each math core is tested in python and node before it's drawn.</li>
+      <li><time>2026-11-02</time> the guide: type a request in any chamber and the scene changes; LLM mode through a Cloudflare Worker proxy, offline command parsing otherwise.</li>
+      <li><time>2026-11-02</time> chamber 01 rebuilt in WebGL: real 3D, bloom, plane-by-plane turns through hidden axes, psychedelic backdrop whose symmetry follows the dimension.</li>
+      <li><time>2026-11-02</time> bibliography assembled and checked against journal and publisher records (data/sources.json).</li>
+      <li><time>2026-11-02</time> n-cube engine in Python: vertices from meters, edges by XOR, Meru Prastara face counts, n-D rotations, perspective projection. 82 tests passing.</li>
+    </ol>
+  </section>
+
+  <section id="about" class="block about">
+    <header class="block-head"><h2>About</h2></header>
+    <p>I'm Isha, a student at Emory working at the intersection of astrophysics, data science and visual math. This project started from a question: what would Pingala's binary meters or Mādhava's infinite series look like if you could stand inside them?</p>
+    <p class="mono dim">code: <a href="https://github.com/ishamainii/ananta">github.com/ishamainii/ananta</a> · stack: python (numpy, pytest), three.js, glsl, web audio</p>
+  </section>
+</main>
+
+<footer class="foot mono dim">ananta · v0.3 · made by isha maini · sources in every chamber's notebook</footer>
+
+<script type="module" src="js/home.js"></script>
+</body>
+</html>

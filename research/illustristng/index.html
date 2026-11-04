@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IllustrisTNG → MaNGA · Isha Maini</title>
+<meta name="description" content="Forward-modeling IllustrisTNG galaxies into mock MaNGA integral-field observations: pipeline profiling, scaling limits, and an LLM research assistant.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&family=Tiro+Devanagari+Sanskrit&display=swap">
+<link rel="stylesheet" href="../../css/site.css">
+<link rel="stylesheet" href="../../css/home.css">
+<style>
+  .paper { max-width: 760px; margin: 0 auto; padding: 110px var(--gutter) 60px; position: relative; z-index: 1; }
+  .paper h1 { font-weight: 300; font-size: clamp(28px, 4vw, 42px); line-height: 1.15; margin: 8px 0 14px; text-wrap: balance; }
+  .paper h2 { font-weight: 400; font-size: 22px; margin: 44px 0 10px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+  .paper p, .paper li { color: var(--ink); max-width: 68ch; }
+  .numbers { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 18px 0; }
+  .numbers div { border: 1px solid var(--rule); border-radius: 12px; padding: 14px; background: rgba(10, 8, 24, 0.6); }
+  .numbers b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: 26px; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .numbers span { font-size: 13px; color: var(--ink-dim); }
+  .flow { overflow-x: auto; margin: 18px 0; }
+  .flow svg { min-width: 640px; width: 100%; height: auto; display: block; }
+  .bg-quiet { position: fixed; inset: 0; background: radial-gradient(ellipse at 70% 0%, rgba(176, 140, 255, 0.12), transparent 60%), radial-gradient(ellipse at 10% 100%, rgba(255, 154, 74, 0.1), transparent 55%), var(--night); z-index: 0; }
+</style>
+</head>
+<body>
+<div class="bg-quiet" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="mark" href="../../"><b lang="sa">अनन्त</b><span>ISHA MAINI</span></a>
+  <nav class="crumbs"><a href="../../#research">research</a><a aria-current="page">illustristng → manga</a></nav>
+</header>
+
+<article class="paper">
+  <p class="kicker mono">undergraduate research · emory university · jul 2025 – present</p>
+  <h1>Forward-modeling IllustrisTNG galaxies into mock MaNGA observations</h1>
+  <p>Simulations and surveys speak different languages. IllustrisTNG gives you particles: stellar positions, ages, metallicities. MaNGA gives you spectra on a hexagonal bundle of fibers. To compare them fairly, I convert simulated galaxies into synthetic integral-field data cubes that look like MaNGA observations, then analyze them with GIST, the same pipeline used on real data. The science goal is to test how viewing angle affects the M<sub>BH</sub>–σ<sub>*</sub> relation in AGN-hosting galaxies.</p>
+
+  <h2>The pipeline</h2>
+  <div class="flow">
+    <svg viewBox="0 0 720 120" role="img" aria-label="Pipeline: TNG particles, mock IFU spectra, regrid to the fiber bundle, data cube, GIST analysis">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ffd27a"/></marker></defs>
+      <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#efe6d6" text-anchor="middle">
+        <g fill="none" stroke="rgba(255,210,122,.45)">
+          <rect x="6" y="30" width="120" height="58" rx="10"/><rect x="152" y="30" width="130" height="58" rx="10" stroke="#ff9a4a"/>
+          <rect x="308" y="30" width="120" height="58" rx="10"/><rect x="454" y="30" width="110" height="58" rx="10"/><rect x="590" y="30" width="124" height="58" rx="10"/>
+        </g>
+        <text x="66" y="55">TNG particles</text><text x="66" y="73" fill="rgba(239,230,214,.6)">snapshot, subhalo</text>
+        <text x="217" y="55">mock spectra</text><text x="217" y="73" fill="#ff9a4a">13.1 min · bottleneck</text>
+        <text x="368" y="55">regrid</text><text x="368" y="73" fill="rgba(239,230,214,.6)">fib_n, re_kpc</text>
+        <text x="509" y="55">data cube</text><text x="509" y="73" fill="rgba(239,230,214,.6)">fov, noise</text>
+        <text x="652" y="55">GIST</text><text x="652" y="73" fill="rgba(239,230,214,.6)">kinematics, σ*</text>
+        <g stroke="#ffd27a" marker-end="url(#ar)"><line x1="126" y1="59" x2="150" y2="59"/><line x1="282" y1="59" x2="306" y2="59"/><line x1="428" y1="59" x2="452" y2="59"/><line x1="564" y1="59" x2="588" y2="59"/></g>
+      </g>
+    </svg>
+  </div>
+  <p>Phase one was a controlled parameter study. I held the fiber bundle fixed (fib_n = 7) and varied the field of view and the galaxy's physical scale (re_kpc), comparing edge-on and face-on views, to see what each choice changes in what GIST can recover.</p>
+
+  <h2>Why it couldn't scale</h2>
+  <div class="numbers">
+    <div><b>13.1 min</b><span>main spectral step, on 6 CPUs</span></div>
+    <div><b>6.3 / 10 GB</b><span>memory used, against the cap</span></div>
+    <div><b>381</b><span>parallel tasks, each loading its own copy of the particle data</span></div>
+    <div><b>2 + 6</b><span>runs for a 2×4 sweep, instead of 8 full runs</span></div>
+  </div>
+  <p>I timed each stage. The spectral step dominated, and because every one of its 381 parallel tasks loaded its own copy of the particle data, adding cores would have run out of memory before it ran faster. Reading the code turned up two more things:</p>
+  <ul>
+    <li><b>re_kpc only affects the final regrid.</b> So a 2×4 parameter sweep needs 2 full runs plus 6 short regrids, not 8 full runs. That's 75% fewer full runs.</li>
+    <li><b>Cached intermediate files didn't record their settings.</b> A stale file could be silently reused for the wrong configuration.</li>
+  </ul>
+
+  <h2>An LLM assistant that reads the real outputs</h2>
+  <p>To stop wasting runs, I wrote a small tool-using LLM assistant in Python. It has five tools that read our actual output files: it lists available results, summarizes timing logs, plans parameter sweeps using the reuse rule above, and checks data cubes for the zero, negative or NaN noise values that make GIST fail partway through a run. It's connected to our live outputs, so a bad cube gets flagged in seconds instead of after a failed run.</p>
+
+  <h2>What's next</h2>
+  <ul>
+    <li>Share particle data across workers to lift the memory ceiling, then measure speedup at 6, 12 and 24 workers.</li>
+    <li>A LangChain-based version of the assistant (in progress).</li>
+    <li>Scale from one galaxy to a sample of subhalos spread in stellar mass.</li>
+  </ul>
+  <p class="mono dim" style="margin-top:40px">tools: python · illustristng api / jupyterlab · gist · anthropic api (tool use)</p>
+</article>
+</body>
+</html>

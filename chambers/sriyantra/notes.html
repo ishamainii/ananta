@@ -1,0 +1,28 @@
+  <h2>05 · श्रीयन्त्र · an optimisation problem</h2>
+  <p class="dim">classical yantra · Kulaichev, Indian J. History of Science (1984) · Tahta, Mathematical Gazette (1992)</p>
+
+  <h3>Setting it up</h3>
+  <p>Nine triangles, symmetric about a vertical axis, inside a unit circle: four point up (Śiva) and five point down (Śakti). Triangle i has a horizontal side at height bᵢ, half-width wᵢ and an apex on the axis at aᵢ. I read the structure off a published reference drawing and checked it numerically:</p>
+  <ul>
+    <li>the two outer triangles have apexes and base corners on the circle (w = √(1 − b²));</li>
+    <li>each of the other seven apexes sits exactly on another triangle's base line;</li>
+    <li>eleven points (per half) are triple concurrencies, where three lines pass through one point.</li>
+  </ul>
+  <p>That leaves 9 heights + 7 widths = <b>16 unknowns</b> and <b>11 equations</b>. The Jacobian has full rank 11, so the yantra is a <b>5-parameter family</b>: fix five heights and the rest is determined. That's why hand construction is so fiddly, and why Kulaichev treats it as a system of conditions [kulaichev1984].</p>
+
+  <h3>Concurrency as an equation</h3>
+  <p>Write each line as normalised (A, B, C) with Ax + By + C = 0. Three lines meet in a point exactly when</p>
+  <div class="eq">$$\det\begin{pmatrix}A_1&amp;B_1&amp;C_1\\A_2&amp;B_2&amp;C_2\\A_3&amp;B_3&amp;C_3\end{pmatrix} = 0.$$</div>
+  <p>That's smooth in the unknowns, so it suits Newton's method.</p>
+
+  <h3>Solving it</h3>
+  <p>Hold the five free heights fixed, and take Newton steps on the other eleven unknowns with a finite-difference Jacobian. A backtracking line search halves the step if it would make the residual worse. Converging from a scrambled start takes a handful of iterations. Quadratic convergence shows up as the residual curve falling off a cliff, and each marked point turns green when its determinant drops below 10⁻⁹.</p>
+<pre><code>const J = jacobian(x)[:, free];           // 11 × 11
+const dx = solve(J, -residuals(x));
+let λ = 1; while (‖r(x + λ·dx)‖ ≥ ‖r(x)‖) λ /= 2;
+x = x + λ·dx;</code></pre>
+  <p>Tests (python + node): the reference yantra satisfies all eleven conditions to 3×10⁻¹⁶; Newton recovers it from a perturbed start; and moving a free height gives a different, still exact, yantra.</p>
+
+  <h3>Honest caveats</h3>
+  <p>Traditional yantras vary, and Tahta (1992) looks critically at some of the claims made about the yantra's geometry [tahta1992]. What's drawn here is one well-defined mathematical idealisation, not the only "correct" yantra.</p>
+  <p class="stamp">try the guide: "scramble it" · "show another yantra"</p>

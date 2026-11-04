@@ -1,0 +1,9 @@
+{
+ "num": "07", "short": "pūrṇa", "name": "Pūrṇa", "deva": "पूर्ण",
+ "sub": "three ways to hold the infinite",
+ "description": "The Upaniṣadic whole, the Jaina ladder of enumerable, innumerable and infinite, and Bhāskara II's khahara.",
+ "aria": "An endless spiral zoom into a mandala that contains itself",
+ "intro": "Long before set theory, Indian thinkers argued about the infinite: a whole that stays whole when you remove the whole, numbers too large to count, and what you get when you divide by zero.",
+ "dock": "<div id=\"moves\" style=\"display:flex;gap:6px\"><button class=\"chip\" aria-pressed=\"true\">I · pūrṇa</button><button class=\"chip\" aria-pressed=\"false\">II · jaina</button><button class=\"chip\" aria-pressed=\"false\">III · khahara</button></div>",
+ "trip": "65"
+}

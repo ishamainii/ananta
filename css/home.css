@@ -1,0 +1,52 @@
+/* home.css — the landing page: shader sky behind a single readable column. */
+body.home { overflow-x: hidden; }
+.sky { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+main, .foot { position: relative; z-index: 1; }
+main { max-width: 1040px; margin: 0 auto; padding: 0 var(--gutter); }
+
+.hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; gap: 18px; padding-top: 90px; max-width: 760px; }
+.kicker { color: var(--saffron); letter-spacing: 0.08em; font-size: 12.5px; margin: 0; }
+.hero h1 { margin: 0; font-family: var(--f-sans); font-weight: 300; font-size: clamp(30px, 4.6vw, 52px); line-height: 1.12; letter-spacing: -0.01em; text-wrap: balance; }
+.lede { margin: 0; font-size: 18px; color: var(--ink-dim); max-width: 60ch; }
+.hero-cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.hero-cta .chip { text-decoration: none; height: 42px; padding: 0 18px; }
+.chip.primary { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 22px rgba(255, 180, 80, 0.25); }
+
+.block { padding: 72px 0 24px; }
+.block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--rule); padding-bottom: 10px; margin-bottom: 22px; }
+.block-head h2 { margin: 0; font-weight: 400; font-size: 28px; }
+.dim { color: var(--ink-dim); }
+
+.chambers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 14px; }
+.chamber { position: relative; border: 1px solid var(--rule); border-radius: 14px; background: rgba(10, 8, 24, 0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); overflow: hidden; }
+.chamber a, .chamber .inner { display: flex; flex-direction: column; gap: 6px; padding: 18px 18px 16px; color: var(--ink); text-decoration: none; min-height: 100%; }
+.chamber a:hover { background: rgba(255, 210, 122, 0.06); }
+.chamber .num { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-faint); display: flex; justify-content: space-between; }
+.chamber .status { color: var(--ink-dim); }
+.chamber.live .status { color: var(--gold); }
+.chamber .deva { font-family: var(--f-deva); font-size: 30px; line-height: 1.2; color: var(--gold); }
+.chamber:not(.live) .deva { color: rgba(255, 210, 122, 0.55); }
+.chamber h3 { margin: 0; font-size: 17px; font-weight: 600; }
+.chamber p { margin: 0; font-size: 14px; color: var(--ink-dim); }
+.chamber .who { font-family: var(--f-mono); font-size: 11.5px; color: var(--saffron); margin-top: 4px; }
+
+.research-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: end; padding: 24px; border: 1px solid var(--rule); border-radius: 16px;
+  background: rgba(10, 8, 24, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: var(--ink); text-decoration: none; }
+.research-card:hover { border-color: var(--gold); }
+.research-card h3 { margin: 4px 0 8px; font-size: 22px; font-weight: 400; }
+.research-card p { margin: 0 0 8px; max-width: 70ch; }
+.stat-row { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--gold); margin-top: 10px !important; }
+.rc-go { color: var(--gold); }
+
+.log { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 13px; }
+.log time { color: var(--saffron); margin-right: 12px; }
+.about p { max-width: 64ch; }
+.foot { text-align: center; padding: 60px var(--gutter) 40px; font-size: 12px; }
+@media (max-width: 560px) { .research-card { grid-template-columns: 1fr; } }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.stats div { display: flex; flex-direction: column; gap: 6px; padding: 18px; border: 1px solid var(--rule); border-radius: 14px; background: rgba(10, 8, 24, 0.6);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.stats b { font-family: var(--f-mono); font-weight: 500; font-size: 30px; color: var(--gold); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.stats span { font-size: 14px; color: var(--ink); }
+.stats em { font-style: normal; font-family: var(--f-mono); font-size: 11.5px; color: var(--saffron); }

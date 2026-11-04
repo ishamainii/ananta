@@ -1,0 +1,25 @@
+  <h2>03 · चक्रवाल · the wheel</h2>
+  <p class="dim">Brahmagupta (628) → Jayadeva (11th c.) → Bhāskara II, Bījagaṇita (1150)</p>
+
+  <h3>The problem</h3>
+  <p>Find whole numbers x, y with x² − N·y² = 1 (a "vargaprakṛti" problem; Europe later named it after Pell). For N = 61 the smallest solution is</p>
+  <div class="eq">$$1\,766\,319\,049^2 - 61\cdot 226\,153\,980^2 = 1,$$</div>
+  <p>the case Fermat famously posed as a challenge in 1657, about five centuries after Bhāskara II had solved it [selenius1975].</p>
+
+  <h3>One turn of the wheel</h3>
+  <p>Keep a triple (a, b, k) with a² − N·b² = k. Pick m &gt; 0 so that k divides a + b·m and m² is as close to N as possible. Then</p>
+  <div class="eq">$$a' = \frac{am + Nb}{|k|},\quad b' = \frac{a + bm}{|k|},\quad k' = \frac{m^2 - N}{k}.$$</div>
+  <p>The invariant a'² − N·b'² = k' holds after every turn. That's Brahmagupta's composition rule (bhāvanā), divided through by k². Choosing m near √N keeps |k| small, and the cycle always returns to k = 1. My tests check the invariant at every step for ten values of N, and that N = 61 lands exactly on Bhāskara's numbers.</p>
+<pre><code>while (k !== 1n) {
+  const K = |k|;  let m0 = 1n;
+  while ((a + b*m0) % K !== 0n) m0++;         // k | a + b·m
+  m = the m ≡ m0 (mod K) with |m² − N| smallest;
+  [a, b, k] = [(a*m + N*b)/K, (a + b*m)/K, (m*m − N)/k];
+}</code></pre>
+
+  <h3>Why it's remarkable</h3>
+  <p>Selenius (1975) showed the chakravāla is a best-approximation continued-fraction process of minimal length. For N = 61 he counts five or six steps with Bhāskara's shortcuts against about 22 convergents in the Euler–Lagrange approach [selenius1975]. The plain version drawn here takes 13 turns. Each a/b is a rational approximation of √N, and the readout shows the digits locking in.</p>
+
+  <h3>Reading the picture</h3>
+  <p>Each spoke is one turn. Its distance from the centre is the number of digits in a, and the size of its petal is |k|. The wheel closes, and the bowl rings, when k reaches 1.</p>
+  <p class="stamp">try the guide: "solve N = 991" (x has 30 digits)</p>
