@@ -8,7 +8,7 @@
  "aria": "The Sri Yantra drawn in light, with its triple intersection points solved live",
  "intro": "Nine triangles must interlock so that, again and again, three lines pass through one point. Drawing it by hand is famously hard. Here it's an optimisation problem, solved in front of you.",
  "dock": "<button class=\"chip\" id=\"scrambleBtn\">scramble</button><button class=\"chip\" id=\"nudgeBtn\">another yantra</button>",
- "trip": "40",
+ "glow": "40",
  "legend": [
   [
    "#ffcf6b",
@@ -153,14 +153,15 @@
   },
   {
    "k": [
+    "glow",
     "trip",
     "background",
     "psychedelic",
-    "haze",
+    "light",
     "kaleidoscope"
    ],
    "q": "what is the background?",
-   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'trip 0' to switch it off and see only the math."
+   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'glow 0' to switch it off and see only the math."
   },
   {
    "k": [

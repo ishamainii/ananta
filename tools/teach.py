@@ -22,8 +22,8 @@ COMMON_FAQ = [
      "a": "Bhupali uses five notes, Sa Re Ga Pa Dha, tuned as the ratios 1, 9/8, 5/4, 3/2 and 5/3. It has no half-steps, so any note the math picks sounds consonant against the drone."},
     {"k": ["frequency", "frequencies", "hz", "hertz", "ratio", "tuning"], "q": "how are the frequencies chosen?",
      "a": "Sa is 138.6 Hz. Every other note is Sa times a whole-number ratio (9/8, 5/4, 3/2, 5/3) or that times a power of 2 for higher octaves. Which note plays is chosen by a number in the scene. Open 'why this sound' to watch it live."},
-    {"k": ["trip", "background", "psychedelic", "haze", "kaleidoscope"], "q": "what is the background?",
-     "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'trip 0' to switch it off and see only the math."},
+    {"k": ["glow", "trip", "background", "psychedelic", "light", "kaleidoscope"], "q": "what is the background?",
+     "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'glow 0' to switch it off and see only the math."},
     {"k": ["who made", "who built", "isha", "author"], "q": "who made this?",
      "a": "Isha Maini, a data science student at Emory. Each chamber's math is written and tested in Python and JavaScript before it's drawn."},
 ]
@@ -36,7 +36,7 @@ def notes_link(text):
 CH = {}
 
 CH["pingala"] = dict(
-    trip="45",
+    glow="45",
     legend=[["#fff0d6", "corner = one meter, labelled । light ऽ heavy"], ["#ffcf6b", "edge that flips syllable 1"],
             ["#ff8a3d", "flips syllable 2"], ["#ff5c8a", "flips syllable 3"], ["#b08cff", "flips syllable 4"],
             ["#5fd4ff", "flips syllable 5"], ["#5fe3b2", "flips syllable 6"], ["#ffd27a", "gold spark: walks through every meter"]],
@@ -85,7 +85,7 @@ CH["pingala"] = dict(
 )
 
 CH["madhava"] = dict(
-    trip="45",
+    glow="45",
     legend=[["#ffcf6b", "chain: each link is one term, length 1/(2k+1)"], ["--#ffd27a", "π/4, where the series is heading"],
             ["#ffd27a", "gold dot: estimate with Mādhava's correction"], ["#fff0d6", "white dot: the plain sum so far"],
             ["#ff5c8a", "swing view, rose: plain sums"], ["#ffd27a", "swing view, gold: corrected sums"]],
@@ -127,7 +127,7 @@ CH["madhava"] = dict(
 )
 
 CH["chakravala"] = dict(
-    trip="40",
+    glow="40",
     legend=[["#ffd27a", "the path of the wheel, one turn per stop"], ["#ff5c8a", "a stop: label shows k, petal size is |k|"],
             ["#fff0d6", "white: k = 1, solved"], ["rgba(255,210,122,.5)", "rings: further out = more digits in a"]],
     tutorial=[
@@ -168,7 +168,7 @@ CH["chakravala"] = dict(
 )
 
 CH["ramanujan"] = dict(
-    trip="60",
+    glow="60",
     legend=[["linear-gradient(90deg,#ff5c8a,#ffcf6b,#5fe3b2,#5fd4ff,#b08cff)", "colour: the angle (phase) of P(q)"],
             ["#efe6d6", "bright bands: where |P(q)| is constant"], ["#ffd27a", "rim: |q| = 1, a wall of infinities"]],
     tutorial=[
@@ -209,7 +209,7 @@ CH["ramanujan"] = dict(
 )
 
 CH["sriyantra"] = dict(
-    trip="40",
+    glow="40",
     legend=[["#ffcf6b", "Śiva triangles, pointing up (4)"], ["#ff5c8a", "Śakti triangles, pointing down (5)"],
             ["#5fe3b2", "green: three lines meet exactly"], ["#ff5c8a", "swelling rose dot: they miss (size = error)"],
             ["#fff0d6", "the bindu, centre point"]],
@@ -251,7 +251,7 @@ CH["sriyantra"] = dict(
 )
 
 CH["tatkalika"] = dict(
-    trip="40",
+    glow="40",
     legend=[["#5fd4ff", "earth, at the centre"], ["#ffd27a", "mean planet: moves at constant speed"],
             ["#ff8a3d", "epicycle arm"], ["#fff0d6", "true planet, and its trail"],
             ["#b08cff", "E(M): the correction over one lap"], ["#5fe3b2", "tangent turns green where the rate is zero"]],
@@ -293,7 +293,7 @@ CH["tatkalika"] = dict(
 )
 
 CH["purna"] = dict(
-    trip="60",
+    glow="60",
     legend=[["linear-gradient(90deg,#ffcf6b,#ff5c8a,#b08cff)", "I: the mandala, containing itself at every scale"],
             ["#5fd4ff", "II: rings of seeds, ×10 each ring"], ["#ff5c8a", "III: 1 ÷ x as x slides to 0"],
             ["#ffd27a", "III: khahara, the quantity divided by zero"]],
@@ -333,7 +333,7 @@ CH["purna"] = dict(
 for slug, spec in CH.items():
     p = ROOT / "chambers" / slug / "page.json"
     page = json.loads(p.read_text(encoding="utf-8"))
-    page.update(trip=spec["trip"], legend=spec["legend"], tutorial=spec["tutorial"], sound=spec["sound"],
+    page.update(glow=spec["glow"], legend=spec["legend"], tutorial=spec["tutorial"], sound=spec["sound"],
                 faq=spec["faq"] + COMMON_FAQ)
     p.write_text(json.dumps(page, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print("taught", slug, len(spec["tutorial"]), "steps")

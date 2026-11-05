@@ -8,7 +8,7 @@
  "aria": "An epicycle model drawing a rosette, beside the equation-of-centre curve and its tangent",
  "intro": "In 1150 Bhāskara II asked how fast a planet moves at a single instant. The answer hides an idea we now call the derivative, and the rule that it vanishes at a maximum.",
  "dock": "<label class=\"chip\">epicycle r/R <input id=\"kSel\" type=\"range\" min=\"5\" max=\"80\" value=\"32\" style=\"width:90px;accent-color:#ff8a3d\"></label>",
- "trip": "40",
+ "glow": "40",
  "legend": [
   [
    "#5fd4ff",
@@ -153,14 +153,15 @@
   },
   {
    "k": [
+    "glow",
     "trip",
     "background",
     "psychedelic",
-    "haze",
+    "light",
     "kaleidoscope"
    ],
    "q": "what is the background?",
-   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'trip 0' to switch it off and see only the math."
+   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'glow 0' to switch it off and see only the math."
   },
   {
    "k": [

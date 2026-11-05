@@ -8,7 +8,7 @@
  "aria": "A twisting chain of light whose links are the terms of Madhava's series for pi",
  "intro": "In 14th-century Kerala, Mādhava wrote π as an infinite sum, then found how to correct the last term so a few dozen terms give eleven digits. Watch the series fold into π.",
  "dock": "<label class=\"chip\">view <select id=\"viewSel\"><option value=\"chain\">chain</option><option value=\"swing\">swing</option></select></label><label class=\"chip\">correction <select id=\"orderSel\"><option value=\"0\">none</option><option value=\"1\">1/(4n)</option><option value=\"2\">n/(4n²+1)</option><option value=\"3\" selected>(n²+1)/(n(4n²+5))</option></select></label><button class=\"chip\" id=\"labBtn\" aria-pressed=\"false\" title=\"Can a machine rediscover Mādhava?\">✦ machine rediscovery</button>",
- "trip": "45",
+ "glow": "45",
  "legend": [
   [
    "#ffcf6b",
@@ -157,14 +157,15 @@
   },
   {
    "k": [
+    "glow",
     "trip",
     "background",
     "psychedelic",
-    "haze",
+    "light",
     "kaleidoscope"
    ],
    "q": "what is the background?",
-   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'trip 0' to switch it off and see only the math."
+   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'glow 0' to switch it off and see only the math."
   },
   {
    "k": [

@@ -8,7 +8,7 @@
  "aria": "A spiral wheel of light where each spoke is one turn of the chakravala method",
  "intro": "Find whole numbers with x² − 61y² = 1. The smallest answer has ten digits. In 1150 Bhāskara II found it with a wheel of steps that always comes back to 1.",
  "dock": "<label class=\"chip\">N <select id=\"nSel\"><option value=\"61\">61</option><option value=\"67\">67</option><option value=\"94\">94</option><option value=\"97\">97</option><option value=\"109\">109</option><option value=\"151\">151</option><option value=\"181\">181</option><option value=\"433\">433</option><option value=\"661\">661</option><option value=\"991\">991</option><option value=\"\">other (ask)</option></select></label>",
- "trip": "40",
+ "glow": "40",
  "legend": [
   [
    "#ffd27a",
@@ -148,14 +148,15 @@
   },
   {
    "k": [
+    "glow",
     "trip",
     "background",
     "psychedelic",
-    "haze",
+    "light",
     "kaleidoscope"
    ],
    "q": "what is the background?",
-   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'trip 0' to switch it off and see only the math."
+   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'glow 0' to switch it off and see only the math."
   },
   {
    "k": [

@@ -16,7 +16,7 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const frag = /* glsl */ `
 precision highp float;
-uniform float uTime, uTrip, uPulse, uZoom, uTerms, uSpin;
+uniform float uTime, uGlow, uPulse, uZoom, uTerms, uSpin;
 uniform vec2 uRes, uCenter;
 vec2 cmul(vec2 a, vec2 b) { return vec2(a.x*b.x - a.y*b.y, a.x*b.y + a.y*b.x); }
 vec3 pal(float t) { return vec3(0.52, 0.36, 0.46) + vec3(0.48, 0.42, 0.44) * cos(6.28318 * (t + vec3(0.02, 0.24, 0.56))); }
@@ -41,7 +41,7 @@ void main() {
   vec3 col = pal(hue);
   col *= 0.42 + 0.58 * smoothstep(0.0, 0.18, band) * smoothstep(1.0, 0.82, band);
   col += vec3(1.0, 0.85, 0.6) * smoothstep(0.03, 0.0, phase) * 0.35;
-  col *= mix(0.55, 1.1, uTrip) * (1.0 + 0.6 * uPulse) * smoothstep(1.0, 0.94, r);
+  col *= mix(0.55, 1.1, uGlow) * (1.0 + 0.6 * uPulse) * smoothstep(1.0, 0.94, r);
   gl_FragColor = vec4(col, 1.0);
 }`;
 const uniforms = { uZoom: { value: 1 }, uTerms: { value: 160 }, uCenter: { value: new THREE.Vector2(0, 0) }, uSpin: { value: 0 } };
@@ -97,7 +97,7 @@ function frame(now) {
     n = n >= 200 ? 1 : n + 1; lastAt = now; readout();
     sound.why = `n = ${n}: n mod 5 = ${n % 5} picks the note${n % 10 >= 5 ? ", second half of each ten an octave up" : ""}`;
     sound.pluck(degree((n % 5) + 2 + (n % 10 >= 5 ? 5 : 0), SA * 2), 0.05);
-    if (n % 5 === 4) { sound.why = `n = ${n} = 5k + 4, so 5 divides p(${n})`; sound.bowl(SA * 4); }
+    if (n % 5 === 4) { sound.why = `n = ${n} = 5k + 4, so 5 divides p(${n})`; sound.bowl(SA * 2); }
   }
   if (!reduce && now - tourAt > 11000) { tourAt = now; TOUR[tour++ % TOUR.length](); readout(); }
   for (const k of ["cx", "cy", "zoom"]) view[k] += ((k === "cx" || k === "cy" ? target[k] : target.zoom) - view[k]) * 0.012;

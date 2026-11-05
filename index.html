@@ -20,7 +20,7 @@
 
 <header class="topbar">
   <a class="mark" href="./"><b lang="sa">अनन्त</b><span>ANANTA</span></a>
-  <nav class="crumbs"><a href="#chambers">chambers</a><a href="#how">how to play</a><a href="#next">next</a><a href="#log">lab log</a><a href="#about">about</a></nav>
+  <nav class="crumbs"><a href="#chambers">chambers</a><a href="#how">how to play</a><a href="#about">about</a></nav>
 </header>
 
 <main>
@@ -43,33 +43,13 @@
   <section id="how" class="block">
     <header class="block-head"><h2>How to play</h2><p class="mono dim">read this once, then every chamber works the same way</p></header>
     <ol class="howto">
-      <li><b>Each chamber is one idea.</b> A meter, a series, an equation. The picture is that idea drawn exactly: nothing in it is decoration except the coloured haze behind it, and the <i>trip</i> slider turns that down to zero.</li>
+      <li><b>Each chamber is one idea.</b> A meter, a series, an equation. The picture is that idea drawn exactly: nothing in it is decoration except the coloured haze behind it, and the <i>glow</i> slider turns it down to zero.</li>
+      <li><b>Every chamber is a room.</b> Drag to walk all the way round the math, scroll or pinch to move inside it, and double-click to come back to the front.</li>
       <li><b>The tutorial walks you in.</b> The first time you enter, a short "how to play" card takes you through the chamber step by step, and each step changes the scene so you see what it means. Press <kbd>?</kbd> any time to bring it back.</li>
       <li><b>The key tells you what you're looking at.</b> Bottom left of every chamber: what each colour and line stands for.</li>
       <li><b>The sound is the math.</b> Every note is picked by a number in the scene, tuned to Raag Bhupali in pure whole-number ratios. Press <i>why this sound</i> to see which number is playing and which note it chose.</li>
       <li><b>You can talk to it.</b> <i>✦ ask</i> (or <kbd>g</kbd>) opens the guide. Type or say several things at once: "show 6 dimensions and turn syllables 2 and 5", "what is a guru syllable", "next chamber".</li>
       <li><b>The notebook has the proof.</b> <kbd>n</kbd> opens the history, the math written out, and the papers every claim comes from.</li>
-    </ol>
-  </section>
-
-  <section id="next" class="block">
-    <header class="block-head"><h2>Next</h2><p class="mono dim">planned, in roughly this order</p></header>
-    <ol class="chambers next-list">
-      <li class="chamber"><div class="inner"><span class="num"><span>08</span><span class="status">○ planned</span></span><span class="deva" lang="sa">कुट्टक</span><h3>Kuṭṭaka · the pulverizer</h3><p>Āryabhaṭa's algorithm for ax + by = c as a lattice walk that grinds coefficients down, with Euclid running alongside for comparison.</p><span class="who">Āryabhaṭa, 499 CE</span></div></li>
-      <li class="chamber"><div class="inner"><span class="num"><span>09</span><span class="status">○ planned</span></span><span class="deva" lang="sa">भद्रगणित</span><h3>Bhadragaṇita · magic squares</h3><p>Nārāyaṇa Paṇḍita's methods for building magic squares, shown as a search space a solver can explore.</p><span class="who">Nārāyaṇa Paṇḍita, 1356</span></div></li>
-      <li class="chamber"><div class="inner"><span class="num"><span>10</span><span class="status">○ planned</span></span><span class="deva" lang="sa">ज्या</span><h3>Jyā · the sine table</h3><p>Āryabhaṭa's 24 sine differences and the Kerala sine series, compared as interpolation and approximation problems.</p><span class="who">Āryabhaṭa · Mādhava</span></div></li>
-    </ol>
-  </section>
-
-  <section id="log" class="block">
-    <header class="block-head"><h2>Lab log</h2><p class="mono dim">what changed, newest first</p></header>
-    <ol class="log mono">
-      <li><time>2026-11-02</time> chambers 02–07 live: Mādhava, Chakravāla, Ramanujan, Śrī Yantra, Tātkālika, Pūrṇa. Each math core is tested in python and node before it's drawn.</li>
-      <li><time>2026-11-04</time> every chamber now teaches itself: step-by-step tutorials, a colour key, arrows between chambers, a volume control, a live "why this sound" readout, and a rewritten guide that understands several commands and questions in one sentence, with voice in and out.</li>
-      <li><time>2026-11-02</time> the guide: type a request in any chamber and the scene changes.</li>
-      <li><time>2026-11-02</time> chamber 01 rebuilt in WebGL: real 3D, bloom, plane-by-plane turns through hidden axes, psychedelic backdrop whose symmetry follows the dimension.</li>
-      <li><time>2026-11-02</time> bibliography assembled and checked against journal and publisher records (data/sources.json).</li>
-      <li><time>2026-11-02</time> n-cube engine in Python: vertices from meters, edges by XOR, Meru Prastara face counts, n-D rotations, perspective projection. 82 tests passing.</li>
     </ol>
   </section>
 

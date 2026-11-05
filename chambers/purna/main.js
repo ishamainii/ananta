@@ -16,7 +16,7 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 // turns stacked rings into one continuous spiral. Sliding log|z| with time is an endless zoom.
 const frag = /* glsl */ `
 precision highp float;
-uniform float uTime, uTrip, uPulse, uMode, uPetals;
+uniform float uTime, uGlow, uPulse, uMode, uPetals;
 uniform vec2 uRes;
 vec3 pal(float t) { return vec3(0.55, 0.38, 0.45) + vec3(0.45, 0.4, 0.45) * cos(6.28318 * (t + vec3(0.0, 0.2, 0.55))); }
 void main() {
@@ -32,7 +32,7 @@ void main() {
   float fill = smoothstep(0.0, 0.6, 0.25 + 0.55 * petals - u) * 0.35;
   vec3 col = pal(tw / P + 0.15 * petals + uTime * 0.02) * (line + fill);   // tw/P jumps by exactly 1 at the wrap; pal has period 1
   float calm = mix(1.0, 0.45, step(0.5, uMode));          // dimmer behind the other two movements
-  col *= mix(0.45, 1.05, uTrip) * (1.0 + 0.7 * uPulse) * calm * smoothstep(0.0, 0.08, r) * smoothstep(1.4, 0.4, r);
+  col *= mix(0.45, 1.05, uGlow) * (1.0 + 0.7 * uPulse) * calm * smoothstep(0.0, 0.08, r) * smoothstep(1.4, 0.4, r);
   gl_FragColor = vec4(col, 1.0);
 }`;
 const uniforms = { uMode: { value: 0 }, uPetals: { value: 8 } };

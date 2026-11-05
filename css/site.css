@@ -86,8 +86,8 @@ body.idle .dock { opacity: 0.3; }
 .chip[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 14px rgba(255, 190, 90, 0.3); }
 .chip.deva { font-family: var(--f-deva); font-size: 18px; }
 .dock .sep { width: 1px; height: 24px; background: var(--rule); margin: 0 4px; }
-.trip { display: inline-flex; align-items: center; gap: 8px; }
-.trip input { width: 92px; accent-color: var(--rose); }
+.glow { display: inline-flex; align-items: center; gap: 8px; }
+.glow input { width: 92px; accent-color: var(--rose); }
 
 /* intro veil */
 .veil {
@@ -130,7 +130,7 @@ body.idle .dock { opacity: 0.3; }
 @media (max-width: 560px) {
   .caption { bottom: calc(env(safe-area-inset-bottom, 0px) + 124px); }
   .mark span { display: none; }
-  .trip input { width: 70px; }
+  .glow input { width: 70px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .veil, .notebook, .dock { transition: none; }
@@ -233,3 +233,8 @@ body.idle .hop { opacity: .35; }
 .lab .board li.hit { background: rgba(255, 210, 122, .12); color: var(--gold); }
 .lab .board em { font-style: normal; color: var(--gold); }
 .lab .board code { font-size: 12.5px; }
+
+/* ---------- 360° hint ---------- */
+.look-hint { position: fixed; z-index: 9; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0; padding: 10px 16px; border-radius: 999px;
+  background: rgba(10, 6, 14, .55); backdrop-filter: blur(8px); font-size: 14px; color: var(--ink); pointer-events: none; transition: opacity 1.2s; text-align: center; }
+.look-hint.gone { opacity: 0; }

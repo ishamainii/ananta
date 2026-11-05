@@ -7,14 +7,14 @@
 //      is a zoom that never ends, which is the closest a picture gets to ananta.
 //   3. Domain warping: fbm noise fed back into itself (Inigo Quilez's trick)
 //      makes the colour flow like oil on water.
-// `trip` (0..1) scales how loud the colour is; `gain` lets a page with bloom turn it down;
+// `glow` (0..1) scales how bright the colour is; `gain` lets a page with bloom turn it down;
 // `pulse` follows the music.
 
 import * as THREE from "three";
 
 const frag = /* glsl */ `
 precision highp float;
-uniform float uTime, uTrip, uPulse, uFold, uHue, uGain;
+uniform float uTime, uGlow, uPulse, uFold, uHue, uGain;
 uniform vec2 uRes;
 varying vec2 vUv;
 
@@ -45,13 +45,13 @@ void main() {
   vec3 col = pal(n * 1.4 + lr * 0.12 + uTime * 0.015);
   col *= 0.35 + 0.65 * rings * (0.6 + 0.4 * petals);
   float vig = smoothstep(1.25, 0.2, r) * smoothstep(0.04, 0.5, r);  // keep the centre calm for the object
-  col *= vig * mix(0.05, 0.42, uTrip) * uGain * (1.0 + 0.9 * uPulse);
+  col *= vig * mix(0.05, 0.42, uGlow) * uGain * (1.0 + 0.9 * uPulse);
   gl_FragColor = vec4(col, 1.0);
 }`;
 
 export function createPsyche() {
   const uniforms = {
-    uTime: { value: 0 }, uTrip: { value: 0.55 }, uPulse: { value: 0 },
+    uTime: { value: 0 }, uGlow: { value: 0.55 }, uPulse: { value: 0 },
     uFold: { value: 8 }, uHue: { value: 0 }, uGain: { value: 1 }, uRes: { value: new THREE.Vector2(1, 1) },
   };
   const mat = new THREE.ShaderMaterial({
@@ -74,4 +74,24 @@ export function createPsyche() {
       uniforms.uPulse.value += (pulse - uniforms.uPulse.value) * 0.15;
     },
   };
+}
+
+// ---- the dome: the same pattern wrapped all the way round the viewer, for the 360° chambers.
+// Each pixel's direction is turned into polar coordinates around the forward axis (−z): r is the
+// angle away from straight ahead, a is the angle around it. So looking ahead you see the same
+// kaleidoscope as the flat backdrop, and turning round you find it continues behind you.
+const domeFrag = frag
+  .replace("varying vec2 vUv;", "varying vec3 vDir;")
+  .replace("vec2 p = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;\n  float r = length(p), a = atan(p.y, p.x);",
+           "vec3 d = normalize(vDir); float r = acos(clamp(-d.z, -1.0, 1.0)) * 0.55, a = atan(d.y, d.x);")
+  .replace("float vig = smoothstep(1.25, 0.2, r) * smoothstep(0.04, 0.5, r);", "float vig = 0.75 * smoothstep(0.02, 0.45, r);");
+
+export function createDome(uniforms, radius = 80) {
+  const mat = new THREE.ShaderMaterial({
+    uniforms, fragmentShader: domeFrag, side: THREE.BackSide, depthWrite: false, toneMapped: false,
+    vertexShader: "varying vec3 vDir; void main(){ vDir = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+  });
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 64, 32), mat);
+  mesh.renderOrder = -1;
+  return mesh;
 }

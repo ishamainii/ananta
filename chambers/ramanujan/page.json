@@ -8,7 +8,7 @@
  "aria": "Domain colouring of the partition generating function over the unit disk",
  "intro": "How many ways can you split 200 into whole numbers? Almost four trillion. Ramanujan found the formula by listening to a function that explodes at every root of unity. This is that function.",
  "dock": "<label class=\"chip\">view <select id=\"viewSel\"><option value=\"disk\">whole disk</option><option value=\"0/1\">q → 1</option><option value=\"1/2\">→ 1/2</option><option value=\"1/3\">→ 1/3</option><option value=\"1/5\">→ 1/5</option><option value=\"2/5\">→ 2/5</option></select></label>",
- "trip": "60",
+ "glow": "60",
  "legend": [
   [
    "linear-gradient(90deg,#ff5c8a,#ffcf6b,#5fe3b2,#5fd4ff,#b08cff)",
@@ -149,14 +149,15 @@
   },
   {
    "k": [
+    "glow",
     "trip",
     "background",
     "psychedelic",
-    "haze",
+    "light",
     "kaleidoscope"
    ],
    "q": "what is the background?",
-   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'trip 0' to switch it off and see only the math."
+   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'glow 0' to switch it off and see only the math."
   },
   {
    "k": [

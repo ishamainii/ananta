@@ -8,7 +8,7 @@
  "aria": "An endless spiral zoom into a mandala that contains itself",
  "intro": "Long before set theory, Indian thinkers argued about the infinite: a whole that stays whole when you remove the whole, numbers too large to count, and what you get when you divide by zero.",
  "dock": "<div id=\"moves\" style=\"display:flex;gap:6px\"><button class=\"chip\" aria-pressed=\"true\">I · pūrṇa</button><button class=\"chip\" aria-pressed=\"false\">II · jaina</button><button class=\"chip\" aria-pressed=\"false\">III · khahara</button></div>",
- "trip": "60",
+ "glow": "60",
  "legend": [
   [
    "linear-gradient(90deg,#ffcf6b,#ff5c8a,#b08cff)",
@@ -135,14 +135,15 @@
   },
   {
    "k": [
+    "glow",
     "trip",
     "background",
     "psychedelic",
-    "haze",
+    "light",
     "kaleidoscope"
    ],
    "q": "what is the background?",
-   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'trip 0' to switch it off and see only the math."
+   "a": "The haze behind the math is a kaleidoscope shader. Its symmetry follows the chamber's math, but it's decoration. Say 'glow 0' to switch it off and see only the math."
   },
   {
    "k": [

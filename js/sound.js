@@ -15,14 +15,18 @@ export const degree = (d, base = SA * 2) => base * BHU[((d % 5) + 5) % 5] * 2 **
 // name a frequency as a swara of the scale: which degree, its ratio to Sa, and the octave
 const SWARA = ["Sa", "Re", "Ga", "Pa", "Dha"], RATIO = ["1", "9/8", "5/4", "3/2", "5/3"];
 export function swara(f) {
-  const oct = Math.floor(Math.log2(f / SA) + 1e-6), r = f / (SA * 2 ** oct);
+  const oct = Math.floor(Math.log2(f / SA) + 0.03), r = f / (SA * 2 ** oct);   // 0.03 octave of slack so a note a hair flat of Sa still counts as Sa
   let best = 0; BHU.forEach((b, i) => { if (Math.abs(Math.log2(r / b)) < Math.abs(Math.log2(r / BHU[best]))) best = i; });
   const off = Math.abs(1200 * Math.log2(r / BHU[best]));
-  return { name: SWARA[best], ratio: RATIO[best], octave: oct, inScale: off < 15, label: off < 15 ? `${SWARA[best]} (${RATIO[best]} × Sa)` : `${Math.round(f)} Hz` };
+  // the exact ratio to the home Sa, octave included: Ga two octaves up is 5/4 × 4 = 5
+  const [n0, d0] = RATIO[best].split("/").map(Number).concat(1).slice(0, 2), g = (a, b) => b ? g(b, a % b) : a;
+  let num = n0 * 2 ** Math.max(0, oct), den = d0 * 2 ** Math.max(0, -oct); const k = g(num, den); num /= k; den /= k;
+  const frac = den === 1 ? `${num}` : `${num}/${den}`;
+  return { name: SWARA[best], ratio: frac, octave: oct, inScale: off < 15, label: off < 15 ? `${SWARA[best]} = ${frac} × Sa` : `${Math.round(f)} Hz` };
 }
 
 export function createSound() {
-  let vol = (() => { try { const v = parseFloat(localStorage.getItem("ananta-vol")); return isNaN(v) ? 0.7 : v; } catch { return 0.7; } })();
+  let vol = (() => { try { const v = parseFloat(localStorage.getItem("ananta-vol")); return isNaN(v) ? 0.5 : v; } catch { return 0.7; } })();
   let ac = null, master, wet, analyser, data, on = false, timer = null;
   let droneNext = 0, droneIdx = 0, fluteFree = 0, flute = null;
   const cache = new Map();
@@ -79,7 +83,7 @@ export function createSound() {
   }
   function droneTick() {
     const strings = [SA * 0.75, SA, SA, SA / 2];   // Pa, Sa, Sa, low Sa
-    while (droneNext < ac.currentTime + 1.6) { play(ks(strings[droneIdx % 4], 9, 0.55, 0.35), droneNext, 0.12, 1, 0.55); droneIdx++; droneNext += 1.45; }
+    while (droneNext < ac.currentTime + 1.6) { play(ks(strings[droneIdx % 4], 9, 0.4, 0.18), droneNext, 0.085, 1, 0.6); droneIdx++; droneNext += 1.45; }
   }
   function makeFlute() {
     const o1 = ac.createOscillator(), o2 = ac.createOscillator(); o1.type = "sine"; o2.type = "triangle";
@@ -91,7 +95,7 @@ export function createSound() {
     const noise = ac.createBufferSource(); noise.buffer = nb; noise.loop = true;
     const bp = ac.createBiquadFilter(); bp.type = "bandpass"; bp.Q.value = 3;
     const bg = ac.createGain(); bg.gain.value = 0; const amp = ac.createGain(); amp.gain.value = 0.0001;
-    const tone = ac.createBiquadFilter(); tone.type = "lowpass"; tone.frequency.value = 2600;
+    const tone = ac.createBiquadFilter(); tone.type = "lowpass"; tone.frequency.value = 1700;
     o1.connect(amp); o2.connect(g2); g2.connect(amp); noise.connect(bp); bp.connect(bg); bg.connect(amp); amp.connect(tone); out(tone, 0.9, 0.75);
     [o1, o2, vib, noise].forEach(x => x.start());
     return { o1, o2, bp, bg, vg, amp, f: 0, d: 2 };
@@ -102,9 +106,9 @@ export function createSound() {
       p.cancelScheduledValues(t);
       if (first || !F.f) p.setValueAtTime(f, t); else { p.setValueAtTime(F.f, t); p.exponentialRampToValueAtTime(f, t + glide); }
     }
-    if (first) { F.amp.gain.setValueAtTime(0.0001, t); F.amp.gain.exponentialRampToValueAtTime(0.11, t + 0.35); }
-    else F.amp.gain.linearRampToValueAtTime(0.09 + 0.04 * Math.random(), t + glide + 0.25);
-    F.bg.gain.setValueAtTime(first ? 0.05 : 0.025, t); F.bg.gain.linearRampToValueAtTime(0.018, t + 0.4);
+    if (first) { F.amp.gain.setValueAtTime(0.0001, t); F.amp.gain.exponentialRampToValueAtTime(0.065, t + 0.5); }
+    else F.amp.gain.linearRampToValueAtTime(0.05 + 0.02 * Math.random(), t + glide + 0.35);
+    F.bg.gain.setValueAtTime(first ? 0.025 : 0.012, t); F.bg.gain.linearRampToValueAtTime(0.008, t + 0.4);
     F.vg.gain.setValueAtTime(0, t + glide); F.vg.gain.linearRampToValueAtTime(dur > 1.2 ? f * 0.007 : 0, t + glide + Math.min(1.1, dur * 0.6));
     F.f = f;
   }
@@ -114,12 +118,12 @@ export function createSound() {
     for (let k = 0; k < len; k++) {
       const last = k === len - 1;
       if (k > 0) { const mv = [-2, -1, -1, -1, 1, 1, 1, 2]; d += mv[Math.floor(Math.random() * mv.length)]; }
-      d = Math.max(-1, Math.min(8, d));
+      d = Math.max(-1, Math.min(6, d));
       if (last) d = [0, 2, 3, 5, 7].reduce((a, b) => Math.abs(b - d) < Math.abs(a - d) ? b : a);
       const dur = last ? 2.6 + Math.random() * 1.6 : 0.7 + Math.random() * 0.9;
       fluteNote(t, degree(d), dur, k === 0); t += dur;
     }
-    flute.amp.gain.setValueAtTime(0.09, t); flute.amp.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+    flute.amp.gain.setValueAtTime(0.05, t); flute.amp.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
     flute.bg.gain.linearRampToValueAtTime(0, t + 0.6); flute.vg.gain.linearRampToValueAtTime(0, t + 0.5);
     flute.d = d; fluteFree = t + 2.8 + Math.random() * 3.5;
   }
@@ -150,16 +154,18 @@ export function createSound() {
     why: "",                                      // the chamber sets this before each note: which number chose it
     bowl(f = SA * 2) {
       if (!on) return; api.onNote?.({ kind: "bowl", f, why: api.why }); const t = ac.currentTime + 0.03;
-      [[1, 1, 11], [2.71, .42, 7.5], [5.15, .2, 4.5], [8.4, .08, 2.6]].forEach(([m, a, dcy]) => [0, 0.9].forEach(det => {
+      // partials of a struck bowl. the upper ones are kept quiet and short so it rings warm, not shrill
+      [[1, 1, 11], [2.71, .22, 6], [5.15, .06, 3]].forEach(([m, a, dcy]) => [0, 0.9].forEach(det => {
         const o = ac.createOscillator(), g = ac.createGain(); o.type = "sine"; o.frequency.value = f * m + det;
-        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.045 * a, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + dcy);
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.03 * a, t + 0.09); g.gain.exponentialRampToValueAtTime(0.0001, t + dcy);
         o.connect(g); out(g, 1, 0.75); o.start(t); o.stop(t + dcy + 0.1);
       }));
     },
     pluck(f, gain = 0.07) {                       // a soft santoor string, two courses slightly apart in tune
       if (!on) return; api.onNote?.({ kind: "santoor", f, why: api.why });
-      const t = ac.currentTime + 0.02, b = ks(f, 2.4, 0.7);
-      play(b, t, gain, 1.002, 0.7); play(b, t + 0.01, gain * 0.7, 0.998, 0.7);
+      // dark, soft strike, and quieter the higher it goes, so fast passages never get piercing
+      const t = ac.currentTime + 0.02, b = ks(f, 2.2, 0.32), g = gain * 0.75 * Math.min(1, Math.sqrt(330 / f));
+      play(b, t, g, 1.002, 0.8); play(b, t + 0.012, g * 0.6, 0.998, 0.8);
     },
     energy() {                                    // 0..1 loudness, for the visuals to breathe with
       if (!on || !analyser) return 0;

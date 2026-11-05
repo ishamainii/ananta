@@ -96,7 +96,7 @@ function frame(now) {
     // plus terms play the base note, minus terms three steps higher in the raag (Sa→Pa is × 3/2), so every note stays in Bhupali
     sound.why = `term ${terms}: ${terms % 2 ? "+" : "−"}1/${2 * terms - 1}${terms % 2 ? "" : ", a minus term, so three notes higher in the raag"}`;
     sound.pluck(degree(Math.min(9, 2 + Math.floor(terms / 8)) + (terms % 2 ? 0 : 3), SA * 2), 0.05);
-    if (terms > 1 && d > goodDigits(estimate(terms - 1, order))) { sound.why = `π gained a correct digit: ${Math.max(0, d - 2)} now`; sound.bowl(SA * 4); }
+    if (terms > 1 && d > goodDigits(estimate(terms - 1, order))) { sound.why = `π gained a correct digit: ${Math.max(0, d - 2)} now`; sound.bowl(SA * 2); }
     readout();
   }
   if (autoTwist && view === "chain") {          // breathe away from 180° and come back, so the spiral blooms and folds
@@ -125,7 +125,7 @@ const lab = document.getElementById("lab"), labBtn = document.getElementById("la
 const showLab = open => { lab.hidden = !open; labBtn.setAttribute("aria-pressed", String(open)); };
 labBtn.addEventListener("click", () => showLab(lab.hidden));
 document.getElementById("labClose").addEventListener("click", () => showLab(false));
-const rediscovery = createRediscovery({ panel: lab, onDone: d => { order = 3; $("orderSel").value = "3"; readout(); sound.why = "the search found Mādhava's correction"; sound.bowl(SA * 4); } });
+const rediscovery = createRediscovery({ panel: lab, onDone: d => { order = 3; $("orderSel").value = "3"; readout(); sound.why = "the search found Mādhava's correction"; sound.bowl(SA * 2); } });
 
 setupChamber({ key: "madhava", sound, psyche: stage.psyche, tools: [
   { name: "rediscover", hint: "can a machine rediscover madhava", description: "Run the symbolic-regression search over 703,836 rational formulas to see whether Madhava's correction is the best fit to the series' tail, and report the winner.",

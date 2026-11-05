@@ -1,5 +1,5 @@
 // chamber-ui.js: everything every chamber shares.
-// intro veil, dock, trip + volume, the how-to-play tour, the colour key, "why this sound",
+// intro veil, dock, glow + volume, the how-to-play tour, the colour key, "why this sound",
 // arrows to the next and previous chamber, the notebook drawer and the guide.
 // A chamber's own words (tour steps, key, sound mapping, guide answers) come from its
 // page.json, which make_pages.py drops into the page as <script id="chamberData">.
@@ -16,7 +16,12 @@ export async function setupChamber({ key, sound, psyche, onEnter, tools = [] }) 
   const seen = (() => { try { return localStorage.getItem("ananta-tour-" + key) === "done"; } catch { return false; } })();
 
   // ---- intro veil. first visit: the tour opens straight after
-  const enter = withSound => { $("veil").classList.add("gone"); if (withSound) start(); wake(); onEnter?.(); if (!seen && data.tutorial?.length) setTimeout(() => tour.open(0), 900); };
+  const hint = () => {                                   // the room is 360°: say so once, then get out of the way
+    const h = document.createElement("p"); h.className = "look-hint";
+    h.textContent = matchMedia("(pointer: coarse)").matches ? "Drag to look around. Pinch to move in. Double-tap to come back." : "Drag to look around. Scroll to move in. Double-click to come back.";
+    document.body.appendChild(h); setTimeout(() => h.classList.add("gone"), 6500); setTimeout(() => h.remove(), 8000);
+  };
+  const enter = withSound => { $("veil").classList.add("gone"); if (withSound) start(); wake(); onEnter?.(); setTimeout(hint, 400); if (!seen && data.tutorial?.length) setTimeout(() => tour.open(0), 900); };
   $("begin")?.addEventListener("click", () => enter(true));
   $("silent")?.addEventListener("click", () => enter(false));
 
@@ -30,11 +35,11 @@ export async function setupChamber({ key, sound, psyche, onEnter, tools = [] }) 
     vol.addEventListener("input", () => { sound.setVolume(vol.value / 100); if (!sound.on && vol.value > 0) start(); });
   }
 
-  // ---- trip slider: how strong the psychedelic layer is
-  const trip = $("trip");
-  if (trip) {
-    const set = () => { psyche.uniforms.uTrip.value = trip.value / 100; };
-    trip.addEventListener("input", set); set();
+  // ---- glow slider: how strong the psychedelic layer is
+  const glow = $("glow");
+  if (glow) {
+    const set = () => { psyche.uniforms.uGlow.value = glow.value / 100; };
+    glow.addEventListener("input", set); set();
   }
 
   // ---- idle fade
@@ -101,9 +106,9 @@ export async function setupChamber({ key, sound, psyche, onEnter, tools = [] }) 
   // ---- things the guide can do in every chamber, on top of the chamber's own tools
   const go = c => { location.href = `${root}chambers/${c.slug}/`; return { say: `Walking to ${c.name}.` }; };
   const shared = [
-    { name: "set_trip", hint: "trip 0", description: "Set the psychedelic background strength, 0 (only the math) to 100.", input_schema: { type: "object", properties: { level: { type: "number", minimum: 0, maximum: 100 } }, required: ["level"] },
-      parse: t => { const m = t.match(/(?:trip|psychedelic|haze|background)\D*(\d+)/) || (/more psychedelic|trippier|wilder/.test(t) && [0, 95]) || (/calm|less psychedelic|clearer|just the math|plain/.test(t) && [0, 0]); return m ? { level: +m[1] } : null; },
-      run: ({ level }) => { if (trip) { trip.value = level; trip.dispatchEvent(new Event("input")); } return { say: level === 0 ? "Background off: only the math is left on screen." : `Trip set to ${level}.` }; } },
+    { name: "set_glow", hint: "glow 0", description: "Set how bright the coloured light behind the math is, 0 (only the math) to 100.", input_schema: { type: "object", properties: { level: { type: "number", minimum: 0, maximum: 100 } }, required: ["level"] },
+      parse: t => { const m = t.match(/(?:glow|light|trip|psychedelic|background)\D*(\d+)/) || (/more psychedelic|trippier|wilder/.test(t) && [0, 95]) || (/calm|less psychedelic|clearer|just the math|plain/.test(t) && [0, 0]); return m ? { level: +m[1] } : null; },
+      run: ({ level }) => { if (glow) { glow.value = level; glow.dispatchEvent(new Event("input")); } return { say: level === 0 ? "Glow off: only the math is left on screen." : `Glow set to ${level}.` }; } },
     { name: "volume", hint: "volume 40", description: "Set the volume 0-100 (v), change it by d, or turn sound on (on: true).", input_schema: { type: "object", properties: { v: { type: "number" }, d: { type: "number" }, on: { type: "boolean" } } },
       parse: t => { const m = t.match(/vol(?:ume)?\D*(\d+)/); if (m) return { v: +m[1] }; if (/louder|turn (it )?up/.test(t)) return { d: 15 }; if (/quieter|softer|turn (it )?down/.test(t)) return { d: -15 }; if (/\bmute\b|sound off|stop (the )?(sound|music)/.test(t)) return { v: 0 }; if (/sound on|play (the )?(sound|music)|unmute/.test(t)) return { on: true }; return null; },
       run: ({ v, d, on }) => { if (on) { start(); return { say: "Sound on." }; }

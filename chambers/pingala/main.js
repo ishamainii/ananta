@@ -5,7 +5,7 @@ import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
-import { createPsyche } from "../../js/psyche.js";
+import { createPsyche, createDome } from "../../js/psyche.js";
 import { createSound, degree, SA } from "../../js/sound.js";
 import { setupChamber } from "../../js/chamber-ui.js";
 import { toNum } from "../../js/guide.js";
@@ -20,7 +20,7 @@ const DEV = "०१२३४५६७८९", dev = k => String(k).split("").map
 const pop = x => { let c = 0; while (x) { c += x & 1; x >>= 1; } return c; };
 const gray = i => i ^ (i >> 1);
 
-// ---------- renderer: psychedelic backdrop, then the cube, then bloom ----------
+// ---------- renderer: a dome of light all round you, the cube inside it, then bloom ----------
 const canvas = $("stage");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
 renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1));
@@ -29,13 +29,15 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 200);
 camera.position.set(2.6, 1.7, 5.6);
 const controls = new OrbitControls(camera, canvas);
-Object.assign(controls, { enableDamping: true, dampingFactor: 0.06, enablePan: false, minDistance: 3.2, maxDistance: 12, autoRotate: !reduce, autoRotateSpeed: 0.35 });
+// drag all the way round, scroll or pinch to fly inside the cube; double-click to come back
+Object.assign(controls, { enableDamping: true, dampingFactor: 0.06, enablePan: false, minDistance: 0.4, maxDistance: 14, autoRotate: !reduce, autoRotateSpeed: 0.35 });
+canvas.addEventListener("dblclick", () => { camera.position.set(2.6, 1.7, 5.6); controls.target.set(0, 0, 0); });
 
 const psyche = createPsyche();
 psyche.uniforms.uGain.value = 0.42;      // bloom brightens everything, so the backdrop sits lower here
+scene.add(createDome(psyche.uniforms));
 const composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(psyche.scene, psyche.camera));
-const main = new RenderPass(scene, camera); main.clear = false; composer.addPass(main);
+const main = new RenderPass(scene, camera); composer.addPass(main);
 const bloom = new UnrealBloomPass(new THREE.Vector2(512, 512), 0.8, 0.5, 0.18); composer.addPass(bloom);
 composer.addPass(new OutputPass());
 
@@ -163,7 +165,7 @@ const tA = new THREE.Vector3(), tB = new THREE.Vector3(), UP = new THREE.Vector3
 const t0 = performance.now();
 function frame(now) {
   stepTurns(now);
-  if (now - stepT0 > STEP_MS) { step++; stepT0 = now; renderCaption(); const g = pop(curV()); sound.why = `${meterOf(curV()).map(b => b ? "ऽ" : "।").join("")} has ${g} guru${g === 1 ? "" : "s"} → ${g} step${g === 1 ? "" : "s"} up the scale`; sound.pluck(degree(g + 2, SA * 4)); }
+  if (now - stepT0 > STEP_MS) { step++; stepT0 = now; renderCaption(); const g = pop(curV()); sound.why = `${meterOf(curV()).map(b => b ? "ऽ" : "।").join("")} has ${g} guru${g === 1 ? "" : "s"} → ${g} step${g === 1 ? "" : "s"} up the scale`; sound.pluck(degree(g + 2, SA * 2)); }
 
   const P = V.map(v => proj3(mul(Bd, v)));
   let dmin = Infinity, dmax = -Infinity; for (const p of P) { dmin = Math.min(dmin, p[3]); dmax = Math.max(dmax, p[3]); }

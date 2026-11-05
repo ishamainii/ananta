@@ -18,7 +18,7 @@ const canvas = document.getElementById("sky");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
 renderer.setPixelRatio(Math.min(1.5, devicePixelRatio || 1));
 const psyche = createPsyche();
-psyche.uniforms.uTrip.value = 0.7;
+psyche.uniforms.uGlow.value = 0.7;
 function resize() { renderer.setSize(innerWidth, innerHeight, false); psyche.resize(innerWidth, innerHeight, renderer.getPixelRatio()); }
 addEventListener("resize", resize); resize();
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;

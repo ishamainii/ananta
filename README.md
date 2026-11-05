@@ -30,7 +30,7 @@ index.html                 home: chambers, how to play, lab log
 chambers/<name>/           one folder per chamber (index.html + main.js)
 js/psyche.js               the kaleidoscope / log-polar zoom shader behind every chamber
 js/sound.js                Web Audio score: Karplus–Strong tanpura & santoor, bansuri, bowl
-js/chamber-ui.js           veil, dock, trip slider, notebook drawer, bibliography
+js/chamber-ui.js           veil, dock, glow slider, notebook drawer, bibliography
 data/sources.json          every citation, checked against a publisher or journal record
 python/                    the math, tested first (pytest), then ported to JS
 worker/                    Cloudflare Worker proxy for the AI guide
