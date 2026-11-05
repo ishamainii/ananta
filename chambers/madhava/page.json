@@ -7,7 +7,7 @@
  "description": "Madhava's 14th-century infinite series for π, and the Kerala correction terms that make it converge astonishingly fast.",
  "aria": "A twisting chain of light whose links are the terms of Madhava's series for pi",
  "intro": "In 14th-century Kerala, Mādhava wrote π as an infinite sum, then found how to correct the last term so a few dozen terms give eleven digits. Watch the series fold into π.",
- "dock": "<label class=\"chip\">view <select id=\"viewSel\"><option value=\"chain\">chain</option><option value=\"swing\">swing</option></select></label><label class=\"chip\">correction <select id=\"orderSel\"><option value=\"0\">none</option><option value=\"1\">1/(4n)</option><option value=\"2\">n/(4n²+1)</option><option value=\"3\" selected>(n²+1)/(n(4n²+5))</option></select></label>",
+ "dock": "<label class=\"chip\">view <select id=\"viewSel\"><option value=\"chain\">chain</option><option value=\"swing\">swing</option></select></label><label class=\"chip\">correction <select id=\"orderSel\"><option value=\"0\">none</option><option value=\"1\">1/(4n)</option><option value=\"2\">n/(4n²+1)</option><option value=\"3\" selected>(n²+1)/(n(4n²+5))</option></select></label><button class=\"chip\" id=\"labBtn\" aria-pressed=\"false\" title=\"Can a machine rediscover Mādhava?\">✦ machine rediscovery</button>",
  "trip": "45",
  "legend": [
   [

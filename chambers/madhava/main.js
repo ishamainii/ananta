@@ -8,6 +8,7 @@
 import { createFlatStage, glowLine, glowDot } from "../../js/flat-stage.js";
 import { createSound, degree, SA } from "../../js/sound.js";
 import { setupChamber } from "../../js/chamber-ui.js";
+import { createRediscovery } from "./rediscover.js";
 
 const $ = id => document.getElementById(id);
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -110,7 +111,28 @@ function frame(now) {
   requestAnimationFrame(frame);
 }
 
+// ---------- machine rediscovery panel ----------
+document.body.insertAdjacentHTML("beforeend", `<section class="lab" id="lab" hidden aria-label="Machine rediscovery">
+  <div class="tour-top"><span class="tour-n">machine rediscovery · symbolic regression</span><button class="chip close" id="labClose" aria-label="Close">✕</button></div>
+  <h2>Can a machine find Mādhava's correction from data alone?</h2>
+  <p>I give a search the exact leftover tail of the series for n = 5 to 40, and nothing else: no π, no Kerala, no hint. It tries every formula
+  (an² + bn + c) / (dn³ + en² + fn + g) with whole-number coefficients 0 to 6, scores each by how many digits it gets right, then tests the winner on n = 41 to 200, which it never saw.</p>
+  <button class="chip primary lab-run">run the search</button>
+  <div class="lab-out"></div>
+  <p class="dim small">Honest limits: I chose the shape of the formulas and the coefficient range, and Mādhava's formula lies inside that space. So this is rediscovery inside a hypothesis space, the way symbolic regression always works, not discovery from nothing.</p>
+</section>`);
+const lab = document.getElementById("lab"), labBtn = document.getElementById("labBtn");
+const showLab = open => { lab.hidden = !open; labBtn.setAttribute("aria-pressed", String(open)); };
+labBtn.addEventListener("click", () => showLab(lab.hidden));
+document.getElementById("labClose").addEventListener("click", () => showLab(false));
+const rediscovery = createRediscovery({ panel: lab, onDone: d => { order = 3; $("orderSel").value = "3"; readout(); sound.why = "the search found Mādhava's correction"; sound.bowl(SA * 4); } });
+
 setupChamber({ key: "madhava", sound, psyche: stage.psyche, tools: [
+  { name: "rediscover", hint: "can a machine rediscover madhava", description: "Run the symbolic-regression search over 703,836 rational formulas to see whether Madhava's correction is the best fit to the series' tail, and report the winner.",
+    input_schema: { type: "object", properties: {} },
+    parse: t => /rediscover|machine|symbolic|search for (the )?formula|\bai\b|learn the correction/.test(t) ? {} : null,
+    run: async () => { showLab(true); const d = await rediscovery.run(); const w = d.top[0];
+      return { say: `Searched ${d.seen.toLocaleString()} formulas. The best fit to the tail is (n²+1)/(n(4n²+5)), Mādhava's sharpest correction: ${w.s.toFixed(1)} correct digits on the training range, ${w.test.toFixed(1)} on unseen n.`, winner: w }; } },
   { name: "set_terms", hint: "show 25 terms", description: "Show the first n terms of Madhava's series (1 to 200) and pause there.",
     input_schema: { type: "object", properties: { n: { type: "integer", minimum: 1, maximum: 200 } }, required: ["n"] },
     parse: t => { const m = t.match(/(\d+)\s*terms?/); return m ? { n: +m[1] } : null; },

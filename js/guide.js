@@ -68,7 +68,7 @@ export function createGuide({ chamber, tools, faq = [], context = () => "" }) {
   async function runClause(c) {
     if (/^(help|commands|what can (you|i) do|options|menu)\b/.test(c)) return "I can change the scene or answer questions, several at once. Try: " + hints.slice(0, 6).join(" · ") + ".";
     if (/^(hi|hello|hey|namaste)\b/.test(c)) return `Namaste. This is ${chamber}. Ask me to change something, or ask what you're looking at.`;
-    if (!isQuestion(c) || /^(show|turn|go|set|play|open)/.test(c)) {
+    if (!isQuestion(c) || /^(show|turn|go|set|play|open|run|solve|dive|scramble|try|can (you|a|the) (machine|computer|ai)|can you)\b/.test(c)) {
       for (const t of tools) {
         const args = t.parse?.(c);
         if (args) { const r = await t.run(args); return r?.say ?? "Done."; }
