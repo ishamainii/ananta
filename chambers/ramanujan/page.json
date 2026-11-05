@@ -25,40 +25,33 @@
  ],
  "tutorial": [
   {
-   "t": "Partitions",
+   "t": "Splitting a number",
    "do": "partitions of 4",
-   "b": "A <b>partition</b> of n is a way to split n into whole numbers, ignoring order. 4 = 3+1 = 2+2 = 2+1+1 = 1+1+1+1, plus 4 itself, so p(4) = 5.",
-   "see": "the big number at the bottom: p(4) = 5."
+   "at": "#cap2",
+   "b": "4 can be split 5 ways: 4, 3+1, 2+2, 2+1+1 and 1+1+1+1. So p(4) = 5."
   },
   {
-   "t": "They explode",
+   "t": "It grows fast",
    "do": "partitions of 200",
-   "b": "p(10) = 42. p(100) = 190,569,292. p(200) is almost four trillion. Here they're counted exactly with Euler's pentagonal-number recurrence, using arbitrary-size integers.",
-   "see": "p(200) = 3,972,999,029,388."
+   "at": "#cap2",
+   "b": "p(200) is almost four trillion."
   },
   {
-   "t": "Fold every p(n) into one function",
+   "t": "One picture for every p(n)",
    "do": "whole disk",
-   "b": "Hardy and Ramanujan packed all the p(n) into P(q) = Σ p(n)qⁿ = ∏ 1/(1 − qᵏ). The disk is every complex number q with |q| &lt; 1. Each pixel is one q, coloured by the <b>angle</b> of P(q). The bright bands join points where |P| is the same size.",
-   "see": "calm colour near the centre, frantic colour near the rim."
+   "b": "This disk is one function that contains every p(n). Colour shows its angle and the bright rings show its size."
   },
   {
-   "t": "The wall",
+   "t": "The edge",
    "do": "dive toward 0/1",
-   "b": "Each factor 1/(1 − qᵏ) blows up at the k-th roots of unity, points evenly spaced on the rim. With infinitely many factors the whole rim is a wall of blow-ups. The biggest is at q → 1, on the right.",
-   "see": "colour and bands piling up infinitely fast as you near the edge."
+   "at": "#viewSel",
+   "b": "Near the rim the function blows up at infinitely many points. Hardy and Ramanujan used these blow-ups to estimate p(n)."
   },
   {
-   "t": "Reading p(n) off the explosions",
-   "do": "dive toward 1/2",
-   "b": "The <b>circle method</b>: the size of each blow-up tells you about p(n). The one at q → 1 alone gives p(n) ≈ e^{π√(2n/3)} / (4n√3). The readout divides the exact p(n) by that estimate, and it creeps toward 1. Smaller blow-ups like this one at −1 (a/b = 1/2) supply the corrections.",
-   "see": "'ratio exact / estimate' in the top-left readout."
-  },
-  {
-   "t": "The mod 5 miracle",
+   "t": "A pattern in fives",
    "do": "play",
-   "b": "Ramanujan noticed p(4), p(9), p(14)… every p(5k + 4) is divisible by 5. Also p(7k + 5) by 7 and p(11k + 6) by 11. As n counts up, the readout turns green and a bowl rings on each 5k + 4.",
-   "see": "the green flash and the bowl every fifth number."
+   "at": "#ro",
+   "b": "p(4), p(9), p(14) and every fifth one after are divisible by 5. This panel turns green each time."
   }
  ],
  "sound": "<p><b>Five notes, mod 5.</b> As n counts up, the note is chosen by <b>n mod 5</b>. Bhupali has exactly five notes, so the melody walks Sa Re Ga Pa Dha and repeats every 5 numbers, an octave higher for the second half of each ten. So n = 5k + 4 always lands on Dha.</p><p>That's the point: the bowl rings on every <b>n = 5k + 4</b>, exactly the numbers whose p(n) Ramanujan proved divisible by 5. You can hear the congruence.</p><p>Every chamber plays in <b>Raag Bhupali</b>: five notes, Sa Re Ga Pa Dha, tuned as whole-number ratios of the home note Sa (138.6 Hz here): <b>1, 9/8, 5/4, 3/2, 5/3</b>. Simple ratios mean the sound waves line up every few cycles, so they never clash. That lets the math pick any note it likes and it still sounds like music. Underneath, a tanpura drone holds Sa and Pa, and a bansuri improvises in the same raag. The santoor and the singing bowl are the ones the math plays.</p>",

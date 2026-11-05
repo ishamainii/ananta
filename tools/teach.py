@@ -7,9 +7,12 @@ Tour steps: t = title, b = body (html), see = what to look at, do = a guide comm
 step runs so the scene shows what the step is talking about.
 """
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).parent))
+from tours import TOURS            # the short how-to-play steps
 
 RAAG = ("<p>Every chamber plays in <b>Raag Bhupali</b>: five notes, Sa Re Ga Pa Dha, tuned as whole-number "
         "ratios of the home note Sa (138.6 Hz here): <b>1, 9/8, 5/4, 3/2, 5/3</b>. Simple ratios mean the sound "
@@ -333,7 +336,7 @@ CH["purna"] = dict(
 for slug, spec in CH.items():
     p = ROOT / "chambers" / slug / "page.json"
     page = json.loads(p.read_text(encoding="utf-8"))
-    page.update(glow=spec["glow"], legend=spec["legend"], tutorial=spec["tutorial"], sound=spec["sound"],
+    page.update(glow=spec["glow"], legend=spec["legend"], tutorial=TOURS[slug], sound=spec["sound"],
                 faq=spec["faq"] + COMMON_FAQ)
     p.write_text(json.dumps(page, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print("taught", slug, len(spec["tutorial"]), "steps")

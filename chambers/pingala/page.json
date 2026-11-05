@@ -45,46 +45,38 @@
  ],
  "tutorial": [
   {
-   "t": "A meter is a pattern of light and heavy",
+   "t": "Two kinds of syllable",
    "do": "show 3 dimensions",
-   "b": "Sanskrit verse is built from syllables that are either <b>laghu</b>, light (।), or <b>guru</b>, heavy (ऽ). Over 2,000 years ago Pingala listed every possible pattern. With 3 syllables there are 8: ।।।, ।।ऽ, ।ऽ।, and so on.",
-   "see": "the 8 labels on the cube's corners. That's every 3-syllable meter, once each."
+   "b": "Sanskrit verse uses light syllables (।) and heavy ones (ऽ). A meter is a pattern of them, like ।ऽ।."
   },
   {
-   "t": "Light = 0, heavy = 1",
-   "do": "show 3 dimensions",
-   "b": "Write ऽ as 0 and । as 1, read the digits right to left, and a meter becomes a binary number. Pingala's rules for listing all the meters (prastāra) and for finding a meter's place in that list (uddiṣṭa) then work exactly like counting in binary. Give each syllable its own direction in space and each meter becomes a corner: 3 syllables, 3 directions, a cube.",
-   "see": "the first symbol of each label changes when you cross the cube one way, the second when you cross it another."
+   "t": "Every pattern is a corner",
+   "b": "Three syllables give 8 patterns. Each one sits on a corner of this cube, labelled with its pattern."
   },
   {
-   "t": "An edge changes one syllable",
-   "do": "show 3 dimensions",
-   "b": "Two corners are joined only if their meters differ in exactly one syllable. The edge's colour says which syllable. Gold edges flip the first syllable, orange the second, rose the third. The key at the bottom left lists them.",
-   "see": "pick a gold edge and compare the labels at its two ends. Only the first symbol differs."
+   "t": "Edges change one syllable",
+   "at": "#key",
+   "b": "Two corners are joined when their patterns differ by one syllable. The edge colour tells you which syllable changed."
   },
   {
    "t": "Follow the spark",
-   "do": "show 3 dimensions",
-   "b": "The gold spark visits every meter exactly once, changing one syllable per step (a Gray code). The big symbols at the bottom show the meter it's on, and the syllable that just changed glows. Each step plays a note: more heavy syllables means a higher note.",
-   "see": "the bottom caption, and listen: the pitch climbs as heavy syllables appear."
+   "at": "#cap2",
+   "b": "The gold spark visits every pattern once. The large symbols here show the one it is on."
   },
   {
-   "t": "One more syllable, one more dimension",
+   "t": "Add a syllable",
    "do": "show 4 dimensions",
-   "b": "With 4 syllables there are 16 meters, and you need a 4th direction: a <b>tesseract</b>. A screen can only show 3, so it's drawn the way a photo shows a 3D box, with the far side smaller. That's why you see a cube inside a cube.",
-   "see": "the violet edges joining the inner cube to the outer one. They flip syllable 4: the inner cube is every meter ending in one way, the outer cube the other."
+   "at": "#dims",
+   "b": "Four syllables need a fourth direction. The cube becomes a tesseract, drawn as a cube inside a cube."
   },
   {
-   "t": "Turning through the 4th dimension",
-   "do": "turn syllables 1 and 4",
-   "b": "In 4D you don't rotate around an axis, you rotate in a <b>plane</b>, two directions at once. This turns the plane of syllables 1 and 4: the inner and outer cubes swap places. The faint panes show the squares lying in that plane. Drag the scene to turn the ordinary 3 directions yourself.",
-   "see": "the inner cube grow outward while the outer one shrinks in. No edge ever breaks."
+   "t": "Walk around it",
+   "b": "Drag to circle the shape. Scroll or pinch to fly inside it. Double-click to come back."
   },
   {
-   "t": "Count everything with Meru",
-   "do": "show 5 dimensions",
-   "b": "How many squares, cubes, edges? A k-dimensional face frees k syllables and fixes the rest: C(n,k)·2ⁿ⁻ᵏ. The C(n,k) come from the <b>meru-prastāra</b>, the stepped 'mountain' Halāyudha read out of Pingala's rules, centuries before Pascal. The tesseract has 16 corners, 32 edges, 24 squares and 8 cubes.",
-   "see": "now 5 syllables, 32 meters. Ask the guide 'show me 7 dimensions', or press n for the full working."
+   "t": "Listen",
+   "at": "#soundBtn",
+   "b": "Turn the sound on. Each step plays a note, and more heavy syllables mean a higher note."
   }
  ],
  "sound": "<p><b>The spark sings the meter.</b> At each step a santoor note plays, pitched by <b>how many heavy syllables</b> the meter has: ।।।। sits at the bottom, every extra ऽ is one step up the scale, ऽऽऽऽ at the top. Because the walk changes one syllable at a time, the melody only ever moves one step up or down. You're hearing the Gray code.</p><p>A singing bowl rings each time a new plane starts turning.</p><p>Every chamber plays in <b>Raag Bhupali</b>: five notes, Sa Re Ga Pa Dha, tuned as whole-number ratios of the home note Sa (138.6 Hz here): <b>1, 9/8, 5/4, 3/2, 5/3</b>. Simple ratios mean the sound waves line up every few cycles, so they never clash. That lets the math pick any note it likes and it still sounds like music. Underneath, a tanpura drone holds Sa and Pa, and a bansuri improvises in the same raag. The santoor and the singing bowl are the ones the math plays.</p>",

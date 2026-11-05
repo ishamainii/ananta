@@ -37,40 +37,38 @@
  ],
  "tutorial": [
   {
-   "t": "π as a sum that never ends",
+   "t": "A sum for π",
    "do": "twist 180, 3 terms",
-   "b": "Mādhava, in 14th-century Kerala: π/4 = 1 − 1/3 + 1/5 − 1/7 + … forever. Here each term is a <b>link</b> in a chain: forward 1, back 1/3, forward 1/5.",
-   "see": "three links folded along a line. Forward, back, forward."
+   "b": "Mādhava found that π/4 = 1 − 1/3 + 1/5 − 1/7 and so on forever. Each piece is one link in this chain."
   },
   {
-   "t": "Closing in, slowly",
+   "t": "Closing in slowly",
    "do": "12 terms",
-   "b": "Each new link overshoots the target, then undershoots, by less each time. The dashed line marks π/4, where it's heading. The catch: it's painfully slow. 1,000 terms give only 3 correct digits of π.",
-   "see": "the white tip of the chain bouncing either side of the dashed line."
+   "b": "Each link overshoots and then undershoots by a little less. The dashed line is π/4."
   },
   {
-   "t": "Mādhava's trick: guess the leftover",
+   "t": "His shortcut",
    "do": "correction 3",
-   "b": "When you stop after n terms, you throw away an infinite tail. Mādhava found its size is predictable, so you add a <b>correction</b> to the last term. His sharpest one is (n²+1) / (n(4n²+5)).",
-   "see": "the gold dot: the corrected estimate, sitting almost exactly on π/4."
+   "at": "#orderSel",
+   "b": "Mādhava added one small correction at the end of the sum. It makes the answer far more accurate."
   },
   {
-   "t": "Count the digits",
+   "t": "Count the correct digits",
    "do": "25 terms",
-   "b": "Top left, the four rows show the same 25 terms with no correction and with each of Mādhava's three corrections. Without: off by 0.04. With the sharpest: off by about 10⁻¹⁰. Bright digits are correct.",
-   "see": "the digit counts on the right of each row."
+   "at": "#ro",
+   "b": "This panel compares the plain sum with his three corrections. The bright digits are correct."
   },
   {
-   "t": "A microscope on π",
+   "t": "The swing view",
    "do": "swing view, play",
-   "b": "In the swing view each estimate is a ray, magnified so the error is visible. Rose rays are the plain sums: they swing wide. Gold rays have the correction: they land on π and stay. The magnification keeps growing, like zooming in forever.",
-   "see": "the rose fan wobbling while the gold ray sits still on the white π dot."
+   "at": "#viewSel",
+   "b": "Red rays are the plain sums and they wobble. Gold rays use the correction and settle on π."
   },
   {
-   "t": "Unfold the chain",
-   "do": "chain view, twist 120",
-   "b": "Turn each link 120° from the last, not 180°, and the same series curls into a spiral. It's Mādhava's arctangent series evaluated around the unit circle. 180° is the one special angle where it folds flat into π.",
-   "see": "the spiral. Say 'twist 150' or 'twist 90' to try others, or 'play' to let it breathe."
+   "t": "Can a machine find it?",
+   "do": "chain view",
+   "at": "#labBtn",
+   "b": "Press machine rediscovery. A computer search through 703,836 formulas picks out Mādhava's correction from the numbers alone."
   }
  ],
  "sound": "<p><b>Each term is a note.</b> Every new term plucks a santoor string. The series alternates plus and minus, and so does the music: <b>minus terms play three notes higher in the raag</b> (from Sa that's Pa, × 3/2). That's why you hear a back-and-forth. Every 8 terms the base note climbs one step.</p><p>A singing bowl rings <b>every time π gains a correct digit</b>. With the correction on, the bowl rings often at first, then the digits run out of room on screen.</p><p>Every chamber plays in <b>Raag Bhupali</b>: five notes, Sa Re Ga Pa Dha, tuned as whole-number ratios of the home note Sa (138.6 Hz here): <b>1, 9/8, 5/4, 3/2, 5/3</b>. Simple ratios mean the sound waves line up every few cycles, so they never clash. That lets the math pick any note it likes and it still sounds like music. Underneath, a tanpura drone holds Sa and Pa, and a bansuri improvises in the same raag. The santoor and the singing bowl are the ones the math plays.</p>",

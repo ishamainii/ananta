@@ -29,32 +29,24 @@
  ],
  "tutorial": [
   {
-   "t": "Three ways to hold the infinite",
+   "t": "The whole",
    "do": "show purna",
-   "b": "Long before set theory, Indian thinkers argued about the infinite. This chamber has three movements; the buttons at the bottom switch between them. First, <b>pūrṇa</b>, the whole: 'from the whole the whole arises; taking the whole from the whole, the whole remains.'",
-   "see": "the verse along the bottom, and the zoom that never reaches a floor."
-  },
-  {
-   "t": "A whole inside the whole",
-   "b": "The mandala contains a copy of itself, which contains a copy… forever (a Droste spiral). Take the outer ring away and what's left looks exactly the same. Infinite sets do this too: remove all the even numbers from the whole numbers and you still have as many as you started with.",
-   "see": "the rings flowing inward and never running out."
+   "at": "#moves",
+   "b": "An old verse says that taking the whole from the whole leaves the whole. This picture contains itself forever."
   },
   {
    "t": "Too many to count",
    "do": "jaina",
-   "b": "Jaina mathematics sorted numbers into <b>enumerable</b>, <b>innumerable</b> and <b>infinite</b>, and recognised several different kinds of infinity. Here each ring holds ten times the seeds of the one inside it: 10, 100, 1,000…",
-   "see": "the labels beside each ring, until the seeds can't be drawn one by one."
+   "b": "Jaina thinkers sorted numbers into ones you can count, ones too large to count, and infinite ones. Each ring here holds ten times the last."
   },
   {
    "t": "Dividing by zero",
    "do": "show khahara",
-   "b": "Bhāskara II named a quantity divided by zero <b>khahara</b>. The curve is 1 ÷ x as x slides toward 0: it shoots up without limit. His rule: add to khahara or take away from it and it doesn't change.",
-   "see": "the gold beam, and the line: khahara + 1000 = khahara."
+   "b": "As x shrinks to 0, 1 ÷ x grows without limit. Bhāskara II called a number divided by zero khahara."
   },
   {
-   "t": "The honest footnote",
-   "b": "This isn't modern analysis: today 1/0 is left undefined, and we'd say 1/x grows without bound as x → 0⁺. But Bhāskara's rule says exactly how infinity swallows finite additions, an idea Cantor's arithmetic made precise 700 years later.",
-   "see": "the notebook (press n) for the sources."
+   "t": "Then and now",
+   "b": "His rule was that adding to khahara does not change it. Modern set theory has a similar rule: adding a few items to an infinite set does not change its size."
   }
  ],
  "sound": "<p><b>Each movement has its own rule.</b> I, pūrṇa: every note is <b>Sa</b>, just in a different octave, the same whole at a different scale. II, Jaina: the notes <b>count up the scale</b>, ten to a ring, then start again an octave… the counting never ends. III, khahara: <b>one note that never changes</b>, whatever is added around it.</p><p>Switching movement rings a bowl on harmonic 2, 3 or 4 of Sa (× 2, × 3, × 4), the first rungs of the infinite overtone ladder inside every note.</p><p>Every chamber plays in <b>Raag Bhupali</b>: five notes, Sa Re Ga Pa Dha, tuned as whole-number ratios of the home note Sa (138.6 Hz here): <b>1, 9/8, 5/4, 3/2, 5/3</b>. Simple ratios mean the sound waves line up every few cycles, so they never clash. That lets the math pick any note it likes and it still sounds like music. Underneath, a tanpura drone holds Sa and Pa, and a bansuri improvises in the same raag. The santoor and the singing bowl are the ones the math plays.</p>",

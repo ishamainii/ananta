@@ -143,15 +143,20 @@ export async function setupChamber({ key, sound, psyche, onEnter, tools = [] }) 
     let i = 0;
     const show = () => {
       const s = steps[i];
-      $("tourN").textContent = `how to play · ${i + 1} of ${steps.length}`;
+      $("tourN").textContent = `step ${i + 1} of ${steps.length}`;
       $("tourT").textContent = s.t; $("tourB").innerHTML = s.b; $("tourSee").innerHTML = s.see ? `<b>look for</b> ${s.see}` : "";
       $("tourBack").disabled = i === 0;
+      // point at the part of the page this step is about
+      document.querySelectorAll(".tour-spot").forEach(e => e.classList.remove("tour-spot"));
+      const target = s.at && document.querySelector(s.at);
+      const spot = target && (target.closest(".chip") || target);
+      if (spot) { spot.classList.add("tour-spot"); if (spot.closest(".dock")) document.body.classList.remove("idle"); }
       $("tourNext").textContent = i === steps.length - 1 ? (CHAMBERS[here + 1] ? "done ✓" : "done ✓") : "next →";
       if (s.do) guide.exec(s.do, { quiet: true });
       if (window.renderMathInElement) window.renderMathInElement(box, { delimiters: [{ left: "\\(", right: "\\)", display: false }] });
     };
     const open = k => { if (!steps.length) return; i = k; box.hidden = false; tb?.setAttribute("aria-pressed", "true"); showWhy(false); show(); };
-    const close = () => { if (box.hidden) return; box.hidden = true; tb?.setAttribute("aria-pressed", "false"); try { localStorage.setItem("ananta-tour-" + key, "done"); } catch {} };
+    const close = () => { if (box.hidden) return; box.hidden = true; document.querySelectorAll(".tour-spot").forEach(e => e.classList.remove("tour-spot")); tb?.setAttribute("aria-pressed", "false"); try { localStorage.setItem("ananta-tour-" + key, "done"); } catch {} };
     $("tourNext").addEventListener("click", () => { if (i < steps.length - 1) { i++; show(); } else close(); });
     $("tourBack").addEventListener("click", () => { if (i > 0) { i--; show(); } });
     $("tourClose").addEventListener("click", close);

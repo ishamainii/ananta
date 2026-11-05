@@ -31,34 +31,27 @@
   {
    "t": "The puzzle",
    "do": "solve N = 61",
-   "b": "Find whole numbers x and y with <b>x² − 61·y² = 1</b>. Try y = 1, 2, 3… nothing works for a very long time. The smallest answer is x = 1,766,319,049. Fermat posed this as a challenge in 1657. Bhāskara II had solved it around 1150.",
-   "see": "the wheel starting to turn for N = 61."
+   "b": "Find whole numbers with x² − 61y² = 1. The smallest answer has x = 1,766,319,049."
   },
   {
    "t": "Start with a near miss",
-   "b": "The wheel (chakravāla) keeps three numbers a, b, k with <b>a² − N·b² = k</b>. k is how far you are from solved. Start with a near √61: 8² − 61·1² = 3, so k = 3.",
-   "see": "the first line of the readout, top left: start a=8 b=1 k=3."
+   "at": "#ro",
+   "b": "The method keeps a² − 61b² = k, where k measures how far off it is. It starts at 8² − 61 = 3, so k = 3."
   },
   {
-   "t": "One turn of the wheel",
-   "b": "Each turn picks a helper number m: k must divide a + b·m, and m² should be as close to N as possible. Then a, b and k are replaced by (am + Nb)/|k|, (a + bm)/|k| and (m² − N)/k. Each stop on the wheel is one turn, labelled with its new k.",
-   "see": "the k labels. They stay small, never growing out of control."
+   "t": "One turn at a time",
+   "b": "Each stop on the wheel is one turn of the method. Its label shows the new k."
   },
   {
-   "t": "Why it never breaks",
-   "b": "After every turn a² − N·b² still equals k exactly. That's Brahmagupta's composition rule (bhāvanā, 628 CE), divided through by k². The big line at the bottom checks it live with the real numbers.",
-   "see": "the bottom equation: a² − 61·b² = k, true at every turn."
+   "t": "Checked every turn",
+   "at": "#cap2",
+   "b": "This line checks the equation with the real numbers after every turn. When k reaches 1 the puzzle is solved."
   },
   {
-   "t": "Closing the wheel",
-   "b": "When k reaches 1, a² − N·b² = 1: solved. A bowl rings and the wheel blooms. Along the way a/b is a fraction closing in on √N. The readout shows its digits locking in. Stops further from the centre have more digits.",
-   "see": "the last stop turning white, and a/b next to √61 in the readout."
-  },
-  {
-   "t": "Try a monster",
+   "t": "Try a harder one",
    "do": "solve N = 991",
-   "b": "For N = 991 the smallest x has 30 digits. The wheel still finds it in a few dozen turns. Pick any N from the menu, or ask the guide 'solve N = 433'.",
-   "see": "how far out the stops go: those are 30-digit numbers."
+   "at": "#nSel",
+   "b": "Pick another N here. For 991 the answer has 30 digits, and the wheel still finds it."
   }
  ],
  "sound": "<p><b>You hear k.</b> Each turn plucks a note whose pitch is set by <b>how big k is</b>: about log₂|k| steps up the scale. Big near-misses sound high and small ones low, so as the wheel homes in, the melody settles down.</p><p>When <b>k = 1</b> two bowls ring together, on Sa and an octave and a fifth above (× 3): the equation is solved.</p><p>Every chamber plays in <b>Raag Bhupali</b>: five notes, Sa Re Ga Pa Dha, tuned as whole-number ratios of the home note Sa (138.6 Hz here): <b>1, 9/8, 5/4, 3/2, 5/3</b>. Simple ratios mean the sound waves line up every few cycles, so they never clash. That lets the math pick any note it likes and it still sounds like music. Underneath, a tanpura drone holds Sa and Pa, and a bansuri improvises in the same raag. The santoor and the singing bowl are the ones the math plays.</p>",
