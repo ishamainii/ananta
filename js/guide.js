@@ -1,6 +1,12 @@
 // guide.js: "ask the chamber". Plain language in, the scene changes, answers come back.
 //
-// No server, no model: it's a small command interpreter.
+// Two brains, same tools:
+//  * AI (GUIDE_URL set in config.js): the request, the chamber's notes, its live state and the
+//    tool schemas go to Claude through the proxy in worker/. Claude answers and calls the
+//    chamber's tools; each call runs here on the live scene and the result goes back to it,
+//    up to 5 rounds, so "compare the plain series with correction 3 at 40 terms" can take
+//    several actions and then explain what changed.
+//  * coded (no proxy, or the proxy fails): a small command interpreter.
 //  1. split the request into clauses ("show 6 dimensions and turn syllables 2 and 5, then explain guru")
 //     on commas / "and" / "then" / "also", but glue a bare number back on ("2 and 5" stays together)
 //  2. each clause goes to the chamber's tools in order; the first tool whose parse() reads it runs
@@ -9,7 +15,9 @@
 //  4. anything left over gets a short "didn't catch that" with clickable suggestions
 // Answers can be read aloud, and on browsers with speech recognition you can talk to it.
 
-export function createGuide({ chamber, tools, faq = [] }) {
+import { GUIDE_URL, GUIDE_MODEL } from "./config.js";
+
+export function createGuide({ chamber, tools, faq = [], context = () => "" }) {
   const box = document.createElement("div");
   box.className = "guide"; box.hidden = true;
   const hints = tools.map(t => t.hint).filter(Boolean);
@@ -80,7 +88,47 @@ export function createGuide({ chamber, tools, faq = [] }) {
     }
     return said;
   }
-  async function ask(text) { say("you", text); await exec(text); }
+  // ---- AI mode
+  const byName = Object.fromEntries(tools.map(t => [t.name, t]));
+  const schemas = tools.filter(t => t.description).map(({ name, description, input_schema }) =>
+    ({ name, description, input_schema: input_schema ?? { type: "object", properties: {} } }));
+  let history = [];
+  async function online(text) {
+    history.push({ role: "user", content: text });
+    if (history.length > 16) history = history.slice(-16).filter((m, i) => i || m.role === "user");
+    const system = `You are the guide inside "${chamber}", one chamber of Ananta, an interactive site on Indian mathematics built by Isha Maini. ` +
+      `Visitors are curious and often mathematically literate. Be exact: say what is on screen, give the real numbers from tool results, and never ` +
+      `state a historical claim, date or attribution that is not in the context below; cite sources by their id in square brackets. ` +
+      `When the visitor asks to see something, change the scene with the tools first, then explain what changed. ` +
+      `Keep answers to at most 4 short sentences unless asked for more. If something is uncertain or disputed among historians, say so.\n\n` +
+      `CONTEXT:\n${context()}`;
+    for (let round = 0; round < 5; round++) {
+      const res = await fetch(GUIDE_URL, { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ model: GUIDE_MODEL, max_tokens: 500, system, tools: schemas, messages: history }) });
+      if (!res.ok) throw new Error(`guide ${res.status}`);
+      const msg = await res.json();
+      history.push({ role: "assistant", content: msg.content });
+      const out = msg.content.filter(b => b.type === "text").map(b => b.text).join(" ").trim();
+      if (out) say("bot", out);
+      const calls = msg.content.filter(b => b.type === "tool_use");
+      if (!calls.length) return;
+      const results = [];
+      for (const c of calls) {
+        let r; try { r = await byName[c.name].run(c.input); } catch (e) { r = { error: String(e) }; }
+        results.push({ type: "tool_result", tool_use_id: c.id, content: JSON.stringify(r ?? { ok: true }) });
+      }
+      history.push({ role: "user", content: results });
+    }
+  }
+
+  async function ask(text) {
+    say("you", text);
+    if (!GUIDE_URL) return exec(text);
+    const thinking = say("bot dim", "…");
+    try { await online(text); }
+    catch { history = []; await exec(text); }            // proxy down or rate-limited: the coded guide takes over
+    finally { thinking.remove(); }
+  }
 
   box.querySelector("#guideForm").addEventListener("submit", e => {
     e.preventDefault(); const text = input.value.trim(); if (!text) return; input.value = ""; ask(text);
@@ -96,7 +144,7 @@ export function createGuide({ chamber, tools, faq = [] }) {
     mic.addEventListener("click", () => { if (mic.getAttribute("aria-pressed") === "true") rec.stop(); else { voice = true; voiceBtn.setAttribute("aria-pressed", "true"); mic.setAttribute("aria-pressed", "true"); rec.start(); } });
   }
 
-  const toggle = open => { box.hidden = !open; document.getElementById("guideBtn")?.setAttribute("aria-pressed", String(open)); if (open) { input.focus(); if (!log.children.length) say("bot dim", `Ask me to change the scene or explain it. You can chain requests: "${hints[0] ?? "help"} and ${hints[1] ?? "why this sound"}".`); } };
+  const toggle = open => { box.hidden = !open; document.getElementById("guideBtn")?.setAttribute("aria-pressed", String(open)); if (open) { input.focus(); if (!log.children.length) say("bot dim", `${GUIDE_URL ? "AI guide. " : ""}Ask me to change the scene or explain it. You can chain requests: "${hints[0] ?? "help"} and ${hints[1] ?? "why this sound"}".`); } };
   document.getElementById("guideBtn")?.addEventListener("click", () => toggle(box.hidden));
   addEventListener("keydown", e => { if (e.key === "g" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) { e.preventDefault(); toggle(box.hidden); } });
   return { toggle, exec, ask };

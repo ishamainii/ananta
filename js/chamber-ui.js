@@ -101,21 +101,21 @@ export async function setupChamber({ key, sound, psyche, onEnter, tools = [] }) 
   // ---- things the guide can do in every chamber, on top of the chamber's own tools
   const go = c => { location.href = `${root}chambers/${c.slug}/`; return { say: `Walking to ${c.name}.` }; };
   const shared = [
-    { name: "set_trip", hint: "trip 0",
+    { name: "set_trip", hint: "trip 0", description: "Set the psychedelic background strength, 0 (only the math) to 100.", input_schema: { type: "object", properties: { level: { type: "number", minimum: 0, maximum: 100 } }, required: ["level"] },
       parse: t => { const m = t.match(/(?:trip|psychedelic|haze|background)\D*(\d+)/) || (/more psychedelic|trippier|wilder/.test(t) && [0, 95]) || (/calm|less psychedelic|clearer|just the math|plain/.test(t) && [0, 0]); return m ? { level: +m[1] } : null; },
       run: ({ level }) => { if (trip) { trip.value = level; trip.dispatchEvent(new Event("input")); } return { say: level === 0 ? "Background off: only the math is left on screen." : `Trip set to ${level}.` }; } },
-    { name: "volume", hint: "volume 40",
+    { name: "volume", hint: "volume 40", description: "Set the volume 0-100 (v), change it by d, or turn sound on (on: true).", input_schema: { type: "object", properties: { v: { type: "number" }, d: { type: "number" }, on: { type: "boolean" } } },
       parse: t => { const m = t.match(/vol(?:ume)?\D*(\d+)/); if (m) return { v: +m[1] }; if (/louder|turn (it )?up/.test(t)) return { d: 15 }; if (/quieter|softer|turn (it )?down/.test(t)) return { d: -15 }; if (/\bmute\b|sound off|stop (the )?(sound|music)/.test(t)) return { v: 0 }; if (/sound on|play (the )?(sound|music)|unmute/.test(t)) return { on: true }; return null; },
       run: ({ v, d, on }) => { if (on) { start(); return { say: "Sound on." }; }
         const nv = v ?? Math.round(sound.volume * 100) + d; sound.setVolume(nv / 100); if (vol) vol.value = Math.max(0, Math.min(100, nv));
         if (nv > 0 && !sound.on) start(); return { say: nv <= 0 ? "Muted." : `Volume ${Math.max(0, Math.min(100, nv))}.` }; } },
-    { name: "why_sound", hint: "why this sound", parse: t => /why (this|these|the) (sound|note|music|frequenc)|what.*(hearing|playing)|explain the (sound|music)/.test(t) ? {} : null,
+    { name: "why_sound", hint: "why this sound", description: "Open the panel that shows each note as it plays and which number in the math chose it.", parse: t => /why (this|these|the) (sound|note|music|frequenc)|what.*(hearing|playing)|explain the (sound|music)/.test(t) ? {} : null,
       run: () => { showWhy(true); return { say: "Opened 'why this sound'. " + (data.sound ? data.sound.replace(/<[^>]+>/g, "").split(". ").slice(0, 2).join(". ") + "." : "") }; } },
-    { name: "tour", hint: "how do I play", parse: t => /how (do i|to) (play|use|start)|tutorial|walk ?through|teach me|tour|start over|from the (start|beginning)/.test(t) ? {} : null,
+    { name: "tour", hint: "how do I play", description: "Start this chamber's step-by-step how-to-play walkthrough.", parse: t => /how (do i|to) (play|use|start)|tutorial|walk ?through|teach me|tour|start over|from the (start|beginning)/.test(t) ? {} : null,
       run: () => { tour.open(0); return { say: "Starting the walkthrough. Press next when you're ready." }; } },
-    { name: "notebook", hint: "open the notebook", parse: t => /notebook|sources|citations?|papers?|proof|derivation/.test(t) ? {} : null,
+    { name: "notebook", hint: "open the notebook", description: "Open the notebook drawer with the history, derivations and sources.", parse: t => /notebook|sources|citations?|papers?|proof|derivation/.test(t) ? {} : null,
       run: () => { toggleNb(true); return { say: "The notebook has the history, the math written out, and the sources." }; } },
-    { name: "next_chamber", hint: "next chamber",
+    { name: "next_chamber", hint: "next chamber", description: `Go to another chamber by index i (0-based): ${CHAMBERS.map((c, i) => `${i} ${c.name}`).join("; ")}. This chamber is ${here}.`, input_schema: { type: "object", properties: { i: { type: "integer" } }, required: ["i"] },
       parse: t => { if (/next (chamber|room|one)|go (on|forward)/.test(t)) return { i: here + 1 }; if (/previous|prev |last (chamber|room)|go back/.test(t)) return { i: here - 1 };
         const m = t.match(/(?:go to|take me to|open|show me the|visit)\s+(?:the\s+)?([\wāīūṛṣṇśḥṃ]+)/); if (!m) return null;
         const w = m[1].normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -123,7 +123,14 @@ export async function setupChamber({ key, sound, psyche, onEnter, tools = [] }) 
         return i >= 0 && w.length > 3 ? { i } : null; },
       run: ({ i }) => CHAMBERS[i] ? go(CHAMBERS[i]) : { say: i < 0 ? "This is the first chamber." : "This is the last chamber, for now." } },
   ];
-  const guide = createGuide({ chamber: CHAMBERS[here]?.name ?? document.title, tools: [...tools, ...shared], faq: data.faq ?? [] });
+  const strip = h => h.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const context = () => [
+    "LIVE STATE: " + [$("ro")?.innerText, $("cap1")?.innerText, $("cap2")?.innerText].filter(Boolean).join(" | "),
+    "NOTEBOOK: " + nb.innerText.slice(0, 7000),
+    "SOUND MAPPING: " + strip(data.sound ?? ""),
+    "TUTORIAL: " + (data.tutorial ?? []).map(s => `${s.t}: ${strip(s.b)}`).join(" / "),
+  ].join("\n\n");
+  const guide = createGuide({ chamber: CHAMBERS[here]?.name ?? document.title, tools: [...tools, ...shared], faq: data.faq ?? [], context });
 
   // ---- how to play: one card per step, each step can change the scene through the guide
   const tour = (() => {

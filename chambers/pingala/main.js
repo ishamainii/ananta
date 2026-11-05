@@ -152,7 +152,7 @@ setupChamber({ key: "pingala", sound, psyche, tools: [
     run: ({ a, b }) => { a = Math.max(1, Math.min(n, a)) - 1; b = Math.max(1, Math.min(n, b)) - 1; if (a === b) return { error: "need two different syllables" };
       if (a > b) [a, b] = [b, a]; pending = [a, b];
       return { say: `${turn ? "Next" : "Now"}: a quarter turn in the plane of syllables ${a + 1} and ${b + 1}.` }; } },
-  { name: "labels", hint: "hide labels", parse: t => /label|names?|meters? on/.test(t) ? { on: !/hide|off|no /.test(t) } : null,
+  { name: "labels", hint: "hide labels", description: "Show or hide the meter label on each corner.", input_schema: { type: "object", properties: { on: { type: "boolean" } }, required: ["on"] }, parse: t => /label|names?|meters? on/.test(t) ? { on: !/hide|off|no /.test(t) } : null,
     run: ({ on }) => { labels = on; return { say: on ? "Every corner is labelled with its meter: । light, ऽ heavy." : "Labels off." }; } },
   { name: "neighbours", hint: "why are corners joined", parse: t => /edge|joined|connect|neighbou?r/.test(t) ? {} : null,
     run: () => ({ say: `Two corners share an edge when their meters differ in exactly one syllable. The edge's colour tells you which syllable: colour 1 is the first syllable, and so on. Every corner here has ${n} edges, one per syllable you could flip.` }) },
