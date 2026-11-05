@@ -41,8 +41,8 @@ function readout() {
   const best = estimate(terms, order), d = goodDigits(best), s = best.toFixed(10);
   $("cap2").innerHTML = `<span class="hot">${s.slice(0, d)}</span><span>${s.slice(d)}</span>`;
   $("cap1").textContent = view === "chain"
-    ? `twist ${(twist * 180 / Math.PI).toFixed(0)}° · ${Math.abs(twist - Math.PI) < 0.01 ? "the chain folds onto Mādhava's series: its end is π/4" : "the same series, sent around the circle as e^{iθ}"}`
-    : `magnified ×${fmtMag(mag)} · rose: plain partial sums · gold: with Mādhava's correction`;
+    ? `twist ${(twist * 180 / Math.PI).toFixed(0)}°: ${Math.abs(twist - Math.PI) < 0.01 ? "the chain folds onto Mādhava's series: its end is π/4" : "the same series, sent around the circle as e^{iθ}"}`
+    : `magnified ×${fmtMag(mag)}. Rose rays are plain sums, gold rays have Mādhava's correction`;
 }
 const fmtMag = m => m >= 1e4 ? m.toExponential(1).replace("e+", "×10^") : Math.round(m).toLocaleString();
 let mag = 1;
@@ -113,7 +113,7 @@ function frame(now) {
 
 // ---------- machine rediscovery panel ----------
 document.body.insertAdjacentHTML("beforeend", `<section class="lab" id="lab" hidden aria-label="Machine rediscovery">
-  <div class="tour-top"><span class="tour-n">machine rediscovery · symbolic regression</span><button class="chip close" id="labClose" aria-label="Close">✕</button></div>
+  <div class="tour-top"><span class="tour-n">machine rediscovery</span><button class="chip close" id="labClose" aria-label="Close">✕</button></div>
   <h2>Can a machine find Mādhava's correction from data alone?</h2>
   <p>I give a search the exact leftover tail of the series for n = 5 to 40, and nothing else: no π, no Kerala, no hint. It tries every formula
   (an² + bn + c) / (dn³ + en² + fn + g) with whole-number coefficients 0 to 6, scores each by how many digits it gets right, then tests the winner on n = 41 to 200, which it never saw.</p>

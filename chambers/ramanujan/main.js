@@ -82,8 +82,8 @@ function readout() {
     `<br>ratio exact / estimate = <b>${(Number(v) / est).toFixed(5)}</b>` +
     (mod5 ? `<br><span class="ok">n = 5k + 4, so 5 divides p(n): ${group(v)} = 5 × ${group(v / 5n)}</span>` : `<br>&nbsp;`);
   $("cap1").innerHTML = target.name === "disk"
-    ? `P(q) = ∏ 1/(1 − qᵏ) over the unit disk · colour = phase, bands = size`
-    : `diving toward the root of unity e^{2πi·${target.name}} · a major arc of the circle method`;
+    ? `P(q) = ∏ 1/(1 − qᵏ) over the unit disk`
+    : `diving toward the root of unity e^{2πi·${target.name}}, one of the circle method's major arcs`;
   $("cap2").innerHTML = `<span style="font-family:'IBM Plex Mono',monospace;letter-spacing:.02em;font-size:clamp(16px,2.6vw,28px)" class="${mod5 ? "hot" : ""}">p(${n}) = ${group(p(n))}</span>`;
 }
 

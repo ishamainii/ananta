@@ -1,5 +1,5 @@
-  <h2>05 · श्रीयन्त्र · an optimisation problem</h2>
-  <p class="dim">classical yantra · Kulaichev, Indian J. History of Science (1984) · Tahta, Mathematical Gazette (1992)</p>
+  <h2>05 श्रीयन्त्र: an optimisation problem</h2>
+  <p class="dim">The classical yantra, after Kulaichev (1984) and Tahta (1992)</p>
 
   <h3>Setting it up</h3>
   <p>Nine triangles, symmetric about a vertical axis, inside a unit circle: four point up (Śiva) and five point down (Śakti). Triangle i has a horizontal side at height bᵢ, half-width wᵢ and an apex on the axis at aᵢ. I read the structure off a published reference drawing and checked it numerically:</p>
@@ -8,7 +8,7 @@
     <li>each of the other seven apexes sits exactly on another triangle's base line;</li>
     <li>eleven points (per half) are triple concurrencies, where three lines pass through one point.</li>
   </ul>
-  <p>That leaves 9 heights + 7 widths = <b>16 unknowns</b> and <b>11 equations</b>. The Jacobian has full rank 11, so the yantra is a <b>5-parameter family</b>: fix five heights and the rest is determined. That's why hand construction is so fiddly, and why Kulaichev treats it as a system of conditions [kulaichev1984].</p>
+  <p>That leaves 9 heights + 7 widths = <b>16 unknowns</b> and <b>11 equations</b>. The Jacobian has full rank 11, so the yantra is a <b>5-parameter family</b>: fix five heights and the rest is determined. That is why drawing it by hand is so difficult, and why Kulaichev treats it as a system of conditions [kulaichev1984].</p>
 
   <h3>Concurrency as an equation</h3>
   <p>Write each line as normalised (A, B, C) with Ax + By + C = 0. Three lines meet in a point exactly when</p>
@@ -25,4 +25,6 @@ x = x + λ·dx;</code></pre>
 
   <h3>Honest caveats</h3>
   <p>Traditional yantras vary, and Tahta (1992) looks critically at some of the claims made about the yantra's geometry [tahta1992]. What's drawn here is one well-defined mathematical idealisation, not the only "correct" yantra.</p>
-  <p class="stamp">try the guide: "scramble it" · "show another yantra"</p>
+  <h3>Where it went next</h3>
+  <p>The method used here, Newton's method with a line search on a set of geometric constraints, is the same kind of solver inside modern CAD software, where a designer fixes a few lengths and angles and the program places everything else. Like the yantra, those drawings usually have a few free choices and many conditions that must hold exactly.</p>
+  <p class="stamp">try the guide: "scramble it", "show another yantra"</p>

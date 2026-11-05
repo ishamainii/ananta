@@ -49,7 +49,7 @@ export function createRediscovery({ panel, onDone }) {
     const bar = panel.querySelector(".bar i"), board = panel.querySelector(".board");
     const row = (t, i) => {
       const m = isMadhava(t.c);
-      return `<li class="${m >= 0 ? "hit" : ""}"><b>${t.s.toFixed(2)}</b> digits <code>${formula(t.c)}</code>${m === 1 ? " <em>= Mādhava's sharpest correction</em>" : m === 0 ? " <em>= Mādhava's second correction</em>" : ""}${t.test != null ? `<span class="dim"> · unseen n = 41–200: ${t.test.toFixed(2)} digits</span>` : ""}</li>`;
+      return `<li class="${m >= 0 ? "hit" : ""}"><b>${t.s.toFixed(2)}</b> digits <code>${formula(t.c)}</code>${m === 1 ? " <em>= Mādhava's sharpest correction</em>" : m === 0 ? " <em>= Mādhava's second correction</em>" : ""}${t.test != null ? `<span class="dim">. On unseen n = 41 to 200: ${t.test.toFixed(2)} digits</span>` : ""}</li>`;
     };
     return new Promise(res => {
       worker.onmessage = ({ data }) => {

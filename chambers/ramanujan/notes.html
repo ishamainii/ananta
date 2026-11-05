@@ -1,8 +1,8 @@
-  <h2>04 · रामानुजन् · partitions and the circle</h2>
+  <h2>04 रामानुजन्: partitions and the circle</h2>
   <p class="dim">Euler (pentagonal numbers) → Hardy &amp; Ramanujan, Proc. London Math. Soc. (1918) → Rademacher (1937)</p>
 
   <h3>Counting partitions</h3>
-  <p>p(n) is the number of ways to write n as a sum of positive integers, ignoring order: p(4) = 5, since 4 = 3+1 = 2+2 = 2+1+1 = 1+1+1+1. It grows ferociously, and p(200) = 3,972,999,029,388. I compute it exactly with Euler's pentagonal-number recurrence in BigInt:</p>
+  <p>p(n) is the number of ways to write n as a sum of positive integers, ignoring order: p(4) = 5, since 4 = 3+1 = 2+2 = 2+1+1 = 1+1+1+1. It grows very fast: p(200) = 3,972,999,029,388. I compute it exactly with Euler's pentagonal-number recurrence in BigInt:</p>
   <div class="eq">$$p(n) = \sum_{j\ge1} (-1)^{j+1}\Big[p\big(n - \tfrac{j(3j-1)}{2}\big) + p\big(n - \tfrac{j(3j+1)}{2}\big)\Big]$$</div>
 
   <h3>The picture is the generating function</h3>
@@ -16,4 +16,7 @@
 
   <h3>The mod 5 miracle</h3>
   <p>Ramanujan noticed that p(5k + 4) is always divisible by 5 (also p(7k+5) by 7 and p(11k+6) by 11). The readout lights up green and the bowl rings on every n = 5k + 4. That kind of hidden arithmetic is what fills the lost notebook [andrewsberndt2005].</p>
-  <p class="stamp">try the guide: "partitions of 1000" · "dive toward 1/5" · "glow 100"</p>
+  <h3>Where it went next</h3>
+  <p>Ramanujan found congruences for the primes 5, 7 and 11. In 2000 Ken Ono proved that every prime from 5 upward has infinitely many such congruences [ono2000], so the pattern this chamber rings a bowl for is one case of a general law.</p>
+  <p>Hardy and Ramanujan's formula estimates p(n), and Rademacher later made it exact as an infinite series. In 2011 Jan Bruinier and Ono found a finite algebraic formula: p(n) is a finite sum of algebraic numbers [bruinierono2013]. The function in this disk is still central to number theory and to string theory, where similar functions count physical states.</p>
+  <p class="stamp">try the guide: "partitions of 1000", "dive toward 1/5", "glow 100"</p>

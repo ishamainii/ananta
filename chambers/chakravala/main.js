@@ -29,8 +29,8 @@ const group = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 function readout() {
   const s = steps[shown - 1], last = shown === steps.length;
   $("cap1").innerHTML = last
-    ? `the wheel closes after <i style="color:#ffd27a">${steps.length - 1}</i> turns · k = 1`
-    : `turn ${shown - 1} of the wheel · a² − ${N}·b² = <i style="color:#ff5c8a">${s.k}</i>`;
+    ? `the wheel closes after <i style="color:#ffd27a">${steps.length - 1}</i> turns, k = 1`
+    : `turn ${shown - 1}: a² − ${N}·b² = <i style="color:#ff5c8a">${s.k}</i>`;
   $("cap2").innerHTML = `<span class="${last ? "hot" : ""}" style="letter-spacing:.02em;font-family:'IBM Plex Mono',monospace;font-size:clamp(14px,2.3vw,24px)">${group(s.a)}² − ${N}·${group(s.b)}² = ${s.k}</span>`;
   const rows = steps.slice(Math.max(0, shown - 9), shown).map((t, i, arr) =>
     `${t.m === null ? "start " : "m=" + String(t.m).padEnd(4)} a=<b>${group(t.a)}</b> b=${group(t.b)} k=${t.k}`);

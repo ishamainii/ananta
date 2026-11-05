@@ -4,9 +4,9 @@
  "name": "Ramanujan",
  "deva": "रामानुजन्",
  "sub": "partitions and the circle",
- "description": "The partition function p(n), its generating function painted over the unit disk, and the Hardy–Ramanujan formula.",
+ "description": "The partition function p(n), its generating function over the unit disk, and the Hardy–Ramanujan formula.",
  "aria": "Domain colouring of the partition generating function over the unit disk",
- "intro": "How many ways can you split 200 into whole numbers? Almost four trillion. Ramanujan found the formula by listening to a function that explodes at every root of unity. This is that function.",
+ "intro": "How many ways can you split 200 into whole numbers? Almost four trillion. Hardy and Ramanujan estimated these counts from a single function that blows up at every point of a circle. This is that function.",
  "dock": "<label class=\"chip\">view <select id=\"viewSel\"><option value=\"disk\">whole disk</option><option value=\"0/1\">q → 1</option><option value=\"1/2\">→ 1/2</option><option value=\"1/3\">→ 1/3</option><option value=\"1/5\">→ 1/5</option><option value=\"2/5\">→ 2/5</option></select></label>",
  "glow": "60",
  "legend": [

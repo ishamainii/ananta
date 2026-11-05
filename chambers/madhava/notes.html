@@ -1,10 +1,10 @@
-  <h2>02 · माधव · π without end</h2>
+  <h2>02 माधव: π without end</h2>
   <p class="dim">Mādhava of Saṅgamagrāma (c. 1340–1425) → Nīlakaṇṭha's Tantrasaṅgraha (1501) → Jyeṣṭhadeva's Yuktibhāṣā (c. 1530)</p>
 
   <h3>The series</h3>
   <p>The Kerala school wrote the circumference of a circle as an infinite sum. In modern notation:</p>
   <div class="eq">$$\frac{\pi}{4} = 1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} + \cdots$$</div>
-  <p>Europe knows it as the Gregory–Leibniz series (1670s), roughly 250 years later [rajagopal1978, roy1990]. On its own it's painfully slow: 1000 terms still get only three digits right. That's what the rose rays in the swing view show.</p>
+  <p>Europe knows it as the Gregory–Leibniz series (1670s), roughly 250 years later [rajagopal1978, roy1990]. On its own it converges slowly. After 1,000 terms only three digits are correct. That's what the rose rays in the swing view show.</p>
 
   <h3>The end-correction (antya-saṃskāra)</h3>
   <p>The Kerala insight is that the tail you throw away has a predictable size. Stop after n terms and add a correction to the last one:</p>
@@ -18,7 +18,7 @@ const estimate = (n, k) =&gt; 4*(partial(n) + (n % 2 ? -1 : 1)*CORR[k](n));</cod
 
   <h3>Machine rediscovery</h3>
   <p>Could the correction be found from data alone? The ✦ panel runs a symbolic regression: an exhaustive search over every rational function (an² + bn + c) / (dn³ + en² + fn + g) with whole-number coefficients 0 to 6, 703,836 formulas, scored by the mean number of correct digits against the exact tail R(n) = (−1)ⁿ(π/4 − Sₙ) for n = 5 to 40. The winner is exactly F₃ = (n² + 1)/(n(4n² + 5)), about 10 digits on the training range and about 15 on n = 41 to 200, which the search never saw (there the error is near the floor of 64-bit arithmetic). F₂ also places in the top six, written two different ways.</p>
-  <p>The honest framing: I chose the shape of the formulas and the coefficient range, and F₃ lies inside that space, so this is rediscovery within a hypothesis space, as all symbolic regression is. Why F₃ wins is no accident: the tail expands as R(n) = 1/(4n) − 1/(16n³) + 5/(64n⁵) + O(n⁻⁷), F₃ matches all three terms, and its error shrinks like 0.14/n⁷ (checked numerically to n = 400). The result is re-derived independently with exact arithmetic in <code>python/tests/test_rediscover.py</code>.</p>
+  <p>One caveat: I chose the shape of the formulas and the coefficient range, and F₃ lies inside that space, so this is rediscovery within a hypothesis space, as all symbolic regression is. F₃ wins for a clear reason. The tail expands as R(n) = 1/(4n) − 1/(16n³) + 5/(64n⁵) + O(n⁻⁷), F₃ matches all three terms, and its error shrinks like 0.14/n⁷ (checked numerically to n = 400). The result is re-derived independently with exact arithmetic in <code>python/tests/test_rediscover.py</code>.</p>
   <h3>Why the chain twists</h3>
   <p>The chain view draws term k as a link of length 1/(2k+1), turned by an angle θ from the previous link. The end of the chain is</p>
   <div class="eq">$$f(z) = \sum_{k\ge 0}\frac{z^k}{2k+1},\qquad z = e^{i\theta}.$$</div>
@@ -26,4 +26,7 @@ const estimate = (n, k) =&gt; 4*(partial(n) + (n % 2 ? -1 : 1)*CORR[k](n));</cod
 
   <h3>The sound</h3>
   <p>Each new term plucks a santoor string. Whenever the corrected estimate gains a correct digit, a bowl rings.</p>
-  <p class="stamp">try the guide: "show 25 terms" · "swing view" · "twist 120"</p>
+  <h3>Where it went next</h3>
+  <p>Mādhava's series gains a correct digit only every few thousand terms without help. Modern records use series that gain about 14 digits per term. They descend from a family of formulas Ramanujan published in 1914 [ramanujan1914], which the Chudnovsky brothers extended in 1988. In 2025 StorageReview computed 314 trillion digits of π on a single server with the program y-cruncher [storagereview2025].</p>
+  <p>The idea in the machine-rediscovery panel is current research too. Symbolic regression systems such as AI Feynman search for formulas that fit data [udrescu2020], and the Ramanujan Machine project used computer search to propose new formulas for constants like π and e, several of which were later proved [raayoni2021].</p>
+  <p class="stamp">try the guide: "show 25 terms", "swing view", "twist 120"</p>

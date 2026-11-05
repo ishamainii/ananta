@@ -49,7 +49,7 @@ export async function setupChamber({ key, sound, psyche, onEnter, tools = [] }) 
 
   // ---- arrows to the neighbouring chambers, and a menu of all of them
   const hop = (c, dir) => c ? `<a class="hop ${dir}" href="${root}chambers/${c.slug}/" aria-label="${dir === "prev" ? "Previous" : "Next"} chamber: ${c.name}">
-      <span class="arrow">${dir === "prev" ? "‹" : "›"}</span><span class="hop-name"><small>${dir === "prev" ? "previous" : "next"}</small><span lang="sa">${c.deva}</span>${c.name.split(" · ")[0]}</span></a>` : "";
+      <span class="arrow">${dir === "prev" ? "‹" : "›"}</span><span class="hop-name"><small>${dir === "prev" ? "previous" : "next"}</small><span lang="sa">${c.deva}</span>${c.name.split(":")[0]}</span></a>` : "";
   document.body.insertAdjacentHTML("beforeend", hop(CHAMBERS[here - 1], "prev") + hop(CHAMBERS[here + 1], "next"));
   const crumbs = document.querySelector(".crumbs");
   if (crumbs) {
@@ -96,7 +96,8 @@ export async function setupChamber({ key, sound, psyche, onEnter, tools = [] }) 
   // ---- sources, from the shared bibliography
   try {
     const all = await (await fetch(root + "data/sources.json")).json();
-    const list = [...(all[key] ?? []), ...all.general];
+    const SRC_KEY = { tatkalika: "optimisation", purna: "infinity" };   // bibliography sections named by topic
+    const list = [...(all[key] ?? all[SRC_KEY[key]] ?? []), ...all.general];
     $("sources").innerHTML = list.map(s =>
       `<li id="src-${s.id}"><code>[${s.id}]</code> ${s.cite} <a href="${s.url}" target="_blank" rel="noopener">record ↗</a><span class="why">${s.why}</span></li>`).join("");
   } catch {

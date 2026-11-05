@@ -6,7 +6,7 @@
  "sub": "the wheel that solves x² − Ny² = 1",
  "description": "Jayadeva and Bhāskara II's cyclic method for Pell's equation, run live with exact integers.",
  "aria": "A spiral wheel of light where each spoke is one turn of the chakravala method",
- "intro": "Find whole numbers with x² − 61y² = 1. The smallest answer has ten digits. In 1150 Bhāskara II found it with a wheel of steps that always comes back to 1.",
+ "intro": "Find whole numbers with x² − 61y² = 1. The smallest answer has ten digits. Bhāskara II found it around 1150 with a cycle of steps that always ends at 1.",
  "dock": "<label class=\"chip\">N <select id=\"nSel\"><option value=\"61\">61</option><option value=\"67\">67</option><option value=\"94\">94</option><option value=\"97\">97</option><option value=\"109\">109</option><option value=\"151\">151</option><option value=\"181\">181</option><option value=\"433\">433</option><option value=\"661\">661</option><option value=\"991\">991</option><option value=\"\">other (ask)</option></select></label>",
  "glow": "40",
  "legend": [

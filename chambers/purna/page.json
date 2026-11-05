@@ -4,10 +4,10 @@
  "name": "Pūrṇa",
  "deva": "पूर्ण",
  "sub": "three ways to hold the infinite",
- "description": "The Upaniṣadic whole, the Jaina ladder of enumerable, innumerable and infinite, and Bhāskara II's khahara.",
+ "description": "The Upaniṣadic whole, the Jaina classes of number, and Bhāskara II's khahara.",
  "aria": "An endless spiral zoom into a mandala that contains itself",
- "intro": "Long before set theory, Indian thinkers argued about the infinite: a whole that stays whole when you remove the whole, numbers too large to count, and what you get when you divide by zero.",
- "dock": "<div id=\"moves\" style=\"display:flex;gap:6px\"><button class=\"chip\" aria-pressed=\"true\">I · pūrṇa</button><button class=\"chip\" aria-pressed=\"false\">II · jaina</button><button class=\"chip\" aria-pressed=\"false\">III · khahara</button></div>",
+ "intro": "Indian thinkers wrote about the infinite long before set theory. This chamber shows three of their ideas: a whole that stays whole, numbers too large to count, and division by zero.",
+ "dock": "<div id=\"moves\" style=\"display:flex;gap:6px\"><button class=\"chip\" aria-pressed=\"true\">I pūrṇa</button><button class=\"chip\" aria-pressed=\"false\">II jaina</button><button class=\"chip\" aria-pressed=\"false\">III khahara</button></div>",
  "glow": "60",
  "legend": [
   [
@@ -49,7 +49,7 @@
    "b": "His rule was that adding to khahara does not change it. Modern set theory has a similar rule: adding a few items to an infinite set does not change its size."
   }
  ],
- "sound": "<p><b>Each movement has its own rule.</b> I, pūrṇa: every note is <b>Sa</b>, just in a different octave, the same whole at a different scale. II, Jaina: the notes <b>count up the scale</b>, ten to a ring, then start again an octave… the counting never ends. III, khahara: <b>one note that never changes</b>, whatever is added around it.</p><p>Switching movement rings a bowl on harmonic 2, 3 or 4 of Sa (× 2, × 3, × 4), the first rungs of the infinite overtone ladder inside every note.</p><p>Every chamber plays in <b>Raag Bhupali</b>: five notes, Sa Re Ga Pa Dha, tuned as whole-number ratios of the home note Sa (138.6 Hz here): <b>1, 9/8, 5/4, 3/2, 5/3</b>. Simple ratios mean the sound waves line up every few cycles, so they never clash. That lets the math pick any note it likes and it still sounds like music. Underneath, a tanpura drone holds Sa and Pa, and a bansuri improvises in the same raag. The santoor and the singing bowl are the ones the math plays.</p>",
+ "sound": "<p><b>Each movement has its own rule.</b> I, pūrṇa: every note is <b>Sa</b> in a different octave, the same whole at a different scale. II, Jaina: the notes <b>count up the scale</b>, ten to a ring, then start again an octave… the counting never ends. III, khahara: <b>one note that never changes</b>, whatever is added around it.</p><p>Switching movement rings a bowl on harmonic 2, 3 or 4 of Sa (× 2, × 3, × 4), the first rungs of the infinite overtone ladder inside every note.</p><p>Every chamber plays in <b>Raag Bhupali</b>: five notes, Sa Re Ga Pa Dha, tuned as whole-number ratios of the home note Sa (138.6 Hz here): <b>1, 9/8, 5/4, 3/2, 5/3</b>. Simple ratios mean the sound waves line up every few cycles, so they never clash. That lets the math pick any note it likes and it still sounds like music. Underneath, a tanpura drone holds Sa and Pa, and a bansuri improvises in the same raag. The santoor and the singing bowl are the ones the math plays.</p>",
  "faq": [
   {
    "k": [

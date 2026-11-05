@@ -4,9 +4,9 @@
  "name": "Tātkālika",
  "deva": "तात्कालिक",
  "sub": "the instant and the extreme",
- "description": "Bhāskara II's instantaneous motion of a planet, and why its velocity correction vanishes where the equation of centre is extreme.",
+ "description": "Bhāskara II's instantaneous motion of a planet and why its correction stops changing at its extreme.",
  "aria": "An epicycle model drawing a rosette, beside the equation-of-centre curve and its tangent",
- "intro": "In 1150 Bhāskara II asked how fast a planet moves at a single instant. The answer hides an idea we now call the derivative, and the rule that it vanishes at a maximum.",
+ "intro": "Around 1150 Bhāskara II asked how fast a planet moves at a single instant. His answer contains an early form of the derivative and of the rule that it is zero at a maximum.",
  "dock": "<label class=\"chip\">epicycle r/R <input id=\"kSel\" type=\"range\" min=\"5\" max=\"80\" value=\"32\" style=\"width:90px;accent-color:#ff8a3d\"></label>",
  "glow": "40",
  "legend": [

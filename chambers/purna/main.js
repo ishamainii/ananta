@@ -75,7 +75,7 @@ function drawJaina(t, e) {
     }
     ctx.fillStyle = "rgba(239,230,214,.7)"; ctx.font = "11px 'IBM Plex Mono', monospace"; ctx.fillText(labels[i], cx + rr + 6, cy - 4);
   }
-  const stage2 = e < 0.45 ? "saṅkhyāta · enumerable" : e < 0.8 ? "asaṅkhyāta · innumerable" : "ananta · infinite";
+  const stage2 = e < 0.45 ? "saṅkhyāta (countable)" : e < 0.8 ? "asaṅkhyāta (too many to count)" : "ananta (infinite)";
   ctx.fillStyle = "#ffd27a"; ctx.font = "14px 'IBM Plex Mono', monospace"; ctx.textAlign = "center"; ctx.fillText(stage2, cx, cy + R0 * 6.6 + 10); ctx.textAlign = "start";
 }
 // ---------- III: a ÷ x as x → 0, then ± anything ----------
@@ -112,7 +112,7 @@ function frame(now) {
   requestAnimationFrame(frame);
 }
 
-setupChamber({ key: "infinity", sound, psyche: stage.psyche, tools: [
+setupChamber({ key: "purna", sound, psyche: stage.psyche, tools: [
   { name: "movement", hint: "show khahara", description: "Show one of the three movements: 'purna' (the Upaniṣad verse, an endless self-similar zoom), 'jaina' (enumerable, innumerable, infinite) or 'khahara' (division by zero).",
     input_schema: { type: "object", properties: { which: { type: "string", enum: ["purna", "jaina", "khahara"] } }, required: ["which"] },
     parse: t => /khahara|zero|divid/.test(t) ? { which: "khahara" } : /jain|innumer|count/.test(t) ? { which: "jaina" } : /purna|pūrṇa|whole|upani|verse/.test(t) ? { which: "purna" } : null,

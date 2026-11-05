@@ -28,12 +28,12 @@ function nudge() {                                   // move one of the five fre
 }
 function readout() {
   const r = residuals(x), ok = r.filter(v => Math.abs(v) < 1e-9).length, R = norm(r);
-  $("ro").innerHTML = `unknowns <b>16</b> · equations <b>11</b> · free choices <b>5</b>` +
-    `<br>Newton iteration <b>${iter}</b> · ‖residual‖ = <b>${R.toExponential(2)}</b>` +
+  $("ro").innerHTML = `unknowns <b>16</b>, equations <b>11</b>, free choices <b>5</b>` +
+    `<br>Newton step <b>${iter}</b>, error = <b>${R.toExponential(2)}</b>` +
     `<br><span class="${ok === 11 ? "ok" : ""}">${ok} / 11 triple points exact</span>`;
-  $("cap1").textContent = phase === "hold" ? "every marked point is three lines meeting exactly · rose = Śakti (down), gold = Śiva (up)"
+  $("cap1").textContent = phase === "hold" ? "every marked point is three lines meeting exactly"
     : "Newton's method pulling the triangles back into exact concurrency";
-  $("cap2").innerHTML = ok === 11 ? `<span class="hot">९ त्रिकोण · 11 / 11</span>` : `<span>${ok} / 11</span>`;
+  $("cap2").innerHTML = ok === 11 ? `<span class="hot">९ त्रिकोण, 11 / 11</span>` : `<span>${ok} / 11</span>`;
 }
 
 // ---------- drawing ----------

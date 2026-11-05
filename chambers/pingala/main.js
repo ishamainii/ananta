@@ -130,9 +130,9 @@ const curV = () => gray(step % (1 << n)), prevV = () => gray((step - 1 + (1 << n
 const changedSyl = () => step === 0 ? -1 : n - 1 - Math.log2(curV() ^ prevV());
 
 function renderPlaneCap() {
-  if (!shownPlane) { $("cap1").textContent = `${n} syllables · ${1 << n} meters · a ${n}-dimensional cube`; return; }
+  if (!shownPlane) { $("cap1").textContent = `${n} syllables, ${1 << n} meters, a ${n}-dimensional cube`; return; }
   const [a, b] = shownPlane, dot = p => `<i style="color:${HEX[p]}">${p + 1}</i>`;
-  $("cap1").innerHTML = `turning the plane of syllables ${dot(a)} and ${dot(b)}` + (b >= 3 ? ` · through the ${ORD[b]} dimension` : ``);
+  $("cap1").innerHTML = `turning the plane of syllables ${dot(a)} and ${dot(b)}` + (b >= 3 ? `, through the ${ORD[b]} dimension` : ``);
 }
 function renderCaption() {
   const bits = meterOf(curV()), ch = changedSyl();

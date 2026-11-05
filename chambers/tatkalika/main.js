@@ -26,7 +26,7 @@ const deg = r => (r * 180 / Math.PI);
 
 function readout() {
   const rate = 1 + dE(M);
-  $("ro").innerHTML = `r/R = <b>${k.toFixed(2)}</b> · anomaly M = <b>${(deg(M) % 360).toFixed(1)}°</b>` +
+  $("ro").innerHTML = `r/R = <b>${k.toFixed(2)}</b>, anomaly M = <b>${(deg(M) % 360).toFixed(1)}°</b>` +
     `<br>equation of centre E = <b>${deg(E(M)).toFixed(2)}°</b>` +
     `<br>true speed / mean speed = <b>${rate.toFixed(4)}</b>` +
     `<br><span class="${Math.abs(dE(M)) < 0.02 ? "ok" : ""}">instantaneous correction dE/dM = ${dE(M).toFixed(4)}</span>`;
@@ -94,14 +94,14 @@ function frame(now) {
   if (flat && !wasExtreme) { sound.why = "dE/dM = 0: the correction is at its extreme, true speed = mean speed"; sound.bowl(); }
   wasExtreme = flat;
   if (now - lastNote > 700) { lastNote = now; sound.why = `true speed = ${(1 + dE(M)).toFixed(2)} × mean speed → pitch = 4 × that`; sound.pluck(degree(Math.round(4 + 4 * (1 + dE(M)) - 4), SA * 2), 0.05); readout(); }
-  $("cap1").textContent = flat ? "the instantaneous correction vanishes · E is at its extreme · true speed equals mean speed"
+  $("cap1").textContent = flat ? "the correction is at its extreme, so true speed equals mean speed"
     : "the planet's true place = mean place + equation of centre";
   $("cap2").innerHTML = `<span class="${flat ? "hot" : ""}" style="font-family:'IBM Plex Mono',monospace;font-size:clamp(16px,2.4vw,26px);letter-spacing:.02em">dE/dM = ${dE(M).toFixed(3)}</span>`;
   requestAnimationFrame(frame);
 }
 
 $("kSel").addEventListener("input", e => { k = e.target.value / 100; trail = []; });
-setupChamber({ key: "optimisation", sound, psyche: stage.psyche, tools: [
+setupChamber({ key: "tatkalika", sound, psyche: stage.psyche, tools: [
   { name: "set_epicycle", hint: "epicycle 0.5", description: "Set the epicycle-to-deferent ratio r/R (0.05 to 0.8). Bigger ratios give bigger equations of centre and wilder rosettes.",
     input_schema: { type: "object", properties: { ratio: { type: "number", minimum: 0.05, maximum: 0.8 } }, required: ["ratio"] },
     parse: t => { const m = t.match(/(?:epicycle|ratio)\D*(0?\.\d+|\d+(?:\.\d+)?)/); return m ? { ratio: +m[1] > 1 ? +m[1] / 100 : +m[1] } : null; },

@@ -4,9 +4,9 @@
  "name": "Śrī Yantra",
  "deva": "श्रीयन्त्र",
  "sub": "nine triangles, eleven exact meetings",
- "description": "The Śrī Yantra as a system of 11 equations in 16 unknowns, scrambled and re-solved live with Newton's method.",
+ "description": "The Śrī Yantra as 11 equations in 16 unknowns, scrambled and solved again with Newton's method.",
  "aria": "The Sri Yantra drawn in light, with its triple intersection points solved live",
- "intro": "Nine triangles must interlock so that, again and again, three lines pass through one point. Drawing it by hand is famously hard. Here it's an optimisation problem, solved in front of you.",
+ "intro": "Nine triangles must interlock so that three lines cross at a single point, eleven times over. That is very hard to draw by hand. Here it becomes a system of equations solved in front of you.",
  "dock": "<button class=\"chip\" id=\"scrambleBtn\">scramble</button><button class=\"chip\" id=\"nudgeBtn\">another yantra</button>",
  "glow": "40",
  "legend": [

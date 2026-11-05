@@ -1,8 +1,8 @@
-  <h2>01 · छन्दः · meters as a hypercube</h2>
+  <h2>01 छन्दः: meters as a hypercube</h2>
   <p class="dim">Pingala, <i>Chandaḥśāstra</i> (c. 3rd–2nd c. BCE) → Halāyudha's commentary (10th c.)</p>
 
   <h3>The idea</h3>
-  <p>Pingala lists every meter of n syllables as a string of laghu (light, ।) and guru (heavy, ऽ). If I read laghu = 0 and guru = 1, a meter is just an n-bit binary string, and there are 2ⁿ of them. Those are exactly the corners of an n-dimensional cube with coordinates ±1.</p>
+  <p>Pingala lists every meter of n syllables as a string of laghu (light, ।) and guru (heavy, ऽ). If I read laghu = 0 and guru = 1, a meter is an n-bit binary string, and there are 2ⁿ of them. Those are exactly the corners of an n-dimensional cube with coordinates ±1.</p>
   <p>Two corners share an edge when the meters differ in one syllable. In code that's one line: the XOR of the two indices has a single 1-bit.</p>
 <pre><code>// vertex i is meter i; an edge flips exactly one syllable
 for (let i = 0; i &lt; 1 &lt;&lt; n; i++)
@@ -23,4 +23,7 @@ for (let i = 0; i &lt; 1 &lt;&lt; n; i++)
   <h3>The walk and the music</h3>
   <p>The gold spark visits every meter once, changing one syllable per step: a reflected Gray code, \(g(i) = i \oplus \lfloor i/2 \rfloor\). It's a Hamiltonian cycle on the hypercube. Each step plays a santoor note whose pitch rises with the number of gurus, in Raag Bhupali. The background kaleidoscope always has 2n mirrored wedges, so its symmetry tracks the dimension.</p>
 
-  <p class="stamp">math tested in /python (pytest) · scene: three.js r160 · shader: js/psyche.js · try the guide: "show me 6 dimensions"</p>
+  <h3>Where it went next</h3>
+  <p>Pingala's two-symbol patterns returned in the twentieth century as engineering. In 1947 Frank Gray patented the code the gold spark follows, a way of counting where only one bit changes at each step, so a sensor read between two positions can never be badly wrong [gray1953]. Gray codes still sit inside rotary encoders, error-correcting schemes and the Karnaugh maps used to simplify logic circuits.</p>
+  <p>The cube itself became a computer design. In the 1980s parallel machines such as the Connection Machine linked their processors as the corners of a hypercube, so that any two of them were at most n steps apart. That is the same edge rule this chamber draws.</p>
+  <p class="stamp">math tested in /python (pytest); scene: three.js r160; shader: js/psyche.js; try the guide: "show me 6 dimensions"</p>

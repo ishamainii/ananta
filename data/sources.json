@@ -44,6 +44,12 @@
    "cite": "Halāyudha (10th c.). Mṛtasañjīvanī, commentary on Pingala's Chandaḥśāstra. Dating per Winternitz, History of Indian Literature, vol. III.",
    "url": "https://en.wikipedia.org/wiki/Halayudha",
    "why": "The commentary that makes the meru-prastāra (Pascal's triangle) explicit."
+  },
+  {
+   "id": "gray1953",
+   "cite": "Gray, F. (1953). Pulse code communication. US Patent 2,632,058 (filed 1947).",
+   "url": "https://patents.google.com/patent/US2632058A",
+   "why": "The reflected binary code the walk follows."
   }
  ],
  "madhava": [
@@ -70,6 +76,30 @@
    "cite": "Ramasubramanian, K. (2023). The history and historiography of the discovery of calculus in India. Proceedings of the ICM 2022, EMS Press, 5784–5812. doi:10.4171/ICM2022/77",
    "url": "https://doi.org/10.4171/icm2022/77",
    "why": "Invited survey at the International Congress of Mathematicians."
+  },
+  {
+   "id": "ramanujan1914",
+   "cite": "Ramanujan, S. (1914). Modular equations and approximations to π. Quarterly Journal of Mathematics, 45, 350–372.",
+   "url": "https://ramanujan.sirinudi.org/Volumes/published/ram06.html",
+   "why": "The fast series behind modern π records."
+  },
+  {
+   "id": "storagereview2025",
+   "cite": "Tom's Hardware (2025). Pi calculating record shattered at 314 trillion digits with a four-month run on a single server.",
+   "url": "https://www.tomshardware.com/pc-components/storage/pi-calculating-record-shattered-at-314-trillion-digits-with-a-four-month-run-on-a-single-server-storagereview-retakes-the-crown-thanks-to-storage-bandwidth",
+   "why": "The current record computation of π."
+  },
+  {
+   "id": "udrescu2020",
+   "cite": "Udrescu, S.-M., & Tegmark, M. (2020). AI Feynman: A physics-inspired method for symbolic regression. Science Advances, 6(16), eaay2631.",
+   "url": "https://doi.org/10.1126/sciadv.aay2631",
+   "why": "Modern symbolic regression."
+  },
+  {
+   "id": "raayoni2021",
+   "cite": "Raayoni, G., et al. (2021). Generating conjectures on fundamental constants with the Ramanujan Machine. Nature, 590, 67–73.",
+   "url": "https://doi.org/10.1038/s41586-021-03229-4",
+   "why": "Computer search for formulas for π and e."
   }
  ],
  "chakravala": [
@@ -78,6 +108,18 @@
    "cite": "Selenius, C.-O. (1975). Rationale of the chakravāla process of Jayadeva and Bhāskara II. Historia Mathematica, 2, 167–184.",
    "url": "https://doi.org/10.1016/0315-0860(75)90142-6",
    "why": "Shows the method is a minimal-length, best-approximation continued-fraction algorithm; for N = 61 it needs a handful of steps where the European route needs about 22 convergents."
+  },
+  {
+   "id": "lenstra2002",
+   "cite": "Lenstra, H. W. (2002). Solving the Pell equation. Notices of the American Mathematical Society, 49(2), 182–192.",
+   "url": "https://www.ams.org/notices/200202/fea-lenstra.pdf",
+   "why": "How the equation is solved today."
+  },
+  {
+   "id": "hallgren2007",
+   "cite": "Hallgren, S. (2007). Polynomial-time quantum algorithms for Pell's equation and the principal ideal problem. Journal of the ACM, 54(1), Article 4.",
+   "url": "https://doi.org/10.1145/1206035.1206039",
+   "why": "The quantum algorithm."
   }
  ],
  "ramanujan": [
@@ -92,6 +134,18 @@
    "cite": "Andrews, G. E., & Berndt, B. C. (2005). Ramanujan's Lost Notebook, Part I. Springer.",
    "url": "https://link.springer.com/book/9780387255293",
    "why": "The definitive edition of the lost notebook, with proofs."
+  },
+  {
+   "id": "ono2000",
+   "cite": "Ono, K. (2000). Distribution of the partition function modulo m. Annals of Mathematics, 151(1), 293–307.",
+   "url": "https://emis.univie.ac.at/journals/Annals/151_1/ono.pdf",
+   "why": "Congruences for every prime from 5 upward."
+  },
+  {
+   "id": "bruinierono2013",
+   "cite": "Bruinier, J. H., & Ono, K. (2013). Algebraic formulas for the coefficients of half-integral weight harmonic weak Maass forms. Advances in Mathematics, 246, 198–219.",
+   "url": "https://arxiv.org/abs/1104.1182",
+   "why": "A finite algebraic formula for p(n)."
   }
  ],
  "sriyantra": [
@@ -132,6 +186,12 @@
    "cite": "Bṛhadāraṇyaka Upaniṣad 5.1.1 (pūrṇam adaḥ pūrṇam idam …). Commentary: Swami Krishnananda, The Brihadaranyaka Upanishad.",
    "url": "https://www.swami-krishnananda.org/upanishad/upan_12.html",
    "why": "The verse of fullness: from the full, the full is taken, and the full remains."
+  },
+  {
+   "id": "cantor1874",
+   "cite": "Cantor, G. (1874). Ueber eine Eigenschaft des Inbegriffes aller reellen algebraischen Zahlen. Journal für die reine und angewandte Mathematik, 77, 258–262.",
+   "url": "https://doi.org/10.1515/crll.1874.77.258",
+   "why": "The first proof that infinities differ in size."
   }
  ],
  "optimisation": [
@@ -140,6 +200,12 @@
    "cite": "Ramasubramanian, K., & Srinivas, M. D. (2010). Development of calculus in India. In Studies in the History of Indian Mathematics. Hindustan Book Agency. doi:10.1007/978-93-86279-49-1_8",
    "url": "https://doi.org/10.1007/978-93-86279-49-1_8",
    "why": "Discusses Bhāskara II's instantaneous motion and the vanishing of the velocity correction where the equation of centre is extremal (Siddhānta-śiromaṇi)."
+  },
+  {
+   "id": "kingma2015",
+   "cite": "Kingma, D. P., & Ba, J. (2015). Adam: A method for stochastic optimization. International Conference on Learning Representations.",
+   "url": "https://arxiv.org/abs/1412.6980",
+   "why": "The optimiser that trains most neural networks."
   }
  ]
 }
