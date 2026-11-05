@@ -15,8 +15,8 @@ Interactive chambers that turn results from Indian mathematics into light and so
 Every chamber teaches itself: a step-by-step "how to play" tour (each step changes the
 scene), a colour key, and a "why this sound" panel that shows which number picked each note.
 
-The guide (✦ ask, or g) has two modes. With GUIDE_URL set in js/config.js it is Claude,
-reached through the proxy in worker/ (key kept server-side, origin-locked, rate-limited):
+The guide (✦ ask, or g) has two modes. With GUIDE_URL set in js/config.js it is Llama 3.3 70B on Cloudflare Workers AI (free tier),
+reached through the proxy in worker/ (no API key, origin-locked, rate-limited):
 it gets the chamber's notes and live readout, calls the chamber's tools on the real scene,
 reads the results and explains them. Without a proxy, or if the call fails, it falls back
 to a command interpreter, also in js/guide.js. It splits a request into clauses ("show 6 dimensions and turn syllables 2 and 5,

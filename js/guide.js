@@ -2,7 +2,7 @@
 //
 // Two brains, same tools:
 //  * AI (GUIDE_URL set in config.js): the request, the chamber's notes, its live state and the
-//    tool schemas go to Claude through the proxy in worker/. Claude answers and calls the
+//    tool schemas go to Llama 3.3 70B through the Workers AI proxy in worker/. The model answers and calls the
 //    chamber's tools; each call runs here on the live scene and the result goes back to it,
 //    up to 5 rounds, so "compare the plain series with correction 3 at 40 terms" can take
 //    several actions and then explain what changed.

@@ -1,15 +1,17 @@
-# Guide proxy (Cloudflare Worker)
+# Guide proxy (Cloudflare Worker + Workers AI)
 
-GitHub Pages can't hold a secret, so the LLM guide talks to this tiny proxy.
+GitHub Pages can't run a model or hold a secret, so the AI guide talks to this worker.
+It runs Llama 3.3 70B on Cloudflare Workers AI, whose free allocation (10,000 neurons a
+day) covers roughly 50 guide questions a day at this prompt size. No API key, no payment.
+Past the daily allocation, or if the worker is down, the site's coded guide answers instead.
 
 ```bash
 npm i -g wrangler
 cd worker
-wrangler login
-wrangler secret put ANTHROPIC_API_KEY          # paste your key
-wrangler deploy                                 # prints https://ananta-guide.<you>.workers.dev
+wrangler login        # free Cloudflare account
+wrangler deploy       # prints https://ananta-guide.<you>.workers.dev
 ```
 
-Then set `GUIDE_URL` in `js/config.js` to that URL and `ALLOWED_ORIGIN` in `wrangler.toml`
-to your site's origin (e.g. `https://<you>.github.io`). Without a proxy the guide still
-runs in offline mode, parsing common requests in the browser.
+Then set `GUIDE_URL` in `js/config.js` to that URL. `ALLOWED_ORIGIN` in `wrangler.toml`
+locks the worker to the site's origin; it also rate-limits each visitor to 20 requests
+per 10 minutes.
