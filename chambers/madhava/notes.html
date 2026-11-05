@@ -16,6 +16,9 @@
               n =&gt; (n*n + 1)/(n*(4*n*n + 5))];
 const estimate = (n, k) =&gt; 4*(partial(n) + (n % 2 ? -1 : 1)*CORR[k](n));</code></pre>
 
+  <h3>Machine rediscovery</h3>
+  <p>Could the correction be found from data alone? The ✦ panel runs a symbolic regression: an exhaustive search over every rational function (an² + bn + c) / (dn³ + en² + fn + g) with whole-number coefficients 0 to 6, 703,836 formulas, scored by the mean number of correct digits against the exact tail R(n) = (−1)ⁿ(π/4 − Sₙ) for n = 5 to 40. The winner is exactly F₃ = (n² + 1)/(n(4n² + 5)), about 10 digits on the training range and about 15 on n = 41 to 200, which the search never saw (there the error is near the floor of 64-bit arithmetic). F₂ also places in the top six, written two different ways.</p>
+  <p>The honest framing: I chose the shape of the formulas and the coefficient range, and F₃ lies inside that space, so this is rediscovery within a hypothesis space, as all symbolic regression is. Why F₃ wins is no accident: the tail expands as R(n) = 1/(4n) − 1/(16n³) + 5/(64n⁵) + O(n⁻⁷), F₃ matches all three terms, and its error shrinks like 0.14/n⁷ (checked numerically to n = 400). The result is re-derived independently with exact arithmetic in <code>python/tests/test_rediscover.py</code>.</p>
   <h3>Why the chain twists</h3>
   <p>The chain view draws term k as a link of length 1/(2k+1), turned by an angle θ from the previous link. The end of the chain is</p>
   <div class="eq">$$f(z) = \sum_{k\ge 0}\frac{z^k}{2k+1},\qquad z = e^{i\theta}.$$</div>

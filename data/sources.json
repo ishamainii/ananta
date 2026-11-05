@@ -3,8 +3,8 @@
  "general": [
   {
    "id": "plofker2009",
-   "cite": "Plofker, K. (2009). Mathematics in India: 500 BCE–1800 CE. Princeton University Press.",
-   "url": "https://en.wikipedia.org/wiki/Mathematics_in_India_(book)",
+   "cite": "Plofker, K. (2009). Mathematics in India: 500 BCE–1800 CE. Princeton University Press. ISBN 9780691120676.",
+   "url": "https://press.princeton.edu/books/hardcover/9780691120676/mathematics-in-india",
    "why": "The standard scholarly survey of the field."
   },
   {
@@ -24,7 +24,7 @@
   {
    "id": "vannooten1993",
    "cite": "van Nooten, B. (1993). Binary numbers in Indian antiquity. Journal of Indian Philosophy, 21, 31–50.",
-   "url": "https://arxiv.org/abs/math/0703658",
+   "url": "https://sanskrit.uohyd.ac.in/Algorithms_in_Ancient_India/Material/binary.pdf",
    "why": "The classic study of Pingala's binary enumeration of meters. (Link: Kulkarni's paper, which cites it.)"
   },
   {
@@ -36,7 +36,7 @@
   {
    "id": "singh1985",
    "cite": "Singh, P. (1985). The so-called Fibonacci numbers in ancient and medieval India. Historia Mathematica, 12, 229–244.",
-   "url": "https://courses.cs.cornell.edu/cs2110/2017fa/L25-Fibonacci/Singh-so-called-Fibs.pdf",
+   "url": "https://doi.org/10.1016/0315-0860(85)90021-7",
    "why": "Traces the mātrā-meter counts 1, 2, 3, 5, 8, … through Virahāṅka, Gopāla, Hemacandra and Nārāyaṇa."
   },
   {
@@ -56,7 +56,7 @@
   {
    "id": "roy1990",
    "cite": "Roy, R. (1990). The discovery of the series formula for π by Leibniz, Gregory and Nilakantha. Mathematics Magazine, 63, 291–306.",
-   "url": "https://maa.org/node/113628",
+   "url": "https://doi.org/10.1080/0025570X.1990.11977541",
    "why": "Prize-winning comparison of the European and Kerala derivations."
   },
   {
@@ -76,7 +76,7 @@
   {
    "id": "selenius1975",
    "cite": "Selenius, C.-O. (1975). Rationale of the chakravāla process of Jayadeva and Bhāskara II. Historia Mathematica, 2, 167–184.",
-   "url": "https://www.ms.uky.edu/~sohum/ma330/files/Rationale-of-the-chakrav-la-process-of-Jayadeva-and-Bh-skara-II_1975_Historia-Mathematica.pdf",
+   "url": "https://doi.org/10.1016/0315-0860(75)90142-6",
    "why": "Shows the method is a minimal-length, best-approximation continued-fraction algorithm; for N = 61 it needs a handful of steps where the European route needs about 22 convergents."
   }
  ],

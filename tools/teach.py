@@ -311,7 +311,7 @@ CH["purna"] = dict(
          "b": "Bhāskara II named a quantity divided by zero <b>khahara</b>. The curve is 1 ÷ x as x slides toward 0: it shoots up without limit. His rule: add to khahara or take away from it and it doesn't change.",
          "see": "the gold beam, and the line: khahara + 1000 = khahara."},
         {"t": "The honest footnote",
-         "b": "This isn't modern analysis: today we'd say 1/x has no limit at 0 rather than give it a value. But Bhāskara's rule says exactly how infinity swallows finite additions, an idea Cantor's arithmetic made precise 700 years later.",
+         "b": "This isn't modern analysis: today 1/0 is left undefined, and we'd say 1/x grows without bound as x → 0⁺. But Bhāskara's rule says exactly how infinity swallows finite additions, an idea Cantor's arithmetic made precise 700 years later.",
          "see": "the notebook (press n) for the sources."},
     ],
     sound="<p><b>Each movement has its own rule.</b> I, pūrṇa: every note is <b>Sa</b>, just in a different octave, the same whole at a different scale. II, Jaina: the notes <b>count up the scale</b>, ten to a ring, then start again an octave… the counting never ends. III, khahara: <b>one note that never changes</b>, whatever is added around it.</p><p>Switching movement rings a bowl on harmonic 2, 3 or 4 of Sa (× 2, × 3, × 4), the first rungs of the infinite overtone ladder inside every note.</p>" + RAAG,
@@ -325,7 +325,7 @@ CH["purna"] = dict(
         {"k": ["khahara", "zero", "divide", "division"], "q": "what is khahara?",
          "a": "Bhāskara II's name, in the Bījagaṇita (1150), for a quantity with zero as its divisor. Adding or subtracting doesn't change it."},
         {"k": ["cantor", "set theory", "modern"], "q": "how does this relate to modern math?",
-         "a": "Cantor (1870s–90s) showed infinite sets can have equal size to their parts and come in different sizes. Today 1/0 is left undefined rather than given a value."},
+         "a": "Cantor (1870s–90s) showed infinite sets can have equal size to their parts and come in different sizes. Today 1/0 is left undefined; what Bhāskara's rule anticipates is cardinal arithmetic, where ℵ₀ + n = ℵ₀."},
     ],
 )
 

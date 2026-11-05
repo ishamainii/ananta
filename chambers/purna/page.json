@@ -53,7 +53,7 @@
   },
   {
    "t": "The honest footnote",
-   "b": "This isn't modern analysis: today we'd say 1/x has no limit at 0 rather than give it a value. But Bhāskara's rule says exactly how infinity swallows finite additions, an idea Cantor's arithmetic made precise 700 years later.",
+   "b": "This isn't modern analysis: today 1/0 is left undefined, and we'd say 1/x grows without bound as x → 0⁺. But Bhāskara's rule says exactly how infinity swallows finite additions, an idea Cantor's arithmetic made precise 700 years later.",
    "see": "the notebook (press n) for the sources."
   }
  ],
@@ -109,7 +109,7 @@
     "modern"
    ],
    "q": "how does this relate to modern math?",
-   "a": "Cantor (1870s–90s) showed infinite sets can have equal size to their parts and come in different sizes. Today 1/0 is left undefined rather than given a value."
+   "a": "Cantor (1870s–90s) showed infinite sets can have equal size to their parts and come in different sizes. Today 1/0 is left undefined; what Bhāskara's rule anticipates is cardinal arithmetic, where ℵ₀ + n = ℵ₀."
   },
   {
    "k": [

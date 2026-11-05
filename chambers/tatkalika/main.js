@@ -37,9 +37,15 @@ function draw(t) {
   // ---- left: the epicycle, seen from a slowly turning frame so the orbit draws a rosette
   const R = Math.min(wide ? W * 0.24 : W * 0.36, H * 0.3), cx = wide ? W * 0.32 : W / 2, cy = wide ? H / 2 - 10 : H * 0.36;
   const ang = mean - frameSpin * mean, mx = cx + R * Math.cos(ang), my = cy - R * Math.sin(ang);
-  const pa = ang + M + Math.PI, px = mx + R * k * Math.cos(pa), py = my - R * k * Math.sin(pa);
+  // the epicycle's radius is drawn in proportion to the planet's distance H from earth (H/R below).
+  // With that construction the angle earth sees between mean and true planet is exactly
+  // E(M) = −arcsin(k sin M), the sine rule the curve on the right plots, so the picture and the
+  // formula are the same model. (A fixed-size epicycle would give atan2(−k sin M, 1 − k cos M)
+  // instead, whose extreme sits at cos M = k, not at 90°.)
+  const Hn = (-k * Math.cos(M) + Math.sqrt(1 - (k * Math.sin(M)) ** 2)) / (1 - k * k);
+  const pa = ang + M + Math.PI, px = mx + R * k * Hn * Math.cos(pa), py = my - R * k * Hn * Math.sin(pa);
   ctx.save(); ctx.strokeStyle = "rgba(255,210,122,.2)"; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.stroke();
-  ctx.beginPath(); ctx.arc(mx, my, R * k, 0, 6.2832); ctx.stroke(); ctx.restore();
+  ctx.beginPath(); ctx.arc(mx, my, R * k * Hn, 0, 6.2832); ctx.stroke(); ctx.restore();
   trail.push([px, py]); if (trail.length > 2600) trail.shift();
   const seg = 120; for (let i = 0; i + 1 < trail.length; i += seg) {
     const hue = ["#ffcf6b", "#ff8a3d", "#ff5c8a", "#b08cff", "#5fd4ff"][Math.floor(i / seg) % 5];
